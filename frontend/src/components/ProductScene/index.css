@@ -1,0 +1,48 @@
+.product-info {
+    width: 400px;
+}
+
+.add-product-btn {
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: large;
+    background-color: black;
+    border: 2px solid transparent;
+    cursor: pointer;
+    color: white;
+}
+
+
+.add-product-btn:hover {
+    /* Rotate the gradient to opposite corners on hover */
+    animation: rotateGradient 0.5s linear infinite alternate;
+    border: 2px solid transparent; /* Set the border to transparent on hover */
+}
+
+@keyframes rotateGradient {
+    0% {
+        box-shadow: 0 0 0 1px pink, 0 0 0 1px purple;
+    }
+    100% {
+        box-shadow: 0 0 0 1px purple, 0 0 0 1px pink;
+    }
+}
+
+.product-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.toggle-review-btn {
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+}
+
+.review-textarea {
+    color: red;
+    width: 25vw;
+    height: 5vh;
+}

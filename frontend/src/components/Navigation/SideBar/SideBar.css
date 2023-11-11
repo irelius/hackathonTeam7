@@ -1,0 +1,61 @@
+.sidebar {
+    width: 0; /* Initially hidden */
+    overflow-x: hidden;
+    transition: 0.5s;
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background for the blur effect */
+    /* ... other sidebar styles ... */
+
+  }
+
+  .sidebar.open {
+    width: 250px; /* Display the sidebar when the "open" class is applied */
+    /* ... additional styles for open sidebar ... */
+    position: absolute;
+    height: 100;
+    /* top: 85%; */
+    top: 67px;
+    /* left: 1% */
+
+  }
+
+  .sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 5px ;
+
+  }
+
+  /* Hide button labels by default */
+.button-label {
+    display: none;
+  }
+
+  /* When the sidebar is open, show the button labels */
+  .sidebar.open .button-label {
+    display: block;
+    margin-left: 10px; /* Adjust the margin for spacing between icon and label */
+    transition: opacity 0.3s; /* Add a transition for smooth reveal */
+  }
+
+  .nav-btn {
+    border: none;
+    color: rgb(77, 77, 77);
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px ;
+    background-color: transparent;
+    transition: background-color .3s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(240, 240, 240, 0.974);
+}
+
+.nav-btn.active {
+    background-color: rgb(236, 236, 236);
+    color: black;
+    cursor: initial;
+}

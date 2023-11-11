@@ -1,0 +1,117 @@
+.form-container {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    /* background-color: white; */
+    backdrop-filter: blur(10px);
+    /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6);
+    /* Semi-transparent white background for the blur effect */
+    border-radius: 10px;
+}
+
+.form-container.login {
+    position: absolute;
+    bottom: 450px;
+    left: 39%;
+    width: 400px;
+}
+
+.form-container h1,
+h2 {
+    padding-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+    align-items: center;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 87%;
+}
+
+.field-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+hr {
+    width: 50%
+}
+
+.form p {
+    margin: 10px 0;
+}
+
+.field label {
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.field input {
+    border: 1px solid #acacac;
+    border-radius: 5px;
+    padding: 7px 7px;
+    margin: 0 10px;
+}
+
+.form p {
+    text-align: center;
+}
+
+.demo-button {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
+}
+
+.submit-button {
+    /* background-color: transparent; */
+    border: none;
+    width: 81%;
+    padding: 11px 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.submit-button:hover {
+    transform: scale(1.05);
+}
+
+#cancel-button {
+    cursor: pointer;
+    position: relative;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.signup-back-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+
+    border: none;
+    font-size: 25px;
+}

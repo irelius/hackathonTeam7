@@ -1,0 +1,100 @@
+.cart-table {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  /* Apply a blur effect to the background */
+  background: rgba(255, 255, 255, 0.6);
+  /* Semi-transparent white background for the blur effect */
+  border-radius: 10px;
+  text-align: center;
+  max-width: 800px;
+  /* Set your desired maximum width */
+  margin: 0 auto;
+  /* Center the grid horizontally */
+}
+
+.table-header {
+  display: flex;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #000;
+  font-weight: bold;
+}
+
+.table-cell {
+  flex: 1;
+  padding: 10px;
+  min-width: 125px;
+}
+
+#cart-name {
+  min-width: 250px;
+}
+
+.cart-card {
+  display: flex;
+  border-bottom: 1px solid #000;
+}
+
+.cart-info {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+}
+
+.cart-back-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+
+  border: none;
+  font-size: 25px;
+}
+
+#cart-section * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cart-quantity {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#cart-quantity>* {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+#checkout-button {
+  cursor: pointer;
+  position: relative;
+  border: 1px solid black;
+  margin: 20px;
+  padding: 10px 10px;
+  border-radius: 10px;
+}
+
+.quantity-change {
+  font-size: 20px;
+}
+
+.quantity-change:hover {
+  background-color: rgb(208, 208, 215);
+}
+
+#delete-cart-item-button {
+  font-size: 20px;
+  border: none;
+  background-color: transparent;
+}
+
+#delete-cart-item-button:hover {
+  background-color: rgb(208, 208, 215);
+}

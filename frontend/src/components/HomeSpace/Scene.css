@@ -1,0 +1,11 @@
+.back-button {
+    cursor: pointer;
+    position: relative;
+    top: 300px;
+    border: 1px solid black;
+    padding: 10px 10px;
+    border-radius: 10px;
+
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background for the blur effect */
+}

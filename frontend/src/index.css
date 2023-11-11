@@ -1,0 +1,79 @@
+/* TODO Add site wide styles */
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Border Stuff */
+.no-border {
+    border: none;
+}
+
+.black-border {
+    border: 1px solid black;
+}
+
+.white-border {
+    border: 1px solid white;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Text Stuff */
+.primary-font {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+* {
+    font-family: "Inter", sans-serif;
+  }
+
+.font-20 {
+    font-size: 20px;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Color Stuff */
+.primary-color {
+    color: black
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Background Color Stuff */
+.primary-bg {
+    background-color: white;
+}
+
+
+.container {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 550px;
+    /* background-color: white; */
+    backdrop-filter: blur(10px);
+    /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6);
+    /* Semi-transparent white background for the blur effect */
+    border-radius: 10px;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
+/* Mouse Stuff */
+
+.pointer:hover {
+    cursor: pointer;
+}

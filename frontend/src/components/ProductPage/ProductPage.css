@@ -1,0 +1,64 @@
+.product-container {
+    position: absolute;
+    top: 10%;
+    left: 25%;
+    z-index: 1;
+    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background for the blur effect */
+    border-radius: 10px;
+    /* text-align: center; */
+    width: 55vw; /* Set your desired maximum width */
+    margin: 0 auto; /* Center the grid horizontally */
+ 
+}
+
+.product-container h1 {
+    text-align: center;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
+    gap: 20px; /* Add spacing between grid items */
+    height: 45vh;
+
+}
+
+.product-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+/* .product {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 10px 20px;
+} */
+
+.product a {
+    text-decoration: none;
+    color: initial;
+}
+
+.product-price {
+    font-weight: 700;
+}
+
+.product li {
+    /* padding: 10px; */
+}
+
+/* .cart-btn {
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 6px;
+    width: 80%;
+    margin: 0 auto; 
+    display: block; 
+} */
+
+.cart-icon {
+    height: 30px;
+}

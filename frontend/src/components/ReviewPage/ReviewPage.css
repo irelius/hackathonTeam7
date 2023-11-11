@@ -1,0 +1,67 @@
+.review-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6);
+    /* Semi-transparent white background for the blur effect */
+    border-radius: 10px;
+    text-align: center;
+    max-width: 800px;
+    /* Set your desired maximum width */
+    margin: 0 auto;
+    /* Center the grid horizontally */
+}
+
+.review-container h1 {
+    text-align: center;
+}
+
+.review-grid {
+    display: flex;
+    transition: transform 0.3s ease;
+    
+}
+
+.review {
+    width: 45vw;
+    height: 30vh;
+    background: rgba(255, 255, 255, 0.6);
+    margin: 0 3px;
+    border-radius: 10px;
+}
+
+.review-info {
+    padding: 10px 10px;
+}
+
+.pagination {
+    text-align: center;
+}
+
+.pagination button {
+    border-radius: 30px;
+    padding: 8px 10px;
+    margin-top: 15px;
+}
+
+.arrow {
+    margin: 10px ;
+}
+
+.bxs-star {
+    color: yellow;
+    font-size: larger;
+}
+
+.info {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.info.user {
+    font-size: large;
+}

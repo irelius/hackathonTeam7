@@ -1,0 +1,144 @@
+#nav {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+    width: 100%;
+
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+li {
+    list-style: none;
+}
+
+.home-btn {
+    border: none;
+    padding: 9px 11px;
+    color: black;
+    background-color: transparent;
+    font-size: 27px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 25px;
+}
+
+/* .home-btn.active {
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: black;
+    color: white;
+} */
+
+.auth-btn {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    padding: 8px 15px;
+    margin: 0 5px;
+    color: rgb(59, 59, 59);
+    font-weight: 700;
+    cursor: pointer;
+
+
+    background: rgba(255, 255, 255, 0.6);
+    /* Create a color gradient border */
+    /* box-shadow: 0 0 0 1px violet, 0 0 0 1px purple; */
+    /* background-clip: content-box; */
+    transition: box-shadow 0.5s;
+}
+
+.auth-btn:hover {
+    /* Rotate the gradient to opposite corners on hover */
+    animation: rotateGradient 0.5s linear infinite alternate;
+    border: 1px solid transparent;
+    /* Set the border to transparent on hover */
+}
+
+@keyframes rotateGradient {
+    0% {
+        box-shadow: 0 0 0 1px pink, 0 0 0 1px purple;
+    }
+
+    100% {
+        box-shadow: 0 0 0 1px purple, 0 0 0 1px pink;
+    }
+}
+
+
+
+
+.bx-cart {
+    margin-right: 5px;
+}
+
+.user-icon {
+    background-color: transparent;
+    margin-right: 10px;
+    border: none;
+    font-size: 35px;
+    cursor: pointer;
+    color: black;
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 1%;
+    backdrop-filter: blur(10px);
+    /* Apply a blur effect to the background */
+    background: rgba(255, 255, 255, 0.6);
+    /* Semi-transparent white background for the blur effect */
+}
+
+.profile-container {
+    padding: 5px 5px;
+    width: 150px;
+    margin: 0;
+}
+
+.profile-container li {
+    text-align: left;
+    padding: 3px 0;
+}
+
+.user-btn {
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    border: none;
+    background-color: transparent;
+    transition: background-color .3s ease;
+}
+
+.user-btn:hover {
+    background-color: rgba(240, 240, 240, 0.974);
+}
+
+.bx-menu {
+    margin-top: 2px;
+}
+
+.toggle {
+    margin-left: 30px;
+    cursor: pointer;
+    font-size: 30px;
+    background-color: transparent;
+    color: black;
+    border: none;
+}
+
+
+#header-bar {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    background-color: orange;
+}
