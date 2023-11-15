@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    quantity: {
+    productQuantity: {
       type: DataTypes.INTEGER,
       defaultValue: 1,
     },

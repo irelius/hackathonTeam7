@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    quantity: {
+    productQuantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
       hooks: {
         beforeCreate: (order) => {
           // Calculate totalAmount before creating the record
-          order.totalAmount = order.quantity * order.pricePerUnit;
+          order.totalAmount = order.productQuantity * order.pricePerUnit;
         },
       },
     }
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // // Calculate and assign the totalAmount separately
   // Order.beforeCreate((order, options) => {
-  //   order.totalAmount = order.quantity * order.pricePerUnit;
+  //   order.totalAmount = order.productQuantity * order.pricePerUnit;
   // });
 
   return Order;

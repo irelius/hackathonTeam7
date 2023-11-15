@@ -39,7 +39,7 @@ module.exports = {
         },
         onDelete: 'NO ACTION',
       },
-      quantity: {
+      productQuantity: {
         type: Sequelize.INTEGER,
         defaultValue: 1,
       },

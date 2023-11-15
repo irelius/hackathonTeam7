@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      quantity: {
+      productQuantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
