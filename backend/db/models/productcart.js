@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       ProductCart.belongsTo(models.User, {
         foreignKey: "userId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION",
       })
       ProductCart.belongsTo(models.Cart, {
         foreignKey: "cartId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION",
       })
       ProductCart.belongsTo(models.Product, {
         foreignKey: "productId",
-        onDelete: "CASCADE"
+        onDelete: "NO ACTION"
       })
     }
   };
@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       defaultValue: 1,
     },
     pricePerUnit: {

@@ -22,7 +22,6 @@ module.exports = {
           key: "id"
         },
         allowNull: false,
-        // onDelete: "NO ACTION",
       },
       cartId: {
         type: Sequelize.INTEGER,
@@ -35,7 +34,7 @@ module.exports = {
         allowNull: false,
       },
       productDescription:{
-        type: Sequelize.STRING(2000),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       quantity: {
@@ -47,16 +46,15 @@ module.exports = {
         allowNull: false,
       },
       orderDate: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
       },
       status: {
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue: 'processing'
       },
       totalAmount: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

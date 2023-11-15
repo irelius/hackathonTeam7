@@ -7,21 +7,29 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Review.belongsTo(models.User, {
         foreignKey: "userId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION",
       })
       Review.belongsTo(models.Product, {
         foreignKey: "productId",
-        onDelete: "CASCADE"
+        onDelete: "NO ACTION"
       })
     }
   };
 
   Review.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     review: {
-      type: DataTypes.STRING(2000)
+      type: DataTypes.TEXT,
+      allowNull: false,
     },
     rating: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   }, {
     sequelize,

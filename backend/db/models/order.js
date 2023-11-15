@@ -7,24 +7,32 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Order.belongsTo(models.User, {
         foreignKey: "userId",
-        // onDelete: "NO ACTION"
+        onDelete: "NO ACTION"
       })
     }
   };
 
   Order.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     cartId: {
       type: DataTypes.INTEGER,
+      allowNull: false
     },
     productId: {
       type: DataTypes.INTEGER,
+      allowNull: false
     },
     productName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     productDescription: {
-      type: DataTypes.STRING(2000),
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     quantity: {
@@ -36,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     orderDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,
     },
     status: {
@@ -45,17 +53,25 @@ module.exports = (sequelize, DataTypes) => {
     },
     totalAmount: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
     }
-  }, {
-    sequelize,
-    modelName: 'Order'
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Order',
+      hooks: {
+        beforeCreate: (order) => {
+          // Calculate totalAmount before creating the record
+          order.totalAmount = order.quantity * order.pricePerUnit;
+        },
+      },
+    }
+  );
 
-  // Calculate and assign the totalAmount separately
-  Order.beforeCreate((order, options) => {
-    order.totalAmount = order.quantity * order.pricePerUnit;
-  });
+
+  // // Calculate and assign the totalAmount separately
+  // Order.beforeCreate((order, options) => {
+  //   order.totalAmount = order.quantity * order.pricePerUnit;
+  // });
 
   return Order;
 };

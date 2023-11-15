@@ -18,31 +18,26 @@ module.exports = {
       {
         email: 'admin@aa.io',
         username: 'AdminUser',
-        role: "admin",
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         email: 'demo@aa.io',
         username: 'DemoUser',
-        role: "customer",
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         email: 'user1@aa.io',
         username: 'UserOne',
-        role: "customer",
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         email: 'user2@aa.io',
         username: 'UserTwo',
-        role: "customer",
         hashedPassword: bcrypt.hashSync('password')
       },
       {
         email: 'user3@aa.io',
         username: 'UserThree',
-        role: "customer",
         hashedPassword: bcrypt.hashSync('password')
       },
     ]

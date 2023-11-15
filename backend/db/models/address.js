@@ -2,38 +2,48 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class BillingAddress extends Model {
+  class Address extends Model {
     static associate(models) {
-      BillingAddress.belongsTo(models.User), {
+      Address.belongsTo(models.User), {
         foreignKey: "userId",
-        onDELETE: "CASCADE"
+        onDelete: "NO ACTION"
       }
     }
   }
-  BillingAddress.init({
-    billingFirstName: {
+  Address.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    type: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    billingLastName: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    billingAddress: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    billingState: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    billingZipCode: {
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    zipCode: {
       type: DataTypes.STRING,
       allowNull: false,
     }
   }, {
     sequelize,
-    modelName: 'BillingAddress',
+    modelName: 'Address',
   });
-  return BillingAddress;
+  return Address;
 };

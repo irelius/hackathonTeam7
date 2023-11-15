@@ -19,27 +19,25 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       productId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Products"
+          model: 'Products',
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       review: {
-        type: Sequelize.STRING(2000),
-        allowNull: false
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       rating: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 5
       },
       createdAt: {
         allowNull: false,

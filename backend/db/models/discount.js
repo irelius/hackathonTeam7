@@ -8,21 +8,31 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Discount.init({
-        codeName: {
-            type: DataTypes.STRING,
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
         },
         applicableCategory: {
             type: DataTypes.STRING,
             defaultValue: "All"
         },
+        discountName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         discountType: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            defaultValue: "percent",
         },
         discountValue: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
         expirationDate: {
-            type: DataTypes.DATEONLY
+            type: DataTypes.DATEONLY,
+            allowNull: false
         }
     }, {
         sequelize,

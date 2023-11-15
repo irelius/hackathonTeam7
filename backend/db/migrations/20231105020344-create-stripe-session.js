@@ -19,20 +19,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: "id"
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       cartId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Carts",
-          key: "id"
+          model: 'Carts',
+          key: 'id',
         },
-        onDelete: "CASCADE",
-        allowNull: false,
-
+        onDelete: 'NO ACTION',
       },
       sessionId: {
         type: Sequelize.STRING,

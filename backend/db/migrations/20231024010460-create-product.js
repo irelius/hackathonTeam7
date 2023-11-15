@@ -20,14 +20,14 @@ module.exports = {
         allowNull: false,
       },
       productDescription: {
-        type: Sequelize.STRING(2000),
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       productPrice: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      quantity: {
+      productQuantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

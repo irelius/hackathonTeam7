@@ -15,22 +15,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      codeName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       applicableCategory: {
         type: Sequelize.STRING,
         defaultValue: "All",
-        allowNull: false
+      },
+      discountName: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       discountType: {
         type: Sequelize.STRING,
         defaultValue: "percent",
-        allowNull: false
       },
       discountValue: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       expirationDate: {

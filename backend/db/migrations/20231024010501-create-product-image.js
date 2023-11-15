@@ -17,12 +17,12 @@ module.exports = {
       },
       productId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Products',
-          key: "id"
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       image: {
         type: Sequelize.STRING,

@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("BillingAddresses", {
+    return queryInterface.createTable("Addresses", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,28 +19,31 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: "id"
+          key: 'id',
         },
-        onDelete: "CASCADE",
-        allowNull: false,
+        onDelete: 'NO ACTION',
       },
-      billingFirstName: {
+      type: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      billingLastName: {
+      lastName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      billingAddress: {
+      address: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      billingState: {
+      state: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      billingZipCode: {
+      zipCode: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -57,7 +60,7 @@ module.exports = {
     }, options);
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "BillingAddresses";
+    options.tableName = "Addresses";
     return queryInterface.dropTable(options);
   }
 };

@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       ProductCategory.belongsTo(models.Category, {
         foreignKey: "categoryId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION",
       })
       ProductCategory.belongsTo(models.Product, {
         foreignKey: "productId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION",
       })
     }
   };

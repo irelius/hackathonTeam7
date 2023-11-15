@@ -8,42 +8,48 @@ module.exports = (sequelize, DataTypes) => {
                 through: models.ProductCategory,
                 foreignKey: "productId",
             });
-            Product.belongsToMany(models.Cart, {
-                through: models.ProductCart,
-                foreignKey: "productId",
-            });
 
             Product.hasMany(models.Review, {
                 foreignKey: "productId",
+                onDelete: "CASCADE"
             });
             Product.hasMany(models.ProductImage, {
                 foreignKey: "productId",
-            });
-            Product.hasMany(models.ProductCategory, {
-                foreignKey: "productId",
+                onDelete: "CASCADE"
             });
             Product.hasMany(models.ProductCart, {
                 foreignKey: "productId",
+                onDelete: "CASCADE"
             });
-            Product.hasMany(models.Order, {
+            Product.hasMany(models.ProductCategory, {
                 foreignKey: "productId",
+                onDelete: "CASCADE",
             });
-
         }
     };
 
     Product.init({
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
         productName: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         productDescription: {
-            type: DataTypes.STRING(2000),
+            type: DataTypes.TEXT,
+            allowNull: false,
         },
         productPrice: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            allowNull: false,
         },
-        quantity: {
-            type: DataTypes.INTEGER
+        productQuantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         }
     }, {
         sequelize,

@@ -17,22 +17,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+          len: [4, 30],
+        },
       },
       email: {
         type: Sequelize.STRING(256),
         allowNull: false,
-        unique: true
-      },
-      role: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        unique: true,
+        validate: {
+          len: [3, 256],
+          isEmail: true
+        }
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          len: [60, 60],
+        },
       },
       createdAt: {
         allowNull: false,

@@ -19,37 +19,33 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
         },
-        onDelete: "CASCADE",
-        allowNull: false,
+        onDelete: 'NO ACTION',
       },
       cartId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Carts",
-          key: "id"
+          model: 'Carts',
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       productId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Products',
-          key: "id"
+          key: 'id',
         },
-        allowNull: false,
-        onDelete: "CASCADE"
+        onDelete: 'NO ACTION',
       },
       quantity: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         defaultValue: 1,
       },
       pricePerUnit: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

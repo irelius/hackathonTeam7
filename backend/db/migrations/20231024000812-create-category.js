@@ -17,7 +17,7 @@ module.exports = {
       },
       categoryName: {
         type: Sequelize.STRING,
-        allowNull: false
+        defaultValue: "All",
       },
       section: {
         type: Sequelize.STRING,

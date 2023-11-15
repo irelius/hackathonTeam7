@@ -15,23 +15,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Products',
-          key: "id"
-        },
-        allowNull: false,
-        onDelete: "CASCADE"
-      },
       categoryId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Categories",
-          key: "id"
-        },
         allowNull: false,
-        onDelete: "CASCADE"
+        references: {
+          model: 'Categories',
+          key: 'id',
+        },
+        onDelete: 'NO ACTION',
+      },
+      productId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Products',
+          key: 'id',
+        },
+        onDelete: 'NO ACTION',
       },
       createdAt: {
         allowNull: false,

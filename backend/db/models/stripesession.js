@@ -6,18 +6,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       StripeSession.belongsTo(models.User, {
         foreignKey: "userId",
-        onDelete: "CASCADE",
+        onDelete: "NO ACTION"
       })
       StripeSession.belongsTo(models.Cart, {
         foreignKey: "cartId",
+        onDelete: "NO ACTION"
       })
     }
   }
   StripeSession.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     sessionId: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     }
   }, {
     sequelize,

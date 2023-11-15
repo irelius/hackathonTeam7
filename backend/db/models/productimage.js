@@ -7,14 +7,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       ProductImage.belongsTo(models.Product), {
         foreignKey: "productId",
-        onDelete: "CASCADE"
+        onDelete: "NO ACTION"
       }
     }
   };
 
   ProductImage.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     image: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
     }
   }, {
     sequelize,

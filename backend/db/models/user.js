@@ -6,33 +6,47 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Payment, {
-        foreignKey: "userId"
+        foreignKey: "userId",
+        onDelete: "CASCADE",
       })
-      User.hasMany(models.BillingAddress, {
-        foreignKey: "userId"
-      })
-      User.hasMany(models.ShippingAddress, {
-        foreignKey: "userId"
+      User.hasMany(models.Address, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
       })
       User.hasMany(models.Order, {
         foreignKey: "userId",
+        onDelete: "NO ACTION",
       })
       User.hasMany(models.Review, {
-        foreignKey: "userId"
+        foreignKey: "userId",
+        onDelete: "CASCADE",
+      })
+      User.hasMany(models.ProductCart, {
+        foreignKey: "userId",
+        onDelete: "CASCADE",
       })
       User.hasMany(models.Cart, {
-        foreignKey: "userId"
+        foreignKey: "userId",
+        onDelete: "CASCADE",
       })
       User.hasMany(models.StripeSession, {
-        foreignKey: "userId"
+        foreignKey: "userId",
+        onDelete: "CASCADE",
       })
     }
   };
 
   User.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         len: [4, 30],
         isNotEmail(value) {
@@ -45,6 +59,7 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         len: [3, 256],
         isEmail: true
@@ -65,11 +80,6 @@ module.exports = (sequelize, DataTypes) => {
     //   type: DataTypes.STRING,
     //   allowNull: false
     // },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "customer"
-    }
   }, {
     sequelize,
     modelName: 'User'

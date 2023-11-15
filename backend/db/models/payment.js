@@ -7,12 +7,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Payment.belongsTo(models.User), {
         foreignKey: "userId",
-        onDelete: "CASCADE"
+        onDelete: "NO ACTION"
       }
     }
   };
 
   Payment.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
     defaultPayment: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

@@ -14,31 +14,31 @@ module.exports = {
     const validPayments = [
       {
         userId: "2",
+        defaultPayment: true,
         cardHolder: "Demo User",
         cardNumber: "4242424242424242",
         expirationDate: "04/24",
-        defaultPayment: true
       },
       {
         userId: "2",
+        defaultPayment: false,
         cardHolder: "Demo User",
         cardNumber: "1111111111111111",
         expirationDate: "04/24",
-        defaultPayment: false
       },
       {
         userId: "3",
+        defaultPayment: true,
         cardHolder: "User One",
         cardNumber: "4242424242424242",
         expirationDate: "04/24",
-        defaultPayment: true
       },
       {
         userId: "4",
+        defaultPayment: true,
         cardHolder: "User Two",
         cardNumber: "4242424242424242",
         expirationDate: "04/24",
-        defaultPayment: true
       }
     ]
 
