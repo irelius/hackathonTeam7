@@ -11,8 +11,7 @@ const productRouter = require('./products.js')
 const productCategoryRouter = require('./productcategories.js')
 const productImageRouter = require('./productimages.js')
 const reviewRouter = require("./reviews.js")
-const shippingRouter = require('./shippingaddresses.js')
-const billingRouter = require('./billingaddresses.js')
+const addressRouter = require('./addresses.js')
 const cartRouter = require('./carts.js')
 const orderRouter = require("./orders.js")
 const paymentRouter = require('./payments.js')
@@ -30,8 +29,7 @@ router.use('/productcategory', productCategoryRouter);
 router.use('/productcart', productCartRouter)
 router.use('/productimage', productImageRouter);
 router.use('/review', reviewRouter);
-router.use('/shipping', shippingRouter);
-router.use('/billing', billingRouter);
+router.use('/address', addressRouter)
 router.use('/cart', cartRouter);
 router.use('/order', orderRouter);
 router.use('/payment', paymentRouter);

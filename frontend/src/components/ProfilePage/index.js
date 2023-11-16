@@ -13,7 +13,7 @@ import { loadAllProductsThunk } from "../../store/product";
 function ProfilePage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-  const billingObj = useSelector((state) => state.billingAddress);
+  const billingObj = useSelector((state) => state.address);
   const reviewsObj = useSelector((state) => state.review);
   const reviews = Object.values(reviewsObj);
   const productObj = useSelector((state) => state.product);
@@ -87,7 +87,7 @@ function ProfilePage() {
               <div className="address-row">
                 <div>
                   <h3>Street</h3>
-                  <li>{billingObj.billingAddress}</li>
+                  <li>{billingObj.address}</li>
                 </div>
                 <div>
                   <h3>State</h3>

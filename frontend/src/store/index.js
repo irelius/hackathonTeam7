@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   productCategory: productCategoryReducer,
   order: orderReducer,
   review: reviewReducer,
-  billingAddress: billingReducer,
+  address: billingReducer,
   shippingAddress: shippingReducer,
   discount: discountReducer,
   productCart: productCartReducer,

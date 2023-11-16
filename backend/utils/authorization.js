@@ -1,4 +1,4 @@
-const { BillingAddress, Discount, Order, Payment, ProductCategory, Product, Review, ShippingAddress, User } = require("../db/models")
+const { Address, Discount, Order, Payment, ProductCategory, Product, Review, ShippingAddress, User } = require("../db/models")
 const { nextError } = require("./errorFunc")
 
 const forbidden = () => {
@@ -24,21 +24,11 @@ const checkUser = function (req, res, next) {
     return next(forbidden())
 }
 
-const authBilling = async function (req, res, next) {
-    const billingAddress = await BillingAddress.findByPk(req.params.billingAddressId)
-    if (req.user.id === billingAddress.userId || billingAddress.userId === 1) {
+const authAddress = async function (req, res, next) {
+    const address = await Address.findByPk(req.params.addressId)
+    if(req.user.id !== address.userId || address.userId === 1) {
         return next()
     }
-
-    return next(forbidden())
-}
-
-const authShipping = async function (req, res, next) {
-    const shippingAddress = await ShippingAddress.findByPk(req.params.shippingAddressId)
-    if (req.user.id === shippingAddress.userId || shippingAddress.userId === 1) {
-        return next()
-    }
-
     return next(forbidden())
 }
 
@@ -58,7 +48,6 @@ module.exports = {
     forbidden,
     isAdmin,
     checkUser,
-    authBilling,
-    authShipping,
+    authAddress,
     authPayment,
 }

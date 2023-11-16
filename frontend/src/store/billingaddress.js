@@ -7,17 +7,17 @@ const EDIT_BILLING = "/product/editBilling"
 const DELETE_BILLING = "/product/deleteBilling"
 const CLEAR_BILLING = "/product/clearBilling"
 
-export const loadBilling = (billingAddress) => {
+export const loadBilling = (address) => {
     return {
         type: LOAD_BILLING,
-        payload: billingAddress
+        payload: address
     }
 }
 
-export const loadBillings = (billingAddresses) => {
+export const loadBillings = (addresses) => {
     return {
         type: LOAD_BILLINGS,
-        payload: billingAddresses
+        payload: addresses
     }
 }
 
@@ -27,8 +27,8 @@ export const loadOneBillingThunk = (billingId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/billing/${billingId}`)
         if (res.ok) {
-            const billingAddress = await res.json()
-            dispatch(loadBilling(billingAddress))
+            const address = await res.json()
+            dispatch(loadBilling(address))
         } else {
             console.error('Failed to load specific billing address:', res.status, res.statusText);
         }
@@ -42,8 +42,8 @@ export const loadUserBillingsThunk = (userId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/billing/user/${userId}`)
         if (res.ok) {
-            const billingAddresses = await res.json()
-            dispatch(loadBillings(billingAddresses))
+            const addresses = await res.json()
+            dispatch(loadBillings(addresses))
         } else {
             console.error("Failed to load user's billing addresses:", res.status, res.statusText);
         }
@@ -56,8 +56,8 @@ export const loadAllBillingsThunk = () => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/billing/all`)
         if (res.ok) {
-            const billingAddress = await res.json()
-            dispatch(loadBillings(billingAddress))
+            const address = await res.json()
+            dispatch(loadBillings(address))
         } else {
             console.error("Failed to load all billing addresses:", res.status, res.statusText);
         }
@@ -66,10 +66,10 @@ export const loadAllBillingsThunk = () => async (dispatch) => {
     }
 }
 
-export const addBilling = (billingAddress) => {
+export const addBilling = (address) => {
     return {
         type: ADD_BILLING,
-        payload: billingAddress
+        payload: address
     }
 }
 
@@ -94,10 +94,10 @@ export const addBillingThunk = (newBilling) => async (dispatch) => {
     }
 }
 
-export const editBilling = (billingAddress) => {
+export const editBilling = (address) => {
     return {
         type: EDIT_BILLING,
-        payload: billingAddress
+        payload: address
     }
 }
 
@@ -122,10 +122,10 @@ export const editBillingThunk = (billingId, editBilling) => async (dispatch) => 
     }
 }
 
-export const deleteBilling = (billingAddress) => {
+export const deleteBilling = (address) => {
     return {
         type: DELETE_BILLING,
-        payload: billingAddress
+        payload: address
     }
 }
 
@@ -160,18 +160,18 @@ const billingReducer = (state = initialBilling, action) => {
         case LOAD_BILLING:
             return action.payload.data
         case LOAD_BILLINGS:
-            const billingAddresses = {}
+            const addresses = {}
 
             if (!action.payload.data) {
-                return billingAddresses
+                return addresses
             }
 
             for (let i = 0; i < action.payload.data.length; i++) {
                 let curr = action.payload.data[i]
-                billingAddresses[curr.id] = curr
+                addresses[curr.id] = curr
             }
 
-            return billingAddresses
+            return addresses
         case ADD_BILLING:
             newState[action.payload.id] = action.payload
             return newState;
