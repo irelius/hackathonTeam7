@@ -42,16 +42,17 @@
     border: none;
     color: rgb(77, 77, 77);
     background-color: transparent;
-    font-size: 17px;
+    font-size: 12px;
     cursor: pointer;
     width: 100%;
-    padding: 10px ;
+    padding: 5px 10px;
     background-color: transparent;
     transition: background-color .3s ease;
+    margin: 0 5px;
 }
 
 .nav-btn:hover {
-    background-color: rgba(240, 240, 240, 0.974);
+    background-color: rgba(208, 208, 208, 0.974);
 }
 
 .nav-btn.active {

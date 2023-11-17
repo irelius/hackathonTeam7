@@ -1,6 +1,7 @@
 .form-container {
-    z-index: 1;
+    /* z-index: 1; */
     position: absolute;
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -11,13 +12,14 @@
     background: rgba(255, 255, 255, 0.6);
     /* Semi-transparent white background for the blur effect */
     border-radius: 10px;
+    
 }
 
 .form-container.login {
-    position: absolute;
+    /* position: absolute;
     bottom: 450px;
     left: 39%;
-    width: 400px;
+    width: 400px; */
 }
 
 .form-container h1,
@@ -63,8 +65,9 @@ hr {
 .field input {
     border: 1px solid #acacac;
     border-radius: 5px;
-    padding: 7px 7px;
+    padding: 12px 7px;
     margin: 0 10px;
+    font-size: 15px;
 }
 
 .form p {
@@ -84,10 +87,10 @@ hr {
     /* background-color: transparent; */
     border: none;
     width: 81%;
-    padding: 11px 10px;
+    padding: 15px 10px;
     margin: 10px 0;
-    border-radius: 10px;
-    background-color: black;
+    border-radius: 30px;
+    background-color: #333333;
     color: white;
     cursor: pointer;
     transition: transform 0.2s ease;
