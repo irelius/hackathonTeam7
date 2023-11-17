@@ -65,8 +65,9 @@ hr {
 .field input {
     border: 1px solid #acacac;
     border-radius: 5px;
-    padding: 7px 7px;
+    padding: 12px 7px;
     margin: 0 10px;
+    font-size: 15px;
 }
 
 .form p {
@@ -86,10 +87,10 @@ hr {
     /* background-color: transparent; */
     border: none;
     width: 81%;
-    padding: 11px 10px;
+    padding: 15px 10px;
     margin: 10px 0;
-    border-radius: 10px;
-    background-color: black;
+    border-radius: 30px;
+    background-color: #333333;
     color: white;
     cursor: pointer;
     transition: transform 0.2s ease;

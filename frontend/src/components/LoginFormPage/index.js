@@ -80,7 +80,7 @@ function LoginFormPage() {
               {errors.credential && <p>{errors.credential}</p>}
             </div>
             <button type="submit" className="submit-button">
-              Log In
+              Login
             </button>
             <hr></hr>
             <div>

@@ -25,12 +25,14 @@ function Navigation({ isLoaded }) {
             src="../../../assets/logo2.png"
             alt="Logo"
           ></img>
-          <h3>3DEA</h3>
+          {/* <h3>3DEA</h3> */}
         </NavLink>
         <button className="nav-btn">Shop</button>
         <button className="nav-btn">About Us</button>
         <button className="nav-btn">Showroom</button>
         <button className="nav-btn">Menu</button>
+      </div>
+      <div>
       </div>
       {/* <li id="test">
         <button onClick={toggleSidebar} className="toggle">
@@ -60,10 +62,10 @@ function Navigation({ isLoaded }) {
       {baseLinks}
       <li>
         <NavLink to="/signup">
-          <button className="auth-btn signup">Sign Up</button>
+          <button className="auth-btn">Sign Up</button>
         </NavLink>
         <NavLink to="/login">
-          <button className="auth-btn">Log In</button>
+          <button className="auth-btn main">Login</button>
         </NavLink>
       </li>
     </>

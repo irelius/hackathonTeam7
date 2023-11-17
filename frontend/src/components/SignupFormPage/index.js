@@ -158,20 +158,19 @@ function SignupFormPage() {
               </NavLink>
             </p>
             <p>
-              Demo
               <button
                 type="button"
                 className="demo-button"
                 onClick={handleAdmin}
               >
-                Admin
+                Demo Admin
               </button>
               <button
                 type="button"
                 className="demo-button"
                 onClick={handleCustomer}
               >
-                Customer
+                Demo Customer
               </button>
             </p>
           </div>
