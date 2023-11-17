@@ -12,7 +12,9 @@ const { isAdmin } = require('../../utils/authorization');
 // Get all discounts
 router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const discounts = await Discount.findAll()
+        const discounts = await Discount.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
         res.json({ data: discounts })
     } catch (err) {
         return internalServerError(res, err)
@@ -36,11 +38,11 @@ router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
 // Create a new discount
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const { codeName, applicableCategory, discountType, discountValue, expirationDate } = req.body
+        const { discountName, applicableCategory, discountType, discountValue, expirationDate } = req.body
 
         const newDiscount = await Discount.create({
-            codeName: codeName,
             applicableCategory: applicableCategory,
+            discountName: discountName,
             discountType: discountType,
             discountValue: discountValue,
             expirationDate: expirationDate
@@ -60,8 +62,8 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
             return notFoundError(res, "Discount")
         }
 
-        discountToEdit.codeName = req.body.codeName || discountToEdit.codeName
-        discountToEdit.applicableCategory = req.body.applicableCategory || discountToEdit.codeName
+        discountToEdit.applicableCategory = req.body.applicableCategory || discountToEdit.applicableCategory
+        discountToEdit.discountName = req.body.discountName || discountToEdit.discountName
         discountToEdit.discountType = req.body.discountType || discountToEdit.discountType
         discountToEdit.discountValue = req.body.discountValue || discountToEdit.discountValue
         discountToEdit.expirationDate = req.body.expirationDate || discountToEdit.expirationDate

@@ -67,11 +67,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-
-  // // Calculate and assign the totalAmount separately
-  // Order.beforeCreate((order, options) => {
-  //   order.totalAmount = order.productQuantity * order.pricePerUnit;
-  // });
-
   return Order;
 };

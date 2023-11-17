@@ -1,9 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-const { check } = require('express-validator');
-
-const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
+const { requireAuth, restoreUser } = require('../../utils/auth');
 const { User, Order } = require("../../db/models");
 const { internalServerError, notFoundError, notAuthToView, notAuthToDelete } = require('../../utils/errorFunc');
 const { isAdmin, checkUser, forbidden } = require('../../utils/authorization');
@@ -22,16 +20,21 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
 })
 
 // get all orders made by a user
-router.get("/user/:userId", restoreUser, requireAuth, isAdmin, async (req, res) => {
+router.get("/user/:userId", restoreUser, requireAuth, async (req, res) => {
     try {
         const orders = await Order.findAll({
             where: {
                 userId: req.params.userId
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         })
 
-        if (!orders.length) {
+        if (!orders) {
             return notFoundError(res, "Orders")
+        }
+
+        if (orders.userId !== req.user.id && req.user.id !== 1) {
+            return notAuthToDelete(res, "order")
         }
 
         res.json({ data: orders })
@@ -41,15 +44,16 @@ router.get("/user/:userId", restoreUser, requireAuth, isAdmin, async (req, res) 
 })
 
 // get all orders made by current user
-router.get("/current", restoreUser, requireAuth, async (req, res) => {
+router.get("/current", restoreUser, requireAuth, checkUser, async (req, res) => {
     try {
         const orders = await Order.findAll({
             where: {
                 userId: req.user.id
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         })
 
-        if (!orders.length) {
+        if (!orders) {
             return notFoundError(res, "Orders")
         }
 
@@ -85,7 +89,8 @@ router.get("/date/:dateString", restoreUser, requireAuth, isAdmin, async (req, r
         const orders = await Order.findAll({
             where: {
                 orderDate: req.params.dateString
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         });
         if (!orders.length) {
             return notFoundError(res, "Orders");

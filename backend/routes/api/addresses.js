@@ -10,7 +10,9 @@ const { isAdmin, checkUser, forbidden, authAddress } = require('../../utils/auth
 // Get all addresses
 router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const addresses = await Address.findAll();
+        const addresses = await Address.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        });
         res.json({ data: addresses });
     } catch (err) {
         return internalServerError(res, err);
@@ -23,7 +25,8 @@ router.get("/all/billing", restoreUser, requireAuth, isAdmin, async (req, res) =
         const addresses = await Address.findAll({
             where: {
                 type: "billing"
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         });
         res.json({ data: addresses });
     } catch (err) {
@@ -38,7 +41,8 @@ router.get("/all/shipping", restoreUser, requireAuth, isAdmin, async (req, res) 
         const addresses = await Address.findAll({
             where: {
                 type: "shipping"
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         });
         res.json({ data: addresses });
     } catch (err) {
@@ -66,7 +70,8 @@ router.get("/billing/user/:userId", restoreUser, requireAuth, checkUser, async (
             where: {
                 userId: req.params.userId,
                 type: "billing"
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         });
 
         if (!address.length) {
@@ -86,7 +91,8 @@ router.get("/shipping/user/:userId", restoreUser, requireAuth, checkUser, async 
             where: {
                 userId: req.params.userId,
                 type: "shipping"
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         });
 
         if (!address.length) {

@@ -12,7 +12,9 @@ const { notFoundError, notAuthToEdit, notAuthToDelete, internalServerError } = r
 // get all the carts
 router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const carts = await Cart.findAll()
+        const carts = await Cart.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
         res.json({ data: carts })
     } catch (err) {
         return internalServerError(res, err)
@@ -25,7 +27,8 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
         const cart = await Cart.findAll({
             where: {
                 userId: req.user.id
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         })
 
         if (!cart) {
