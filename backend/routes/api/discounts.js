@@ -21,10 +21,15 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     }
 })
 
-// get a discount by id
-router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
+// get a discount by discountNmae
+router.get("/:discountName", restoreUser, requireAuth, async (req, res, next) => {
     try {
-        const discount = await Discount.findByPk(req.params.discountId)
+        const discount = await Discount.findOne({
+            where: {
+                discountName: req.params.discountName
+            }
+        })
+
         if (!discount) {
             return notFoundError(res, "Discount")
         }
@@ -34,6 +39,7 @@ router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
         return internalServerError(res, err)
     }
 })
+
 
 // Create a new discount
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {

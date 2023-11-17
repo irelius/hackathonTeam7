@@ -26,7 +26,7 @@ module.exports = {
         expirationDate: new Date("2023-12-31")
       },
       {
-        applicableCategory: "Furniture",
+        applicableCategory: "Desk",
         discountName: "SUMMER30",
         discountType: "percent",
         discountValue: 30,

@@ -1,5 +1,4 @@
-"use strict";
-
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 
 let options = {};
@@ -9,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("ProductCategories", {
+    await queryInterface.createTable('DiscountCategories', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,29 +24,27 @@ module.exports = {
         },
         onDelete: 'NO ACTION',
       },
-      productId: {
+      discountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Products',
-          key: 'id',
+          model: "Discounts",
+          key: "id"
         },
-        onDelete: 'NO ACTION',
+        onDelete: "NO ACTION"
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        type: Sequelize.DATE
       }
     }, options);
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "ProductCategories";
+    options.tableName = "DiscountCategories";
     return queryInterface.dropTable(options);
   }
 };

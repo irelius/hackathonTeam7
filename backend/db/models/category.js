@@ -9,11 +9,20 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "categoryId",
         onDelete: "NO ACTION"
       })
+      Category.belongsToMany(models.Discount, {
+        through: models.DiscountCategory,
+        foreignKey: "categoryId",
+        onDelete: "NO ACTION"
+      })
 
       Category.hasMany(models.ProductCategory, {
         foreignKey: "categoryId",
         onDelete: "CASCADE",
       });
+      Category.hasMany(models.DiscountCategory, {
+        foreignKey: "categoryId",
+        onDelete: "CASCADE"
+      })
     }
   }
   Category.init({
