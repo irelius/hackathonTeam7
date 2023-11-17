@@ -44,7 +44,7 @@ router.get("/user/:userId", restoreUser, requireAuth, async (req, res) => {
 })
 
 // get all orders made by current user
-router.get("/current", restoreUser, requireAuth, checkUser, async (req, res) => {
+router.get("/current", restoreUser, requireAuth, async (req, res) => {
     try {
         const orders = await Order.findAll({
             where: {
@@ -72,11 +72,11 @@ router.get('/:orderId', restoreUser, requireAuth, async (req, res) => {
             return notFoundError(res, "Order")
         }
 
-        if (order.userId !== req.user.id && res.user.id !== 1) {
+        if (order.userId !== req.user.id && req.user.id !== 1) {
             return notAuthToView(res, "order")
         }
 
-        res.json({ data: order })
+        return res.json({ data: order })
     } catch (err) {
         return internalServerError(res, err)
     }
