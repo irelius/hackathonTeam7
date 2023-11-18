@@ -11,7 +11,7 @@ function LandingPage() {
             <p>Experience the epitome of elegance and comfort.</p>
           </div>
           <div className="header-btn">
-            <NavLink to="/shop">
+            <NavLink to="/all">
               <button className="auth-btn main">Shop Now</button>
             </NavLink>
             {/* <button>Learn More</button> */}

@@ -15,6 +15,7 @@ export default function ProductsPage() {
   const productObj = useSelector((state) => state.product);
   const products = Object.values(productObj);
 
+
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 9;
   const totalPageCount = Math.ceil(products.length / productsPerPage);
@@ -38,8 +39,8 @@ export default function ProductsPage() {
 
   return (
     <>
-      <div className="container">
-        <h1>All Products</h1>
+      <div className="product-container">
+        <h1>Products</h1>
         <div className="product-grid">
           {displayedProducts.map((product) => (
             <div className="product-cell" key={product.id}>
@@ -77,3 +78,4 @@ export default function ProductsPage() {
     </>
   );
 }
+
