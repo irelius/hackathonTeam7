@@ -65,7 +65,7 @@ router.get('/:cartId', restoreUser, requireAuth, async (req, res) => {
 
 // create a new product cart item
 router.post("/", restoreUser, requireAuth, async (req, res) => {
-    let { productId, quantity } = req.body
+    let { productId, productQuantity } = req.body
 
 
     try {
@@ -85,7 +85,7 @@ router.post("/", restoreUser, requireAuth, async (req, res) => {
             userId: req.user.id,
             cartId: cart.id,
             productId: productId,
-            quantity: quantity,
+            productQuantity: productQuantity,
             pricePerUnit: product.productPrice
         })
 

@@ -68,7 +68,7 @@ function StripePaymentSuccess() {
                 productId: curr.id,
                 productName: allProducts[curr.id]["productName"],
                 productDescription: allProducts[curr.id]["productDescription"],
-                quantity: curr.quantity,
+                productQuantity: curr.productQuantity,
                 pricePerUnit: curr.pricePerUnit,
             };
 

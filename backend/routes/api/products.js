@@ -13,7 +13,9 @@ const { isAdmin } = require('../../utils/authorization');
 // Get all products
 router.get("/all", async (req, res) => {
     try {
-        const products = await Product.findAll()
+        const products = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
         res.json({ data: products })
     } catch (err) {
         return internalServerError(res, err)
@@ -21,9 +23,11 @@ router.get("/all", async (req, res) => {
 })
 
 // Get a product by id
-router.get("/:productId", async (req, res) => {
+router.get("/id/:productId", async (req, res) => {
     try {
-        const product = await Product.findByPk(req.params.productId)
+        const product = await Product.findByPk(req.params.productId, {
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
         if (!product) {
             return notFoundError(res, "Product")
         }
@@ -34,12 +38,20 @@ router.get("/:productId", async (req, res) => {
 })
 
 
-
-
 // Get a product by name
-router.get("/:productName", async (req, res) => {
+router.get("/name/:productName", async (req, res) => {
     let { productName } = req.params
-    if (productName.includes('%20')) productName = productName.split('%20').join(' ')
+
+    // takes the value passed in parameter. If name of product isn't capitalized properly, capitalize it for query
+    productName = productName.split("-")
+    for (let i = 0; i < productName.length; i++) {
+        let curr = productName[i].split('')
+        curr[0] = curr[0].toUpperCase()
+        productName[i] = curr.join("")
+    }
+    productName = productName.join(" ") // join productName array by a space
+
+
     try {
         const product = await Product.findOne({
             where: {
@@ -57,9 +69,9 @@ router.get("/:productName", async (req, res) => {
 
 
 // Get a product by category and by filter type
-    //'or' will, if given multiple categories, return all products of ANY of the categories
-    //'and' will, if given multiple categories, return all products of ALL of the categories
-    //'none' will, if given multiple categories, return all products of NON of the categories
+//'or' will, if given multiple categories, return all products of ANY of the categories
+//'and' will, if given multiple categories, return all products of ALL of the categories
+//'none' will, if given multiple categories, return all products of NON of the categories
 // example url for testing: http://localhost:8000/api/product/filter?categories=Black,Indoor&type=or
 router.get("/filter", async (req, res) => {
     try {
@@ -76,8 +88,7 @@ router.get("/filter", async (req, res) => {
             type = req.query.type
         }
 
-        // filter for "or"
-        if (type === "or") {
+        if (type === "or") { // filter for "or"
             const products = await Product.findAll({
                 include: [
                     {
@@ -97,19 +108,20 @@ router.get("/filter", async (req, res) => {
 
             res.json({ data: products });
 
-            // filter for "none"
-        } else if (type === "none") {
+        } else if (type === "none") { // filter for "none"
             // return res.json(products)
             const productIds = await Product.findAll({
                 attributes: ['id'],
-                include: {
-                    model: Category,
-                    where: {
-                        categoryName: categoryNames,
-                    },
-                    attributes: [],
-                    through: { attributes: [] },
-                },
+                include: [
+                    {
+                        model: Category,
+                        where: {
+                            categoryName: categoryNames,
+                        },
+                        attributes: [],
+                        through: { attributes: [] },
+                    }
+                ],
                 raw: true,
             });
 
@@ -121,16 +133,19 @@ router.get("/filter", async (req, res) => {
                         [Op.notIn]: excludedProductIds,
                     },
                 },
-                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                attributes: {
+                    include: ["id"],
+                    exclude: ['createdAt', 'updatedAt']
+                  },
                 include: {
                     model: Category,
+                    attributes: { exclude: ['createdAt', 'updatedAt'] },
                     through: { attributes: [] }, // Removes ProductCategory as it is redundant information
                 },
             });
             res.json({ data: products })
 
-            // return for "and"
-        } else if (type === "and") {
+        } else if (type === "and") { // return for "and"
             const categoryIds = await Category.findAll({
                 where: {
                     categoryName: categoryNames,
@@ -164,14 +179,14 @@ router.get("/filter", async (req, res) => {
 
 // create a new product to list
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
-    const { productName, productDescription, productPrice, quantity } = req.body
+    const { productName, productDescription, productPrice, productQuantity } = req.body
 
     try {
         const newProduct = await Product.create({
             productName: productName,
             productDescription: productDescription,
             productPrice: productPrice,
-            quantity: quantity
+            productQuantity: productQuantity
         })
 
         res.status(201).json({ data: newProduct })

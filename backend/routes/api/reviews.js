@@ -10,7 +10,7 @@ const { checkUser } = require('../../utils/authorization');
 
 
 // Get all reviews
-router.get("/all", async (req, res) => {
+router.get("/all", restoreUser, requireAuth, async (req, res) => {
     try {
         const reviews = await Review.findAll()
         res.json({ data: reviews })
@@ -20,7 +20,7 @@ router.get("/all", async (req, res) => {
 })
 
 // Get a review by id
-router.get("/:reviewId", async (req, res) => {
+router.get("/:reviewId", restoreUser, requireAuth, async (req, res) => {
     try {
         const review = await Review.findByPk(req.params.reviewId)
         if (!review) {
@@ -32,8 +32,23 @@ router.get("/:reviewId", async (req, res) => {
     }
 })
 
+// Get all reviews made to a particular product
+router.get("/product/:productId",  restoreUser, requireAuth, async (req, res) => {
+    try {
+        const reviews = await Review.findAll({
+            where: {
+                productId: req.params.productId
+            }
+        })
+
+        res.json({ data: reviews })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
 // get a user's review for a product
-router.get("/product/:productId/user/:userId", async (req, res) => {
+router.get("/product/:productId/user/:userId",  restoreUser, requireAuth, async (req, res) => {
     try {
         const review = await Review.findAll({
             where: {
@@ -52,24 +67,8 @@ router.get("/product/:productId/user/:userId", async (req, res) => {
     }
 })
 
-// Get all reviews made to a particular product
-router.get("/product/:productId", async (req, res) => {
-    try {
-        const reviews = await Review.findAll({
-            where: {
-                productId: req.params.productId
-            }
-        })
-
-        res.json({ data: reviews })
-    } catch (err) {
-        return internalServerError(res, err)
-    }
-})
-
-
 // Get all reviews made by a user
-router.get('/user/:userId', async (req, res) => {
+router.get('/user/:userId',  restoreUser, requireAuth, async (req, res) => {
     try {
         const reviews = await Review.findAll({
             where: {
@@ -122,7 +121,7 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
 
 
 // update a product's review
-router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
+router.put("/:reviewId", restoreUser, requireAuth, checkUser, async (req, res) => {
     const userId = req.user.id
     const { review, rating } = req.body;
 
@@ -134,7 +133,7 @@ router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
             return notFoundError(res, "Review")
         }
 
-        if(reviewToEdit.userId !== userId) {
+        if (reviewToEdit.userId !== userId) {
             return notAuthToEdit(res, "review")
         }
 
@@ -150,7 +149,7 @@ router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
 
 
 // delete a review for a product
-router.delete("/:reviewId", restoreUser, requireAuth, async (req, res) => {
+router.delete("/:reviewId", restoreUser, requireAuth, checkUser, async (req, res) => {
     try {
         const review = await Review.findByPk(req.params.reviewId)
         if (!review) {

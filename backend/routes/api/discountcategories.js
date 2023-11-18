@@ -18,11 +18,11 @@ router.get('/all', restoreUser, requireAuth, isAdmin, async (req, res) => {
             include: [
                 {
                     model: Discount,
-                    attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
                 },
                 {
                     model: Category,
-                    attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+                    attributes: { exclude: ["createdAt", "updatedAt"] },
                 }
             ]
         })
