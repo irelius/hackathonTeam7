@@ -1,0 +1,10 @@
+.landing-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.landing {
+    width: 50%;
+    padding: 10px 50px;
+}

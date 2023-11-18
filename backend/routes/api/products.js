@@ -20,6 +20,21 @@ router.get("/all", async (req, res) => {
     }
 })
 
+// Get a product by id
+router.get("/:productId", async (req, res) => {
+    try {
+        const product = await Product.findByPk(req.params.productId)
+        if (!product) {
+            return notFoundError(res, "Product")
+        }
+        res.json({ data: product })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
+
 
 // Get a product by name
 router.get("/:productName", async (req, res) => {

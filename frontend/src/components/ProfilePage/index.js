@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  loadAllBillingsThunk,
-  loadOneBillingThunk,
-  loadUserBillingsThunk,
-} from "../../store/billingaddress";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import AdminDashboard from "../AdminDashboard";
+import CustomerDashboard from "../CustomerDashboard";
 import "./ProfilePage.css";
-import { loadUserReviewsThunk } from "../../store/review";
-import { loadAllProductsThunk } from "../../store/product";
 
 function ProfilePage() {
-  const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+<<<<<<< HEAD
   const billingObj = useSelector((state) => state.address);
   const reviewsObj = useSelector((state) => state.review);
   const reviews = Object.values(reviewsObj);
@@ -51,6 +45,9 @@ function ProfilePage() {
     }
     return stars;
   };
+=======
+  const isAdmin = sessionUser?.id === 1;
+>>>>>>> a29a2ddab7e552179f289a405c9ad9a2d383ec6a
 
   if (!sessionUser) {
     return <Redirect to="/login" />;
@@ -58,6 +55,7 @@ function ProfilePage() {
 
   return (
     <>
+<<<<<<< HEAD
       <div className={`container profile ${reviews.length > 0 ? 'reviews-present' : ''}`}>
         <div className="profile header">
           <h1>
@@ -128,6 +126,14 @@ function ProfilePage() {
             <></>
           )}
         </div>
+=======
+      <div>
+        {isAdmin ? (
+          <AdminDashboard />
+        ) : (
+          <CustomerDashboard />
+        )}
+>>>>>>> a29a2ddab7e552179f289a405c9ad9a2d383ec6a
       </div>
     </>
   );

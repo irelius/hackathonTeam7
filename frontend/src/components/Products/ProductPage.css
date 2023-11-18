@@ -1,15 +1,10 @@
 .product-container {
-    position: absolute;
-    top: 10%;
-    left: 25%;
-    z-index: 1;
     backdrop-filter: blur(10px); /* Apply a blur effect to the background */
     background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background for the blur effect */
     border-radius: 10px;
     /* text-align: center; */
-    width: 55vw; /* Set your desired maximum width */
-    margin: 0 auto; /* Center the grid horizontally */
- 
+    width: 100%; /* Set your desired maximum width */
+    height: 100%;
 }
 
 .product-container h1 {

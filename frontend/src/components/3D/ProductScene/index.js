@@ -1,10 +1,10 @@
 import { Gltf, PresentationControls, Html } from "@react-three/drei";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as productActions from "../../store/product";
-import * as cartActions from "../../store/productcart";
+import * as productActions from "../../../store/product";
+import * as cartActions from "../../../store/productcart";
 import "./index.css";
-import { addReviewThunk } from "../../store/review";
+import { addReviewThunk } from "../../../store/review";
 
 export default function ProductScene({ product }) {
   const dispatch = useDispatch();

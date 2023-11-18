@@ -36,6 +36,8 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  const profileLink = user.id === 1 ? "/admin/dashboard" : "/profile";
+
   return (
     <>
       <button onClick={openMenu} className="user-icon">
@@ -50,7 +52,7 @@ function ProfileButton({ user }) {
             </li> */}
             {/* <li className="profile-info">{user.email}</li> */}
 
-            <NavLink to="/profile">
+            <NavLink to={profileLink}>
               <button className="user-btn">Profile</button>
             </NavLink>
 

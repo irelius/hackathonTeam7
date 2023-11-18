@@ -1,14 +1,13 @@
 #nav {
-    position: absolute;
-    z-index: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 5px;
-    width: 100%;
+    /* width: 100%; */
 
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.314);
+
+    margin: 10px 20px;
 }
 
 li {
@@ -59,12 +58,17 @@ li {
 
 @keyframes rotateGradient {
     0% {
-        box-shadow: 0 0 0 1px pink, 0 0 0 1px purple;
+        box-shadow: 0 0 0 1px rgb(255, 255, 255), 0 0 0 1px rgb(143, 143, 143)
     }
 
     100% {
-        box-shadow: 0 0 0 1px purple, 0 0 0 1px pink;
+        box-shadow: 0 0 0 1px rgb(132, 132, 132), 0 0 0 1px rgb(155, 155, 155);
     }
+}
+
+.auth-btn.main {
+    color: #F2F2F2;
+    background-color: #333333 ;
 }
 
 
@@ -141,4 +145,20 @@ li {
     width: 100%;
 
     background-color: orange;
+}
+
+.logo-header {
+    display: flex;
+}
+
+.home-link {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+
+.logo {
+    width: 60px;
+    height: 50px;
 }
