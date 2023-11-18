@@ -27,13 +27,14 @@ function Navigation({ isLoaded }) {
           ></img>
           {/* <h3>3DEA</h3> */}
         </NavLink>
-        <button className="nav-btn">Shop</button>
+        <NavLink to="/all">
+          <button className="nav-btn">Shop</button>
+        </NavLink>
         <button className="nav-btn">About Us</button>
         <button className="nav-btn">Showroom</button>
         <button className="nav-btn">Menu</button>
       </div>
-      <div>
-      </div>
+      <div></div>
       {/* <li id="test">
         <button onClick={toggleSidebar} className="toggle">
           <i className="bx bx-menu"></i>

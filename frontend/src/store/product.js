@@ -195,18 +195,15 @@ const productReducer = (state = initialProduct, action) => {
         case LOAD_PRODUCT:
             return action.payload.data
         case LOAD_PRODUCTS:
-            const product = {}
-
             if (!action.payload.data) {
-                return product
+              return newState;
             }
-
-            for (let i = 0; i < action.payload.data.length; i++) {
-                let curr = action.payload.data[i]
-                product[curr.id] = curr
-            }
-
-            return {...newState, all: {...product}}
+      
+            action.payload.data.forEach((item) => {
+              newState[item.id] = item;
+            });
+      
+            return newState;
         case ADD_PRODUCT:
             newState[action.payload.id] = action.payload
             return newState;

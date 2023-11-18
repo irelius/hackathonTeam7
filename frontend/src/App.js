@@ -14,6 +14,10 @@ import PaymentSuccess from "./components/StripePayment/PaymentSuccess";
 import PaymentCancel from "./components/StripePayment/PaymentCancel";
 import ProfilePage from "./components/ProfilePage";
 import LandingPage from "./components/LandingPage";
+import AdminDashboard from "./components/AdminDashboard";
+import CustomerDashboard from "./components/CustomerDashboard";
+import ProductsPage from "./components/Products";
+import SingleProductPage from "./components/Products/SingleProductPage";
 
 // import Homespace from "./components/HomeSpace";
 
@@ -48,15 +52,27 @@ function App() {
           <Route path="/login">
             <LoginFormPage />
           </Route>
-          <Route path="/reviews">
+          <Route path="/admin">
+          <AdminDashboard />
+          </Route>
+          <Route path="/profile">
+            <CustomerDashboard />
+          </Route>
+          <Route path="/all">
+            <ProductsPage />
+          </Route>
+          <Route path="/products/:id">
+            <SingleProductPage />
+          </Route>
+          {/* <Route path="/reviews">
             <ReviewPage />
           </Route>
           <Route path="/orders">
             <OrderPage />
-          </Route>
-          <Route path="/profile">
+          </Route> */}
+          {/* <Route path="/profile">
             <ProfilePage />
-          </Route>
+          </Route> */}
           <Route path="/cart">
             <CartPage />
           </Route>
