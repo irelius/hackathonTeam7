@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
+const { Op } = require('sequelize');
 const { requireAuth, restoreUser } = require('../../utils/auth');
 const { User, Order } = require("../../db/models");
 const { internalServerError, notFoundError, notAuthToView, notAuthToDelete } = require('../../utils/errorFunc');
@@ -11,7 +12,7 @@ const { isAdmin, checkUser, forbidden } = require('../../utils/authorization');
 router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const orders = await Order.findAll({
-            attributes: { exclude: ["createdAt", "updatedAt"] }
+            attributes: { exclude: ["updatedAt"] }
         })
         res.json({ data: orders })
     } catch (err) {
@@ -26,7 +27,7 @@ router.get("/user/:userId", restoreUser, requireAuth, async (req, res) => {
             where: {
                 userId: req.params.userId
             },
-            attributes: { exclude: ["createdAt", "updatedAt"] }
+            attributes: { exclude: ["updatedAt"] }
         })
 
         if (!orders) {
@@ -50,7 +51,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res) => {
             where: {
                 userId: req.user.id
             },
-            attributes: { exclude: ["createdAt", "updatedAt"] }
+            attributes: { exclude: ["updatedAt"] }
         })
 
         if (!orders) {
@@ -84,31 +85,33 @@ router.get('/:orderId', restoreUser, requireAuth, async (req, res) => {
 
 
 // get all orders made on a particular date
-router.get("/date/:dateString", restoreUser, requireAuth, isAdmin, async (req, res, next) => {
+router.get("/date/:dateString", restoreUser, requireAuth, checkUser, async (req, res, next) => {
+    const startDate = new Date(req.params.dateString);
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 1);
+
     try {
         const orders = await Order.findAll({
             where: {
-                orderDate: req.params.dateString
+                createdAt: {
+                    [Op.between]: [startDate.toISOString(), endDate.toISOString()],
+                },
             },
-            attributes: { exclude: ["createdAt", "updatedAt"] }
+            attributes: { exclude: ["updatedAt"] },
         });
-        if (!orders.length) {
+
+        if (!orders || orders.length === 0) {
             return notFoundError(res, "Orders");
         }
 
-        // Handle the case where orders are found
-        if (orders.userId === req.user.id || req.user.id === 1) {
-            return res.json({ data: orders });
-        }
-
-        return res.status(403).json({ message: "You are not authorized to see this information." })
+        return res.json({ data: orders });
     } catch (err) {
         return internalServerError(res, err);
     }
 });
 
 router.post("/", restoreUser, requireAuth, async (req, res) => {
-    let { cartId, productId, productName, productDescription, quantity, pricePerUnit } = req.body
+    let { cartId, productId, productName, productDescription, productQuantity, pricePerUnit } = req.body
 
     try {
         const newOrder = await Order.create({
@@ -117,7 +120,7 @@ router.post("/", restoreUser, requireAuth, async (req, res) => {
             productId: productId,
             productName: productName,
             productDescription: productDescription,
-            quantity: quantity,
+            productQuantity: productQuantity,
             pricePerUnit: pricePerUnit,
         })
 

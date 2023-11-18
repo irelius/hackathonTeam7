@@ -11,12 +11,55 @@ const { route } = require('./products');
 
 
 // get all discount categories
-router.get('/all', async(req, res) => {
+router.get('/all', restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const discountCategories = await DiscountCategory.findAll({
-            attributes: { exclude: ["createdAt", "updatedAt"] }
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            include: [
+                {
+                    model: Discount,
+                    attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+                },
+                {
+                    model: Category,
+                    attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+                }
+            ]
         })
         res.json({ data: discountCategories })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
+// create a discountcategory
+router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
+    try {
+        const { discountId, categoryId } = req.body
+
+        const newDiscountCategory = await DiscountCategory.create({
+            discountId: discountId,
+            categoryId: categoryId
+        })
+
+        res.status(201).json({ data: newDiscountCategory })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
+// delete a discountcategory
+router.delete("/:discountCategoryId", restoreUser, requireAuth, isAdmin, async (req, res) => {
+    try {
+        const discountCategoryToDelete = await DiscountCategory.findByPk(req.params.discountCategoryId)
+        if (!discountCategoryToDelete) {
+            return notFoundError(res, "Discount Category")
+        }
+
+        await discountCategoryToDelete.destroy()
+        res.status(200).json({ message: "Discount Category successfully deleted", statusCode: 200 })
     } catch (err) {
         return internalServerError(res, err)
     }

@@ -43,10 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    orderDate: {
-      type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW,
-    },
     status: {
       type: DataTypes.STRING,
       defaultValue: "processing"

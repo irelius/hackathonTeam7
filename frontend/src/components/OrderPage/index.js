@@ -66,7 +66,7 @@ function OrderPage() {
           <div className="order-card" key={order._id}>
             <div className="order-info">
               <div className="order-table-cell">{order.cartId}</div>
-              <div className="order-table-cell">{formatDate(order.orderDate)}</div>
+              <div className="order-table-cell">{formatDate(order.createdAt)}</div>
               <div className="order-table-cell" id="order-name">{order.productName}</div>
               <div className="order-table-cell">{order.quantity}</div>
               <div className="order-table-cell">${order.pricePerUnit / 100}</div>

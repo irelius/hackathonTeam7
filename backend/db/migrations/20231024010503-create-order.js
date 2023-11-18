@@ -29,11 +29,11 @@ module.exports = {
       productId: {
         type: Sequelize.INTEGER,
       },
-      productName:{
+      productName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      productDescription:{
+      productDescription: {
         type: Sequelize.TEXT,
         allowNull: false,
       },
@@ -41,13 +41,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      pricePerUnit:{
+      pricePerUnit: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      orderDate: {
-        type: Sequelize.DATEONLY,
-        defaultValue: Sequelize.NOW
       },
       status: {
         type: Sequelize.STRING,
