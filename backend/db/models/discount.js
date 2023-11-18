@@ -24,10 +24,6 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             allowNull: false
         },
-        applicableCategory: {
-            type: DataTypes.STRING,
-            defaultValue: "All"
-        },
         discountName: {
             type: DataTypes.STRING,
             allowNull: false
