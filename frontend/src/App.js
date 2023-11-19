@@ -18,6 +18,7 @@ import AdminDashboard from "./components/AdminDashboard";
 import CustomerDashboard from "./components/CustomerDashboard";
 import ProductsPage from "./components/Products";
 import SingleProductPage from "./components/Products/SingleProductPage";
+import TestSam from "./components/TestSam/TestSam";
 
 // import Homespace from "./components/HomeSpace";
 
@@ -53,7 +54,7 @@ function App() {
             <LoginFormPage />
           </Route>
           <Route path="/admin">
-          <AdminDashboard />
+            <AdminDashboard />
           </Route>
           <Route path="/profile">
             <CustomerDashboard />
@@ -81,6 +82,10 @@ function App() {
           </Route>
           <Route path="/payment/cancel">
             <PaymentCancel />
+          </Route>
+          {/* Just a test route for my purposes */}
+          <Route path="/test">
+            <TestSam />
           </Route>
         </Switch>
       )}

@@ -2,12 +2,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
+import addressReducer from "./address";
 import productReducer from "./product";
 import productCategoryReducer from "./productcategory";
 import orderReducer from "./order";
 import reviewReducer from "./review";
-import billingReducer from "./billingaddress";
-import shippingReducer from "./shippingaddress";
 import discountReducer from "./discount";
 import productCartReducer from "./productcart"
 import cartReducer from "./cart";
@@ -20,8 +19,7 @@ const rootReducer = combineReducers({
   productCategory: productCategoryReducer,
   order: orderReducer,
   review: reviewReducer,
-  address: billingReducer,
-  shippingAddress: shippingReducer,
+  address: addressReducer,
   discount: discountReducer,
   productCart: productCartReducer,
   cart: cartReducer,

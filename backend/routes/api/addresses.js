@@ -19,8 +19,22 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     }
 });
 
+// get an address by id
+router.get("/:addressId", restoreUser, requireAuth, authAddress, async (req, res) => {
+    try {
+        const address = await Address.findByPk(req.params.addressId)
+        if (!address) {
+            return notFoundError(res, "Address")
+        }
+        res.json({ data: address })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
 // Get all billing addresses
-router.get("/all/billing", restoreUser, requireAuth, isAdmin, async (req, res) => {
+router.get("/billing/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const addresses = await Address.findAll({
             where: {
@@ -36,7 +50,7 @@ router.get("/all/billing", restoreUser, requireAuth, isAdmin, async (req, res) =
 
 
 // Get all shipping addresses
-router.get("/all/shipping", restoreUser, requireAuth, isAdmin, async (req, res) => {
+router.get("/shipping/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const addresses = await Address.findAll({
             where: {
@@ -50,18 +64,48 @@ router.get("/all/shipping", restoreUser, requireAuth, isAdmin, async (req, res) 
     }
 });
 
-// get an address by id
-router.get("/:addressId", restoreUser, requireAuth, authAddress, async (req, res) => {
+// Get a billing address of current user
+router.get("/billing/user/current", restoreUser, requireAuth, async (req, res) => {
     try {
-        const address = await Address.findByPk(req.params.addressId)
-        if (!address) {
-            return notFoundError(res, "Address")
+        const address = await Address.findAll({
+            where: {
+                userId: req.user.id,
+                type: "billing"
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        });
+
+        if (!address.length) {
+            return notFoundError(res, "Billing address")
         }
-        res.json({ data: address })
+
+        res.json({ data: address });
     } catch (err) {
-        return internalServerError(res, err)
+        return internalServerError(res, err);
     }
-})
+});
+
+
+// Get a shipping address of current user
+router.get("/shipping/user/current", restoreUser, requireAuth, async (req, res) => {
+    try {
+        const address = await Address.findAll({
+            where: {
+                userId: req.user.id,
+                type: "shipping"
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        });
+
+        if (!address.length) {
+            return notFoundError(res, "Shipping address")
+        }
+
+        res.json({ data: address });
+    } catch (err) {
+        return internalServerError(res, err);
+    }
+});
 
 // Get a billing address of a user
 router.get("/billing/user/:userId", restoreUser, requireAuth, checkUser, async (req, res) => {
