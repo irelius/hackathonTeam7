@@ -2,7 +2,6 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_CART = "/cart/setCart"
 const ADD_CART = "/cart/addCart"
-const EDIT_CART = "/cart/editCart"
 const DELETE_CART = "/cart/deleteCart"
 const CLEAR_CART = "/cart/clearCart"
 
@@ -91,12 +90,20 @@ const cartReducer = (state = initialCart, action) => {
     const newState = { ...state }
     switch (action.type) {
         case LOAD_CART:
-            return action.payload.data
+            const cart = {}
+
+            if (!action.payload.data) {
+                return cart
+            }
+
+            for (let i = 0; i < action.payload.data.length; i++) {
+                let curr = action.payload.data[i]
+                cart[curr.id] = curr
+            }
+
+            return cart
         case ADD_CART:
-            newState[action.payload.id] = action.payload
-            return newState;
-        case EDIT_CART:
-            newState[action.payload.id] = action.payload;
+            newState[action.payload.data.id] = action.payload.data
             return newState;
         case DELETE_CART:
             delete newState[action.payload.id]
