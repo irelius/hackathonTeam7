@@ -7,13 +7,23 @@ function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(cartActions.loadUserCartThunk())
+        dispatch(addressActions.loadAllAddressesThunk())
     }, [])
 
-    const test = useSelector(state => state.cart)
+    const test = useSelector(state => state.address)
+    console.log(test)
 
     const handleTest = (e) => {
         e.preventDefault()
+
+        const newAddress = {
+            type: "billing",
+            firstName: "test new firstname",
+            lastName: "test new lastname",
+            address: "test new address",
+            state: "test new state",
+            zipCode: "test new zipCode"
+        }
 
         const editAddress = {
             firstName: "test edit firstname",
@@ -23,7 +33,7 @@ function TestSam() {
             zipCode: "test edit zipCode"
         }
 
-        dispatch(cartActions.deleteCartThunk(9))
+        dispatch(addressActions.editAddressThunk(9, editAddress))
 
         // dispatch(addressActions.deleteAddressThunk(9))
     }

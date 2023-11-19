@@ -181,14 +181,15 @@ export const editAddress = (address) => {
     }
 }
 
-export const editAddressThunk = (addressId, editAddress) => async (dispatch) => {
+export const editAddressThunk = (addressId, addressInfo) => async (dispatch) => {
+
     try {
         const res = await csrfFetch(`/api/address/${addressId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(editAddress)
+            body: JSON.stringify(addressInfo)
         })
 
         if (res.ok) {
@@ -253,10 +254,10 @@ const addressReducer = (state = initialAddress, action) => {
 
             return addresses
         case ADD_ADDRESS:
-            newState[action.payload.id] = action.payload
+            newState[action.payload.data.id] = action.payload.data
             return newState;
         case EDIT_ADDRESS:
-            newState[action.payload.id] = action.payload;
+            newState[action.payload.data.id] = action.payload.data;
             return newState;
         case DELETE_ADDRESS:
             delete newState[action.payload.id]
