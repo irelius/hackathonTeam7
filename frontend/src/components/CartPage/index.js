@@ -109,8 +109,6 @@ function CartPage() {
       </div>
       <div>
         {Object.values(cartItems).map((cart) => {
-          console.log(cart.id)
-
           return (
 
             <div className="cart-card" key={cart.id}>

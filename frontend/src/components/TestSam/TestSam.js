@@ -11,14 +11,9 @@ function TestSam() {
     }, [])
 
     const test = useSelector(state => state.cart)
-    console.log('booba', test)
 
     const handleTest = (e) => {
         e.preventDefault()
-
-        const newCart = {
-
-        }
 
         const editAddress = {
             firstName: "test edit firstname",
