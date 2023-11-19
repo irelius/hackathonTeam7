@@ -60,8 +60,6 @@ export const loadCurrentBillingThunk = () => async (dispatch) => {
         if (res.ok) {
             const addresses = await res.json()
 
-            console.log('booba asdf', addresses)
-
             dispatch(loadAddresses(addresses))
         } else {
             console.error("Failed to load current user's billing addresses:", res.status, res.statusText);
@@ -240,12 +238,8 @@ const addressReducer = (state = initialAddress, action) => {
     const newState = { ...state }
     switch (action.type) {
         case LOAD_ADDRESS:
-            console.log('booba 1', action.payload.data)
-
             return action.payload.data
         case LOAD_ADDRESSES:
-            console.log('booba 2', action.payload.data)
-
             const addresses = {}
 
             if (!action.payload.data) {
@@ -259,18 +253,12 @@ const addressReducer = (state = initialAddress, action) => {
 
             return addresses
         case ADD_ADDRESS:
-            console.log('booba 3', action.payload.data)
-
             newState[action.payload.id] = action.payload
             return newState;
         case EDIT_ADDRESS:
-            console.log('booba 4', action.payload.data)
-
             newState[action.payload.id] = action.payload;
             return newState;
         case DELETE_ADDRESS:
-            console.log('booba 5', action.payload.data)
-
             delete newState[action.payload.id]
             return newState;
         case CLEAR_ADDRESS:
