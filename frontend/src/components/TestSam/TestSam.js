@@ -3,39 +3,39 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as addressActions from "../../store/address"
 import * as cartActions from "../../store/cart"
 import * as discountActions from "../../store/discount"
+import * as orderActions from "../../store/order"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(addressActions.loadAllAddressesThunk())
-        dispatch(discountActions.loadAllDiscountsThunk())
+        dispatch(orderActions.loadDateOrderThunk("2023-11-20"))
     }, [])
 
-    const discount = useSelector(state => state.discount)
-    const address = useSelector(state => state.address)
-    console.log('booba', discount)
+    const order = useSelector(state => state.order)
 
     const handleTest = (e) => {
         e.preventDefault()
 
-        const newDiscount = {
-            discountName: "test discount",
-            discountType: "percent",
-            discountValue: 15,
-            expirationDate: new Date("2024-12-12")
+        const newOrder = {
+            cartId: 1,
+            productId: 1,
+            productName: "test product",
+            productDescription: "test product description",
+            productQuantity: 1,
+            pricePerUnit: 9999,
         }
 
-        const editDiscount = {
-            discountName: "test discount",
-            discountType: "percent",
-            discountValue: 20,
-            expirationDate: new Date("2024-12-12")
+        const editOrder = {
+            cartId: 1,
+            productId: 1,
+            productName: "edit product",
+            productDescription: "edit product description",
+            productQuantity: 1,
+            pricePerUnit: 1111,
         }
 
-        // dispatch(discountActions.addDiscountThunk(newDiscount))
-
-        dispatch(discountActions.deleteDiscountThunk(1))
+        dispatch(orderActions.deleteOrderThunk(5))
     }
 
     return (

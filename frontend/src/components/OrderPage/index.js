@@ -2,7 +2,7 @@ import "./OrderPage.css";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearOrder, loadAllOrdersThunk, loadUserOrdersThunk } from "../../store/order";
+import { clearOrder, loadAllOrdersThunk, loadCurrentUserOrdersThunk } from "../../store/order";
 import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { loadAllUsersThunk } from "../../store/user";
 
@@ -21,7 +21,7 @@ function OrderPage() {
     if (sessionUser?.id === 1) {
       dispatch(loadAllOrdersThunk());
     } else {
-      dispatch(loadUserOrdersThunk(sessionUser?.id))
+      dispatch(loadCurrentUserOrdersThunk(sessionUser?.id))
     }
 
     dispatch(clearOrder());
