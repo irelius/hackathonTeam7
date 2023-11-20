@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             Discount.belongsToMany(models.Category, {
                 through: models.DiscountCategory,
                 foreignKey: "discountId",
+                onDelete: "NO ACTION"
             })
 
             Discount.hasMany(models.DiscountCategory, {

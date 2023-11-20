@@ -15,12 +15,36 @@ module.exports = {
         categoryId: 1,
       },
       {
+        discountId: 1,
+        categoryId: 2,
+      },
+      {
+        discountId: 1,
+        categoryId: 3,
+      },
+      {
         discountId: 2,
         categoryId: 11,
       },
       {
+        discountId: 2,
+        categoryId: 12,
+      },
+      {
+        discountId: 3,
+        categoryId: 7,
+      },
+      {
         discountId: 3,
         categoryId: 8,
+      },
+      {
+        discountId: 3,
+        categoryId: 9,
+      },
+      {
+        discountId: 3,
+        categoryId: 10,
       },
     ]
 

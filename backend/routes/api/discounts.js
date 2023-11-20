@@ -4,7 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { Discount } = require("../../db/models");
+const { Discount, DiscountCategory } = require("../../db/models");
 const { internalServerError, notFoundError, notAuthToEdit } = require('../../utils/errorFunc');
 const { isAdmin } = require('../../utils/authorization');
 
@@ -22,13 +22,9 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
 })
 
 // get a discount by discountNmae
-router.get("/:discountName", restoreUser, requireAuth, async (req, res, next) => {
+router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
     try {
-        const discount = await Discount.findOne({
-            where: {
-                discountName: req.params.discountName
-            }
-        })
+        const discount = await Discount.findByPk(req.params.discountId)
 
         if (!discount) {
             return notFoundError(res, "Discount")
@@ -76,7 +72,7 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
 
         await discountToEdit.save()
 
-        res.status(200).json({ date: discountToEdit })
+        res.status(200).json({ data: discountToEdit })
     } catch (err) {
         return internalServerError(res, err)
     }
@@ -85,7 +81,14 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
 // Delete a discount
 router.delete('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const discount = await Discount.findByPk(req.params.discountId)
+        const discountId = req.params.discountId
+
+        await DiscountCategory.destroy({
+            where: { discountId },
+        });
+
+        const discount = await Discount.findByPk(req.params.discountId);
+
         if (!discount) {
             return notFoundError(res, "Discount")
         }
@@ -93,7 +96,8 @@ router.delete('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res
         await discount.destroy()
         res.status(200).json({ message: "Discount successfully deleted", statusCode: 200 })
     } catch (err) {
-        return internalServerError(res, err)
+        console.error("Error deleting discount:", err); // Log the error
+        return internalServerError(res, err);
     }
 })
 

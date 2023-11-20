@@ -203,11 +203,9 @@ router.put('/:addressId', restoreUser, requireAuth, async (req, res) => {
 router.delete("/:addressId", restoreUser, requireAuth, async (req, res) => {
     try {
         const address = await Address.findByPk(req.params.addressId)
-
         if (!address) {
             return notFoundError(res, "Address")
         }
-
         if (req.user.id !== address.userId && req.user.id !== 1) {
             return notAuthToDelete(res, "address")
         }

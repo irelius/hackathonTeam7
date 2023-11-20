@@ -11,6 +11,8 @@ const paymentRouter = require('./payments.js')
 const cartRouter = require('./carts.js')
 const orderRouter = require("./orders.js")
 
+const categoryRouter = require("./category.js")
+
 const productRouter = require('./products.js')
 const productImageRouter = require('./productimages.js')
 const productCategoryRouter = require('./productcategories.js')
@@ -32,6 +34,7 @@ router.use('/address', addressRouter)
 router.use('/payment', paymentRouter);
 router.use('/cart', cartRouter);
 router.use('/order', orderRouter);
+router.use('/category', categoryRouter)
 router.use('/product', productRouter);
 router.use('/productimage', productImageRouter);
 router.use('/productcategory', productCategoryRouter);
