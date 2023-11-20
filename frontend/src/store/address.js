@@ -182,7 +182,6 @@ export const editAddress = (address) => {
 }
 
 export const editAddressThunk = (addressId, editAddress) => async (dispatch) => {
-
     try {
         const res = await csrfFetch(`/api/address/${addressId}`, {
             method: "PUT",

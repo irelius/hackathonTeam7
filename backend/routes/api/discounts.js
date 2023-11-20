@@ -96,7 +96,6 @@ router.delete('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res
         await discount.destroy()
         res.status(200).json({ message: "Discount successfully deleted", statusCode: 200 })
     } catch (err) {
-        console.error("Error deleting discount:", err); // Log the error
         return internalServerError(res, err);
     }
 })

@@ -5,9 +5,9 @@ const { check } = require('express-validator');
 
 const { Op, Sequelize } = require('sequelize');
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User, Product, Category, ProductCategory } = require("../../db/models");
+const { User, Review, Product, Category, ProductCategory, ProductCart, ProductImage } = require("../../db/models");
 const { internalServerError, notFoundError } = require('../../utils/errorFunc');
-const { isAdmin } = require('../../utils/authorization');
+const { isAdmin, checkUser } = require('../../utils/authorization');
 
 
 // Get all products
@@ -22,20 +22,6 @@ router.get("/all", async (req, res) => {
     }
 })
 
-// Get a product by id
-router.get("/id/:productId", async (req, res) => {
-    try {
-        const product = await Product.findByPk(req.params.productId, {
-            attributes: { exclude: ["createdAt", "updatedAt"] }
-        })
-        if (!product) {
-            return notFoundError(res, "Product")
-        }
-        res.json({ data: product })
-    } catch (err) {
-        return internalServerError(res, err)
-    }
-})
 
 
 // Get a product by name
@@ -67,6 +53,20 @@ router.get("/name/:productName", async (req, res) => {
     }
 })
 
+// Get a product by id
+router.get("/id/:productId", async (req, res) => {
+    try {
+        const product = await Product.findByPk(req.params.productId, {
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
+        if (!product) {
+            return notFoundError(res, "Product")
+        }
+        res.json({ data: product })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
 
 // Get a product by category and by filter type
 //'or' will, if given multiple categories, return all products of ANY of the categories
@@ -136,7 +136,7 @@ router.get("/filter", async (req, res) => {
                 attributes: {
                     include: ["id"],
                     exclude: ['createdAt', 'updatedAt']
-                  },
+                },
                 include: {
                     model: Category,
                     attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -196,38 +196,12 @@ router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
 })
 
 
-// update a product's quantity
-router.put("/:productId/quantity", restoreUser, requireAuth, async (req, res) => {
+// update a product
+router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const productId = req.params.productId
-        const { quantity } = req.body.quantity
+        const { productName, productDescription, productPrice, productQuantity } = req.body
 
-        const product = await Product.findByPk(productId)
-
-        if (!product) {
-            return notFoundError(res, "Product")
-        }
-        if (product.quantity < quantity) {
-            return res.status(400).json({ error: "Insufficient quantity of product." })
-        }
-
-        product.quantity += quantity;
-        await product.save()
-
-        return res.json({ message: "Purchase successful" })
-    } catch (err) {
-        return internalServerError(res, err)
-    }
-})
-
-
-// update a product's information
-router.put("/:productId/info", restoreUser, requireAuth, isAdmin, async (req, res) => {
-    const productId = req.params.productId
-    // const { productName, productDescription, productPrice } = req.body.productInfo;
-    const { productName, productDescription, productPrice } = req.body;
-
-    try {
 
         const product = await Product.findByPk(productId)
 
@@ -235,29 +209,69 @@ router.put("/:productId/info", restoreUser, requireAuth, isAdmin, async (req, re
             return notFoundError(res, "Product")
         }
 
+        product.productQuantity = productQuantity;
         product.productName = productName
         product.productDescription = productDescription
         product.productPrice = productPrice
 
         await product.save()
+
         return res.json({ message: "Successfully updated product information" })
     } catch (err) {
         return internalServerError(res, err)
     }
 })
 
+// change product quantity when purchasing
+router.put('/quantity/:productId', restoreUser, requireAuth, checkUser, async (req, res) => {
+    try {
+        const productId = req.params.productId
+        const { productQuantity } = req.body
+        const product = await Product.findByPk(productId)
+
+        if (!product) {
+            return notFoundError(res, "Product")
+        }
+
+        if (product.productQuantity < productQuantity) {
+            return res.status(400).json({ error: "Insufficient quantity of product." })
+        }
+
+        product.productQuantity -= productQuantity;
+
+        await product.save()
+
+        res.status(200).json({ data: product });
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
 
 // delete a product by id
 router.delete("/:productId", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const product = await Product.findByPk(req.params.productId)
+        const productId = req.params.productId
+
+        await ProductCategory.destroy({
+            where: { productId },
+        });
+        await Review.destroy({
+            where: { productId },
+        });
+        await ProductImage.destroy({
+            where: { productId },
+        });
+        await ProductCart.destroy({
+            where: { productId },
+        });
+
+        const product = await Product.findByPk(productId)
 
         if (!product) {
             return notFoundError(res, "Product")
         }
 
         await product.destroy()
-
         res.status(200).json({ message: "Product successfully deleted", statusCode: 200 })
     } catch (err) {
         return internalServerError(res, err)

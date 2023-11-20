@@ -4,38 +4,39 @@ import * as addressActions from "../../store/address"
 import * as cartActions from "../../store/cart"
 import * as discountActions from "../../store/discount"
 import * as orderActions from "../../store/order"
+import * as productActions from "../../store/product"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(orderActions.loadDateOrderThunk("2023-11-20"))
+        dispatch(productActions.loadAllProductsThunk())
     }, [])
 
-    const order = useSelector(state => state.order)
+    const product = useSelector(state => state.product)
 
     const handleTest = (e) => {
         e.preventDefault()
 
-        const newOrder = {
-            cartId: 1,
-            productId: 1,
+        const newProduct = {
             productName: "test product",
-            productDescription: "test product description",
-            productQuantity: 1,
-            pricePerUnit: 9999,
+            productDescription: "test product descript",
+            productPrice: 111,
+            productQuantity: 111
         }
 
-        const editOrder = {
-            cartId: 1,
-            productId: 1,
+        const editProduct = {
             productName: "edit product",
-            productDescription: "edit product description",
-            productQuantity: 1,
-            pricePerUnit: 1111,
+            productDescription: "edit product descript",
+            productPrice: 999,
+            productQuantity: 999
         }
 
-        dispatch(orderActions.deleteOrderThunk(5))
+        const productQuantity = 1
+
+        // dispatch(productActions.editProductQuantityThunk(1, productQuantity))
+
+        dispatch(productActions.deleteProductThunk(1))
     }
 
     return (
