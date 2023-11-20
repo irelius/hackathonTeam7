@@ -5,15 +5,17 @@ import * as cartActions from "../../store/cart"
 import * as discountActions from "../../store/discount"
 import * as orderActions from "../../store/order"
 import * as productActions from "../../store/product"
+import * as productCartActions from "../../store/productcart"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(productActions.loadAllProductsThunk())
+        dispatch(productCartActions.loadUserProductCartThunk())
     }, [])
 
-    const product = useSelector(state => state.product)
+    const productCart = useSelector(state => state.productCart)
+    console.log('booba', productCart)
 
     const handleTest = (e) => {
         e.preventDefault()
@@ -34,9 +36,9 @@ function TestSam() {
 
         const productQuantity = 1
 
-        // dispatch(productActions.editProductQuantityThunk(1, productQuantity))
+        // dispatch(productCartActions.editProductQuantityThunk(1, productQuantity))
 
-        dispatch(productActions.deleteProductThunk(1))
+        // dispatch(productCartActions.deleteProductThunk(1))
     }
 
     return (
