@@ -2,7 +2,7 @@ import "./OrderPage.css";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearOrder, loadAllOrdersThunk, loadUserOrdersThunk } from "../../store/order";
+import { clearOrder, loadAllOrdersThunk, loadCurrentUserOrdersThunk } from "../../store/order";
 import { Redirect, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { loadAllUsersThunk } from "../../store/user";
 
@@ -21,7 +21,7 @@ function OrderPage() {
     if (sessionUser?.id === 1) {
       dispatch(loadAllOrdersThunk());
     } else {
-      dispatch(loadUserOrdersThunk(sessionUser?.id))
+      dispatch(loadCurrentUserOrdersThunk(sessionUser?.id))
     }
 
     dispatch(clearOrder());
@@ -66,7 +66,7 @@ function OrderPage() {
           <div className="order-card" key={order._id}>
             <div className="order-info">
               <div className="order-table-cell">{order.cartId}</div>
-              <div className="order-table-cell">{formatDate(order.orderDate)}</div>
+              <div className="order-table-cell">{formatDate(order.createdAt)}</div>
               <div className="order-table-cell" id="order-name">{order.productName}</div>
               <div className="order-table-cell">{order.quantity}</div>
               <div className="order-table-cell">${order.pricePerUnit / 100}</div>

@@ -15,10 +15,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      applicableCategory: {
-        type: Sequelize.STRING,
-        defaultValue: "All",
-      },
       discountName: {
         type: Sequelize.STRING,
         allowNull: false,

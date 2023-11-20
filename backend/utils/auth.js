@@ -1,7 +1,7 @@
 
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, BillingAddress, ShippingAddress, Order, Payment, Product, Review, Category } = require('../db/models');
+const { User, Address, ShippingAddress, Order, Payment, Product, Review, Category } = require('../db/models');
 
 const { secret, expiresIn } = jwtConfig;
 

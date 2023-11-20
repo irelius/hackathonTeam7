@@ -23,9 +23,9 @@ export const loadProducts = (products) => {
 
 
 // thunk action for one specific product
-export const loadOneProductThunk = (productName) => async (dispatch) => {
+export const loadOneProductThunk = (productId) => async (dispatch) => {
     try {
-        const res = await csrfFetch(`/api/product/${productName}`)
+        const res = await csrfFetch(`/api/product/id/${productId}`)
         if (res.ok) {
             const product = await res.json()
             dispatch(loadProduct(product))
@@ -54,7 +54,7 @@ export const loadAllProductsThunk = () => async (dispatch) => {
 }
 
 // thunk action for products depending on filter and categories
-export const loadFilteredProductsThunk = (categories, type) => async (dispatch) => {
+export const loadFilteredProductsThunk = ({ categories = "All", type = "or" }) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/product/filter?categories=${categories}&type=${type}`)
         if (res.ok) {
@@ -109,20 +109,19 @@ export const editProduct = (product) => {
 
 
 // thunk action for editing a product information
-export const editProductThunk = (productId, productInfo) => async (dispatch) => {
+export const editProductThunk = (productId, newProductInfo) => async (dispatch) => {
     try {
-        const res = await csrfFetch(`/api/product/${productId}/info`, {
+        const res = await csrfFetch(`/api/product/info/${productId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ productInfo })
+            body: JSON.stringify(newProductInfo)
         })
 
         if (res.ok) {
             const updatedProduct = await res.json()
             dispatch(editProduct(updatedProduct))
-            return updatedProduct
         } else {
             console.error('Failed to update product information:', res.status, res.statusText);
         }
@@ -131,27 +130,25 @@ export const editProductThunk = (productId, productInfo) => async (dispatch) => 
     }
 }
 
-
-// thunk action for updating product quantity
-export const editProductQuantityThunk = (productId, quantity) => async (dispatch) => {
+// thunk action for changing product quantity when purchasing item
+export const editProductQuantityThunk = (productId, productQuantity) => async (dispatch) => {
     try {
-        const res = await csrfFetch(`/api/product/${productId}/quantity`, {
+        const res = await csrfFetch(`/api/product/quantity/${productId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ quantity })
+            body: JSON.stringify({ productQuantity })
         })
 
         if (res.ok) {
             const updatedProduct = await res.json()
             dispatch(editProduct(updatedProduct))
-            return updatedProduct
         } else {
-            console.error('Failed to update product quantity:', res.status, res.statusText);
+            console.error('Failed to update product information:', res.status, res.statusText);
         }
     } catch (err) {
-        console.error("An error occurred while calculating product's new category:", err)
+        console.error(`An error occurred while updating product ${productId} information:`, err)
     }
 }
 
@@ -165,7 +162,7 @@ export const deleteProduct = (product) => {
 
 export const deleteProductThunk = (productId) => async (dispatch) => {
     try {
-        const res = await csrfFetch(`/api/${productId}`, {
+        const res = await csrfFetch(`/api/product/${productId}`, {
             method: "DELETE"
         })
 
@@ -195,23 +192,26 @@ const productReducer = (state = initialProduct, action) => {
         case LOAD_PRODUCT:
             return action.payload.data
         case LOAD_PRODUCTS:
+            const products = {}
+
             if (!action.payload.data) {
-              return newState;
+                return products
             }
-      
-            action.payload.data.forEach((item) => {
-              newState[item.id] = item;
-            });
-      
-            return newState;
+
+            for (let i = 0; i < action.payload.data.length; i++) {
+                let curr = action.payload.data[i]
+                products[curr.id] = curr
+            }
+
+            return products
         case ADD_PRODUCT:
-            newState[action.payload.id] = action.payload
+            newState[action.payload.data.id] = action.payload.data
             return newState;
         case EDIT_PRODUCT:
-            newState[action.payload.id] = action.payload;
+            newState[action.payload.data.id] = action.payload.data;
             return newState;
         case DELETE_PRODUCT:
-            delete newState[action.payload.id]
+            delete newState[action.payload]
             return newState;
         case CLEAR_PRODUCT:
             return initialProduct

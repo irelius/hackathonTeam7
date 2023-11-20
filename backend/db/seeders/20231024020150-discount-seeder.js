@@ -12,21 +12,18 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const validDiscounts = [
       {
-        applicableCategory: "All",
         discountName: "WELCOME15",
         discountType: "percent",
         discountValue: 15,
         expirationDate: new Date("9999-12-31")
       },
       {
-        applicableCategory: "Chair",
         discountName: "CHAIR10",
         discountType: "percent",
         discountValue: 10,
         expirationDate: new Date("2023-12-31")
       },
       {
-        applicableCategory: "Furniture",
         discountName: "SUMMER30",
         discountType: "percent",
         discountValue: 30,

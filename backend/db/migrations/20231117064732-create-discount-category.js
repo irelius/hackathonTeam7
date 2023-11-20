@@ -1,6 +1,6 @@
-"use strict";
-
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -8,49 +8,30 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Orders", {
+    await queryInterface.createTable('DiscountCategories', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      categoryId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
-          model: 'Users',
-          key: "id"
+          model: 'Categories',
+          key: 'id',
         },
-        allowNull: false,
+        onDelete: 'NO ACTION',
       },
-      cartId: {
-        type: Sequelize.INTEGER,
-      },
-      productId: {
-        type: Sequelize.INTEGER,
-      },
-      productName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      productDescription: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      productQuantity: {
+      discountId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      pricePerUnit: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      status: {
-        type: Sequelize.STRING,
-        defaultValue: 'processing'
-      },
-      totalAmount: {
-        type: Sequelize.INTEGER,
+        references: {
+          model: 'Discounts',
+          key: 'id',
+        },
+        onDelete: 'NO ACTION',
       },
       createdAt: {
         allowNull: false,
@@ -65,7 +46,7 @@ module.exports = {
     }, options);
   },
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Orders";
+    options.tableName = "DiscountCategories";
     return queryInterface.dropTable(options);
   }
 };

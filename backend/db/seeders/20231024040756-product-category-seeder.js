@@ -10,7 +10,7 @@ options.tableName = 'ProductCategories'
 module.exports = {
   async up(queryInterface, Sequelize) {
     const validProductCategories = [
-      // Product 1: Luxe Leather Sofa
+      // Product 1: Simple Side Table
       {
         productId: 1,
         categoryId: 1 // All
@@ -36,7 +36,7 @@ module.exports = {
         categoryId: 21 // Indoor
       },
 
-      // Product 2: Zenith Dining Table
+      // Product 2: Minimalist Accent Table
       {
         productId: 2,
         categoryId: 1 // All
@@ -63,7 +63,7 @@ module.exports = {
       },
 
 
-      // Product 3: Aura Coffee Table
+      // Product 3: Functional End Table
       {
         productId: 3,
         categoryId: 1 // All
@@ -90,7 +90,7 @@ module.exports = {
       },
 
 
-      // Product 4: Sleek Glass Desk
+      // Product 4: Neutral Side Table
       {
         productId: 4,
         categoryId: 1 // All
@@ -121,7 +121,7 @@ module.exports = {
       },
 
 
-      // Product 5: Minimalist Bookshelf
+      // Product 5: Contemporary Accent Table
       {
         productId: 5,
         categoryId: 1 // All
@@ -155,7 +155,7 @@ module.exports = {
         categoryId: 21 // Indoor
       },
 
-      // Product 6: Contemporary Nightstand
+      // Product 6: Basic Side Table
       {
         productId: 6,
         categoryId: 1 // All
@@ -178,7 +178,7 @@ module.exports = {
       },
 
 
-      // Product 7: Scandi Rocking Chair
+      // Product 7: Essential Coffee Table
       {
         productId: 7,
         categoryId: 1 // All
@@ -209,7 +209,7 @@ module.exports = {
       },
 
 
-      // Product 8: Nuovo Ottoman
+      // Product 8: Minimalist Center Table
       {
         productId: 8,
         categoryId: 1 // All
@@ -240,7 +240,7 @@ module.exports = {
       },
 
 
-      // Product 9: French Rococo Dresser
+      // Product 9: Functional Coffee Table
       {
         productId: 9,
         categoryId: 1 // All
@@ -267,7 +267,7 @@ module.exports = {
       },
 
 
-      // Produt 10: Art Deco Bar Stools
+      // Produt 10: Neutral Coffee Table
       {
         productId: 10,
         categoryId: 1 // All

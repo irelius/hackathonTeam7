@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadAllBillingsThunk,
-  loadOneBillingThunk,
-  loadUserBillingsThunk,
-} from "../../../store/billingaddress";
+import { loadAllAddressesThunk, loadOneAddressThunk } from "../../../store/address";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { loadUserReviewsThunk } from "../../../store/review";
 import { loadAllProductsThunk } from "../../../store/product";
@@ -23,9 +19,9 @@ function SettingsSection() {
 
   useEffect(() => {
     if (sessionUser?.id === 1) {
-      dispatch(loadAllBillingsThunk());
+      dispatch(loadAllAddressesThunk());
     } else {
-      dispatch(loadOneBillingThunk(sessionUser?.id));
+      dispatch(loadOneAddressThunk(sessionUser?.id));
       dispatch(loadUserReviewsThunk(sessionUser?.id));
       dispatch(loadAllProductsThunk());
     }

@@ -7,17 +7,17 @@ const EDIT_DISCOUNT = "/product/editDiscount"
 const DELETE_DISCOUNT = "/product/deleteDiscount"
 const CLEAR_DISCOUNT = "/product/clearDiscount"
 
-export const loadDiscount = (discountAddress) => {
+export const loadDiscount = (discount) => {
     return {
         type: LOAD_DISCOUNT,
-        payload: discountAddress
+        payload: discount
     }
 }
 
-export const loadDiscounts = (discountAddresses) => {
+export const loadDiscounts = (discounts) => {
     return {
         type: LOAD_DISCOUNTS,
-        payload: discountAddresses
+        payload: discounts
     }
 }
 
@@ -49,10 +49,10 @@ export const loadAllDiscountsThunk = () => async (dispatch) => {
     }
 }
 
-export const addDiscount = (discountAddress) => {
+export const addDiscount = (discount) => {
     return {
         type: ADD_DISCOUNT,
-        payload: discountAddress
+        payload: discount
     }
 }
 
@@ -78,22 +78,22 @@ export const addDiscountThunk = (newDiscount) => async (dispatch) => {
     }
 }
 
-export const editDiscount = (discountAddress) => {
+export const editDiscount = (discount) => {
     return {
         type: EDIT_DISCOUNT,
-        payload: discountAddress
+        payload: discount
     }
 }
 
 // thunk aciton to edit a new discount
-export const editDiscountThunk = (discountId, editDiscount) => async (dispatch) => {
+export const editDiscountThunk = (discountId, discountInfo) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/discount/${discountId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(editDiscount)
+            body: JSON.stringify(discountInfo)
         })
 
         if (res.ok) {
@@ -107,10 +107,10 @@ export const editDiscountThunk = (discountId, editDiscount) => async (dispatch) 
     }
 }
 
-export const deleteDiscount = (discountAddress) => {
+export const deleteDiscount = (discount) => {
     return {
         type: DELETE_DISCOUNT,
-        payload: discountAddress
+        payload: discount
     }
 }
 
@@ -120,13 +120,11 @@ export const deleteDiscountThunk = (discountId) => async (dispatch) => {
         const res = await csrfFetch(`/api/discount/${discountId}`, {
             method: "DELETE"
         })
-
         if (res.ok) {
             dispatch(deleteDiscount(discountId))
         } else {
             console.error('Failed to delete discount:', res.status, res.statusText);
         }
-
     } catch (err) {
         console.error(`An error occured while deleting discount:`, err)
     }
@@ -146,26 +144,26 @@ const discountReducer = (state = initialDiscount, action) => {
         case LOAD_DISCOUNT:
             return action.payload.data
         case LOAD_DISCOUNTS:
-            const discountAddresses = {}
+            const discounts = {}
 
             if (!action.payload.data) {
-                return discountAddresses
+                return discounts
             }
 
             for (let i = 0; i < action.payload.data.length; i++) {
                 let curr = action.payload.data[i]
-                discountAddresses[curr.id] = curr
+                discounts[curr.id] = curr
             }
 
-            return discountAddresses
+            return discounts
         case ADD_DISCOUNT:
-            newState[action.payload.id] = action.payload
+            newState[action.payload.data.id] = action.payload.data
             return newState;
         case EDIT_DISCOUNT:
-            newState[action.payload.id] = action.payload;
+            newState[action.payload.data.id] = action.payload.data;
             return newState;
         case DELETE_DISCOUNT:
-            delete newState[action.payload.id]
+            delete newState[action.payload]
             return newState;
         case CLEAR_DISCOUNT:
             return initialDiscount

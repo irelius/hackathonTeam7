@@ -43,10 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    orderDate: {
-      type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW,
-    },
     status: {
       type: DataTypes.STRING,
       defaultValue: "processing"
@@ -66,12 +62,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     }
   );
-
-
-  // // Calculate and assign the totalAmount separately
-  // Order.beforeCreate((order, options) => {
-  //   order.totalAmount = order.productQuantity * order.pricePerUnit;
-  // });
 
   return Order;
 };

@@ -33,7 +33,7 @@ router.post("/", restoreUser, requireAuth, async (req, res) => {
                     },
                     unit_amount: curr.pricePerUnit,
                 },
-                quantity: curr.quantity,
+                productQuantity: curr.productQuantity,
             })
         }
 

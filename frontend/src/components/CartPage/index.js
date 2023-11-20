@@ -2,14 +2,13 @@ import "./CartPage.css";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearOrder } from "../../store/order";
 import { useHistory, } from "react-router-dom/cjs/react-router-dom.min";
 import { deleteProductCartThunk, editProductCartThunk, loadUserProductCartThunk } from "../../store/productcart";
-import { clearProduct, loadAllProductsThunk } from "../../store/product";
-import { clearShipping, loadCurrentShippingThunk, } from "../../store/shippingaddress";
+import { loadAllProductsThunk } from "../../store/product";
 import { csrfFetch } from "../../store/csrf";
 import { loadUserCartThunk } from "../../store/cart";
 import { addStripeSessionThunk } from "../../store/stripesession";
+import { loadCurrentShippingThunk } from "../../store/address";
 
 function CartPage() {
   const history = useHistory();
@@ -24,9 +23,6 @@ function CartPage() {
     dispatch(loadCurrentShippingThunk()).then(() => {
       setLoad(true);
     });
-
-    dispatch(clearShipping());
-    dispatch(clearOrder());
   }, [dispatch]);
 
   const user = useSelector((state) => state.session.user);
@@ -113,43 +109,42 @@ function CartPage() {
       </div>
       <div>
         {Object.values(cartItems).map((cart) => {
-          console.log(cart.id)
-
           return (
 
-          <div className="cart-card" key={cart.id}>
-            <div className="cart-info" id="cart-section">
-              <section className="table-cell">
-                <button className="pointer" id="delete-cart-item-button" onClick={(e) => deleteCartItem(e, cart)}>
-                  <i className="bx bxs-trash"></i>
-                </button>
-              </section>
-              <section className="table-cell" id="cart-name">
-                {allProducts[cart.id]?.productName}
-              </section>
-              <section className="table-cell">
-                ${cart.pricePerUnit / 100}
-              </section>
-              <section className="table-cell" id="cart-quantity">
-                <aside className="pointer quantity-change" onClick={(e) => addQuantity(e, cart)}>
-                  <i className="bx bx-plus"></i>
-                </aside>
-                <aside>{cart.quantity}</aside>
-                <aside className="pointer quantity-change" onClick={(e) => subtractQuantity(e, cart)}>
-                  <i className="bx bx-minus"></i>
-                </aside>
-              </section>
+            <div className="cart-card" key={cart.id}>
+              <div className="cart-info" id="cart-section">
+                <section className="table-cell">
+                  <button className="pointer" id="delete-cart-item-button" onClick={(e) => deleteCartItem(e, cart)}>
+                    <i className="bx bxs-trash"></i>
+                  </button>
+                </section>
+                <section className="table-cell" id="cart-name">
+                  {allProducts[cart.id]?.productName}
+                </section>
+                <section className="table-cell">
+                  ${cart.pricePerUnit / 100}
+                </section>
+                <section className="table-cell" id="cart-quantity">
+                  <aside className="pointer quantity-change" onClick={(e) => addQuantity(e, cart)}>
+                    <i className="bx bx-plus"></i>
+                  </aside>
+                  <aside>{cart.quantity}</aside>
+                  <aside className="pointer quantity-change" onClick={(e) => subtractQuantity(e, cart)}>
+                    <i className="bx bx-minus"></i>
+                  </aside>
+                </section>
+              </div>
             </div>
-          </div>
-        )})}
+          )
+        })}
       </div>
       <div className="table-header">
         <div className="table-cell">Shipping Address</div>
       </div>
       {preppedShippingAddress &&
         <div className="table-cell">
-        {preppedShippingAddress.shippingAddress} {preppedShippingAddress.shippingState} {preppedShippingAddress.shippingZipCode}
-      </div>
+          {preppedShippingAddress.shippingAddress} {preppedShippingAddress.shippingState} {preppedShippingAddress.shippingZipCode}
+        </div>
       }
       <div>
         <button

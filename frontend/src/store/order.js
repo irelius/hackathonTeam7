@@ -3,7 +3,6 @@ import { csrfFetch } from "./csrf";
 const LOAD_ORDER = "/order/setOrder"
 const LOAD_ORDERS = "/order/setOrders"
 const ADD_ORDER = "/order/addOrder"
-const EDIT_ORDER = "/order/editOrder"
 const DELETE_ORDER = "/order/deleteOrder"
 const CLEAR_ORDER = "/order/clearOrder"
 
@@ -21,37 +20,10 @@ export const loadOrders = (orders) => {
     }
 }
 
-export const addOrder = (order) => {
-    return {
-        type: ADD_ORDER,
-        payload: order
-    }
-}
-
-export const editOrder = (order) => {
-    return {
-        type: EDIT_ORDER,
-        payload: order
-    }
-}
-
-export const deleteOrder = (order) => {
-    return {
-        type: DELETE_ORDER,
-        payload: order
-    }
-}
-
-export const clearOrder = () => {
-    return {
-        type: CLEAR_ORDER
-    }
-}
-
 // thunk action for one specific order
 export const loadOneOrderThunk = (orderId) => async (dispatch) => {
     try {
-        const res = await csrfFetch(`/api/order/id/${orderId}`)
+        const res = await csrfFetch(`/api/order/${orderId}`)
         if (res.ok) {
             const order = await res.json()
             dispatch(loadOrder(order))
@@ -79,8 +51,8 @@ export const loadAllOrdersThunk = () => async (dispatch) => {
     return []
 }
 
-// thunk action for one user's orders
-export const loadUserOrdersThunk = () => async (dispatch) => {
+// thunk action for one current user's orders
+export const loadCurrentUserOrdersThunk = () => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/order/current`)
         if (res.ok) {
@@ -93,6 +65,29 @@ export const loadUserOrdersThunk = () => async (dispatch) => {
         console.error('An error occurred while loading order:', err);
     }
 }
+
+// thunk action for order based on date
+export const loadDateOrderThunk = (date) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/order/date/${date}`)
+        if (res.ok) {
+            const order = await res.json()
+            dispatch(loadOrders(order))
+        } else {
+            console.error('Failed to load order:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading order:', err);
+    }
+}
+
+export const addOrder = (order) => {
+    return {
+        type: ADD_ORDER,
+        payload: order
+    }
+}
+
 
 // thunk action for creating a new order
 export const addOrderThunk = (newOrder) => async (dispatch) => {
@@ -118,6 +113,15 @@ export const addOrderThunk = (newOrder) => async (dispatch) => {
     }
 }
 
+
+export const deleteOrder = (order) => {
+    return {
+        type: DELETE_ORDER,
+        payload: order
+    }
+}
+
+
 export const deleteOrderThunk = (orderId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/order/${orderId}`, {
@@ -134,13 +138,19 @@ export const deleteOrderThunk = (orderId) => async (dispatch) => {
     }
 }
 
+export const clearOrder = () => {
+    return {
+        type: CLEAR_ORDER
+    }
+}
+
 const initialOrder = {}
 
 const orderReducer = (state = initialOrder, action) => {
     const newState = { ...state }
     switch (action.type) {
         case LOAD_ORDER:
-            return action.payload
+            return action.payload.data
         case LOAD_ORDERS:
             const order = {}
 
@@ -157,11 +167,8 @@ const orderReducer = (state = initialOrder, action) => {
         case ADD_ORDER:
             newState[action.payload.data.id] = action.payload.data
             return newState;
-        case EDIT_ORDER:
-            newState[action.payload.id] = action.payload;
-            return newState;
         case DELETE_ORDER:
-            delete newState[action.payload.id]
+            delete newState[action.payload]
             return newState;
         case CLEAR_ORDER:
             return initialOrder

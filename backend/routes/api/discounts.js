@@ -4,7 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { Discount } = require("../../db/models");
+const { Discount, DiscountCategory } = require("../../db/models");
 const { internalServerError, notFoundError, notAuthToEdit } = require('../../utils/errorFunc');
 const { isAdmin } = require('../../utils/authorization');
 
@@ -12,17 +12,20 @@ const { isAdmin } = require('../../utils/authorization');
 // Get all discounts
 router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const discounts = await Discount.findAll()
+        const discounts = await Discount.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] }
+        })
         res.json({ data: discounts })
     } catch (err) {
         return internalServerError(res, err)
     }
 })
 
-// get a discount by id
+// get a discount by discountNmae
 router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
     try {
         const discount = await Discount.findByPk(req.params.discountId)
+
         if (!discount) {
             return notFoundError(res, "Discount")
         }
@@ -33,14 +36,15 @@ router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
     }
 })
 
+
 // Create a new discount
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const { codeName, applicableCategory, discountType, discountValue, expirationDate } = req.body
+        const { discountName, applicableCategory, discountType, discountValue, expirationDate } = req.body
 
         const newDiscount = await Discount.create({
-            codeName: codeName,
             applicableCategory: applicableCategory,
+            discountName: discountName,
             discountType: discountType,
             discountValue: discountValue,
             expirationDate: expirationDate
@@ -60,15 +64,15 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
             return notFoundError(res, "Discount")
         }
 
-        discountToEdit.codeName = req.body.codeName || discountToEdit.codeName
-        discountToEdit.applicableCategory = req.body.applicableCategory || discountToEdit.codeName
+        discountToEdit.applicableCategory = req.body.applicableCategory || discountToEdit.applicableCategory
+        discountToEdit.discountName = req.body.discountName || discountToEdit.discountName
         discountToEdit.discountType = req.body.discountType || discountToEdit.discountType
         discountToEdit.discountValue = req.body.discountValue || discountToEdit.discountValue
         discountToEdit.expirationDate = req.body.expirationDate || discountToEdit.expirationDate
 
         await discountToEdit.save()
 
-        res.status(200).json({ date: discountToEdit })
+        res.status(200).json({ data: discountToEdit })
     } catch (err) {
         return internalServerError(res, err)
     }
@@ -77,7 +81,14 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
 // Delete a discount
 router.delete('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const discount = await Discount.findByPk(req.params.discountId)
+        const discountId = req.params.discountId
+
+        await DiscountCategory.destroy({
+            where: { discountId },
+        });
+
+        const discount = await Discount.findByPk(req.params.discountId);
+
         if (!discount) {
             return notFoundError(res, "Discount")
         }
@@ -85,7 +96,7 @@ router.delete('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res
         await discount.destroy()
         res.status(200).json({ message: "Discount successfully deleted", statusCode: 200 })
     } catch (err) {
-        return internalServerError(res, err)
+        return internalServerError(res, err);
     }
 })
 
