@@ -6,26 +6,25 @@ import * as discountActions from "../../store/discount"
 import * as orderActions from "../../store/order"
 import * as productActions from "../../store/product"
 import * as productCartActions from "../../store/productcart"
+import * as productCategoryActions from "../../store/productcategory"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(productCartActions.loadUserProductCartThunk())
+        dispatch(productCategoryActions.loadAllProductCategoriesThunk())
+
+        dispatch(productCategoryActions.clearProductCategory())
     }, [])
 
-    const productCart = useSelector(state => state.productCart)
-    console.log('booba', productCart)
+    const productCategory = useSelector(state => state.productCategory)
+    console.log(productCategory)
 
     const handleTest = (e) => {
         e.preventDefault()
 
-        const newProduct = {
-            productName: "test product",
-            productDescription: "test product descript",
-            productPrice: 111,
-            productQuantity: 111
-        }
+        const newPC = ["Black", "Indoor"]
+        const editPC = ["White", "Outdoor"]
 
         const editProduct = {
             productName: "edit product",
@@ -36,9 +35,9 @@ function TestSam() {
 
         const productQuantity = 1
 
-        // dispatch(productCartActions.editProductQuantityThunk(1, productQuantity))
+        // dispatch(productCategoryActions.editProductCategoryThunk(1, editPC))
 
-        // dispatch(productCartActions.deleteProductThunk(1))
+        dispatch(productCategoryActions.deleteProductCategoryThunk(3))
     }
 
     return (

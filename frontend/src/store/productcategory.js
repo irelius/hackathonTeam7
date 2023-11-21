@@ -75,14 +75,14 @@ export const addProductCategory = (productCategory) => {
 }
 
 // thunk action to create a new product category based on product Id and a list of categories
-export const addProductCategoryThunk = (productId, categories) => async (dispatch) => {
+export const addProductCategoryThunk = (productId, categoryArr) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/productcategory/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ productId, categories })
+            body: JSON.stringify({ productId, categoryArr })
         })
 
         if (res.ok) {
@@ -108,14 +108,14 @@ export const editProductCategory = (productCategory) => {
 
 
 // thunk action to edit productCategories
-export const editProductCategoryThunk = (productId, newCategories) => async (dispatch) => {
+export const editProductCategoryThunk = (productId, categoryArr) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/productcategory/${productId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ categories: newCategories }),
+            body: JSON.stringify({ categoryArr }),
         });
 
         if (res.ok) {
@@ -184,13 +184,20 @@ const productCategoryReducer = (state = initialProduct, action) => {
 
             return productCategories
         case ADD_PRODUCTCATEGORY:
-            newState[action.payload.id] = action.payload.data
+            for (let i = 0; i < action.payload.data.length; i++) {
+                let curr = action.payload.data[i]
+                newState[curr.id] = curr
+            }
             return newState;
         case EDIT_PRODUCTCATEGORY:
-            newState[action.payload.id] = action.payload.data;
-            return newState;
+            const newPCs = {}
+            for (let i = 0; i < action.payload.data.length; i++) {
+                let curr = action.payload.data[i]
+                newPCs[curr.id] = curr
+            }
+            return newPCs;
         case DELETE_PRODUCTCATEGORY:
-            delete newState[action.payload.id]
+            delete newState[action.payload.data.id]
             return newState;
         case CLEAR_PRODUCTCATEGORY:
             return initialProduct

@@ -135,21 +135,15 @@ router.get('/product/:productId/category/:categoryId', async (req, res) => {
 // create a new productCategory
 // will create a new product category between a product Id and for each category passed in
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
-    let { productId, categories } = req.body // categories is by default a string. Ex: "Black,Indoor"
-
-    // prep the categories. add "All" as a category as every product will be counted under the "All" category
-    if (categories.trim().length === 0) {
-        categories = "All"
-    } else {
-        categories += ",All"
-    }
-    const categoryNames = categories.split(',')
+    let { productId, categoryArr } = req.body // categoryArr is an array structured like: ["Black", "Indoor"]
+    categoryArr.push("All")
 
     let newPCs = []
 
     try {
-        for (let i = 0; i < categoryNames.length; i++) { // cycle through each category and create a new pairing
-            let curr = categoryNames[i]
+        for (let i = 0; i < categoryArr.length; i++) { // cycle through each category and create a new pairing
+            let curr = categoryArr[i]
+
             const categoryId = await Category.findOne({
                 where: {
                     categoryName: curr
@@ -157,16 +151,19 @@ router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
                 attributes: ["id"]
             })
 
-            const newProductCategory = await ProductCategory.create({
-                productId: productId,
-                categoryId: categoryId.id
-            })
+            if (categoryId) {
+                const newProductCategory = await ProductCategory.create({
+                    productId: productId,
+                    categoryId: categoryId.id
+                })
 
-
-            newPCs.push(newProductCategory)
+                newPCs.push(newProductCategory)
+            }
         }
 
-        res.status(201).json({ data: newPCs })
+        if (newPCs.length > 0) {
+            res.status(201).json({ data: newPCs });
+        }
     } catch (err) {
         return internalServerError(res, err)
     }
@@ -175,10 +172,10 @@ router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
 
 // edit the product categories of a product
 router.put('/:productId', restoreUser, requireAuth, isAdmin, async (req, res) => {
-    const { categories } = req.body
-    const productId = req.params.productId
+    const { categoryArr } = req.body
+    categoryArr.push("All")
 
-    const categoryNames = categories.split(",")
+    const productId = req.params.productId
 
     try {
         ProductCategory.destroy({
@@ -187,8 +184,8 @@ router.put('/:productId', restoreUser, requireAuth, isAdmin, async (req, res) =>
             },
         });
 
-        for (let i = 0; i < categoryNames.length; i++) {
-            let curr = categoryNames[i]
+        for (let i = 0; i < categoryArr.length; i++) {
+            let curr = categoryArr[i]
 
             const categoryId = await Category.findOne({
                 where: {
@@ -196,18 +193,20 @@ router.put('/:productId', restoreUser, requireAuth, isAdmin, async (req, res) =>
                 }
             })
 
-            await ProductCategory.create({
-                productId: productId,
-                categoryId: categoryId.id
-            })
+            if (categoryId) {
+                await ProductCategory.create({
+                    productId: productId,
+                    categoryId: categoryId.id
+                })
+            }
         }
 
         const returnPCs = await ProductCategory.findAll({
             where: {
                 productId: productId
-            }
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] }
         })
-
         res.status(201).json({ data: returnPCs })
     } catch (err) {
         return internalServerError(res, err)
@@ -223,7 +222,7 @@ router.delete("/:productCategoryId", restoreUser, requireAuth, isAdmin, async (r
         }
 
         await productCategory.destroy()
-        res.status(200).json({ message: "Product Category successfully deleted", statusCode: 200 })
+        res.status(200).json({ data: productCategory })
     } catch (err) {
         return internalServerError(res, err)
     }

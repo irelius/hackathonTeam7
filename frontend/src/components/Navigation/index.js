@@ -57,7 +57,7 @@ function Navigation({ isLoaded }) {
       <li>
         <NavLink to="/cart">
         <button className="cart-page-btn">
-        <i class='bx bx-cart'></i>
+        <i className='bx bx-cart'></i>
         </button>
         </NavLink>
         <ProfileButton user={sessionUser} />
