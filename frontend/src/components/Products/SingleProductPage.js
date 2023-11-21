@@ -7,7 +7,6 @@ import * as cartActions from "../../store/productcart";
 
 function SingleProductPage() {
   const dispatch = useDispatch();
-
   const { id } = useParams();
   const product = useSelector((state) => state.product);
 
