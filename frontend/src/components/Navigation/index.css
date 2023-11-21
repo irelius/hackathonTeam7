@@ -94,6 +94,7 @@ li {
     /* Apply a blur effect to the background */
     background: rgba(255, 255, 255, 0.6);
     /* Semi-transparent white background for the blur effect */
+    z-index: 1000; /* Set a higher z-index value */
 }
 
 .profile-container {
@@ -161,4 +162,16 @@ li {
 .logo {
     width: 60px;
     height: 50px;
+}
+
+
+.cart-page-btn {
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 32px;
+    padding: 4px 3px;
+    line-height: 2px;
+    cursor: pointer;
+    border-radius: 30px;
 }

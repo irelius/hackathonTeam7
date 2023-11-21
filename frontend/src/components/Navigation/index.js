@@ -55,6 +55,11 @@ function Navigation({ isLoaded }) {
     <>
       {baseLinks}
       <li>
+        <NavLink to="/cart">
+        <button className="cart-page-btn">
+        <i class='bx bx-cart'></i>
+        </button>
+        </NavLink>
         <ProfileButton user={sessionUser} />
       </li>
     </>

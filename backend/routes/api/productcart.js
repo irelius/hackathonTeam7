@@ -114,7 +114,7 @@ router.put('/:productCartId', restoreUser, requireAuth, async (req, res) => {
             return notAuthToEdit(res, "product cart")
         }
 
-        productCart.quantity += quantity;
+        productCart.productQuantity = quantity;
         await productCart.save();
 
         res.status(201).json({ data: productCart })

@@ -30,7 +30,7 @@ function CartPage() {
   const allProducts = useSelector((state) => state.product.all);
   const cartItems = useSelector((state) => state.productCart);
   const shippingAddress = useSelector((state) => state.shippingAddress);
-  const preppedShippingAddress = Object.values(shippingAddress)[0];
+  // const preppedShippingAddress = Object.values(shippingAddress)[0];
 
   // Function to format the date
   const formatDate = (dateStr) => {
@@ -110,7 +110,6 @@ function CartPage() {
       <div>
         {Object.values(cartItems).map((cart) => {
           return (
-
             <div className="cart-card" key={cart.id}>
               <div className="cart-info" id="cart-section">
                 <section className="table-cell">
@@ -141,11 +140,11 @@ function CartPage() {
       <div className="table-header">
         <div className="table-cell">Shipping Address</div>
       </div>
-      {preppedShippingAddress &&
+      {/* {preppedShippingAddress &&
         <div className="table-cell">
           {preppedShippingAddress.shippingAddress} {preppedShippingAddress.shippingState} {preppedShippingAddress.shippingZipCode}
         </div>
-      }
+      } */}
       <div>
         <button
           onClick={(e) => {
