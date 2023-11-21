@@ -16,14 +16,14 @@ module.exports = {
         cartId: 2,
         productId: 1,
         productQuantity: 2,
-        pricePerUnit: 449999
+        pricePerUnit: 7999
       },
       {
         userId: 2,
         cartId: 2,
         productId: 2,
         productQuantity: 1,
-        pricePerUnit: 379999
+        pricePerUnit: 8999
       },
       // for User 3
       {
@@ -31,28 +31,28 @@ module.exports = {
         cartId: 3,
         productId: 1,
         productQuantity: 1,
-        pricePerUnit: 449999
+        pricePerUnit: 7999
       },
       {
         userId: 3,
         cartId: 3,
         productId: 3,
         productQuantity: 1,
-        pricePerUnit: 149999
+        pricePerUnit: 7499
       },
       {
         userId: 3,
         cartId: 3,
         productId: 4,
         productQuantity: 1,
-        pricePerUnit: 179999
+        pricePerUnit: 8499,
       },
       {
         userId: 3,
         cartId: 3,
         productId: 9,
         productQuantity: 1,
-        pricePerUnit: 549999,
+        pricePerUnit:  12999,
       },
       // For User 4
       {
@@ -60,7 +60,7 @@ module.exports = {
         cartId: 4,
         productId: 7,
         productQuantity: 1,
-        pricePerUnit: 119999
+        pricePerUnit: 14999
       },
       // For User 5
       {
@@ -68,21 +68,21 @@ module.exports = {
         cartId: 5,
         productId: 3,
         productQuantity: 4,
-        pricePerUnit: 149999
+        pricePerUnit: 7499
       },
       {
         userId: 5,
         cartId: 5,
         productId: 4,
         productQuantity: 2,
-        pricePerUnit: 179999
+        pricePerUnit: 8499
       },
       {
         userId: 5,
         cartId: 5,
         productId: 8,
         productQuantity: 4,
-        pricePerUnit: 59999
+        pricePerUnit: 13999
       },
     ]
 

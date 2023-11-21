@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {
   deleteProductCartThunk,
   editProductCartThunk,
@@ -93,9 +93,28 @@ function CartPage2() {
   };
 
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, cartItem) => {
+    const totalPrice = cartItems.reduce((total, cartItem) => {
       return total + cartItem.productQuantity * (cartItem.pricePerUnit / 100);
     }, 0);
+  
+    // Convert the total price to a string with 2 decimal places
+    const formattedTotalPrice = totalPrice.toFixed(2);
+  
+    // Convert the string back to a number
+    return parseFloat(formattedTotalPrice);
+  };
+
+  const getProductNameById = (productId, productData) => {
+    const product = productData.find((product) => product.id === productId);
+    return product ? product.productName : "Unknown Product";
+  };
+
+  const updateQuantity = (cartItem, newQuantity) => {
+    // Ensure the new quantity is a positive integer
+    newQuantity = parseInt(newQuantity, 10);
+    if (!isNaN(newQuantity) && newQuantity > 0) {
+      dispatch(editProductCartThunk(cartItem.id, newQuantity));
+    }
   };
 
   return isLoaded ? (
@@ -107,13 +126,11 @@ function CartPage2() {
             {cartItems.map((cartItem) => (
               <div className="cart-card" key={cartItem.id}>
                 <div className="cart-info" id="cart-section">
-                
                   <section className="table-cell" id="cart-name">
-                    <img
-                      src={productImage}
-                      className="product-image"
-                    />
-                    {allProducts[cartItem.id]?.productName}
+                    <NavLink to={`/products/${cartItem.productId}`}>
+                      <img src={productImage} className="product-image" />
+                      {getProductNameById(cartItem.productId, allProducts)}
+                    </NavLink>
                   </section>
                   <section className="table-cell">
                     ${cartItem.pricePerUnit / 100}
@@ -125,7 +142,12 @@ function CartPage2() {
                     >
                       <i className="bx bx-plus"></i>
                     </aside>
-                    <aside>{cartItem.productQuantity}</aside>
+                    <input
+                      type="number"
+                      min="1"
+                      value={cartItem.productQuantity}
+                      onChange={(e) => updateQuantity(cartItem, e.target.value)}
+                    />
                     <aside
                       className="pointer quantity-change"
                       onClick={() => subtractQuantity(cartItem)}
