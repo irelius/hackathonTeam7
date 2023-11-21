@@ -19,6 +19,7 @@ import CustomerDashboard from "./components/CustomerDashboard";
 import ProductsPage from "./components/Products";
 import SingleProductPage from "./components/Products/SingleProductPage";
 import TestSam from "./components/TestSam/TestSam";
+import CartPage2 from "./components/CartPage/CartPage";
 
 // import Homespace from "./components/HomeSpace";
 
@@ -75,7 +76,8 @@ function App() {
             <ProfilePage />
           </Route> */}
           <Route path="/cart">
-            <CartPage />
+            {/* <CartPage /> */}
+            <CartPage2 />
           </Route>
           <Route path="/payment/success">
             <PaymentSuccess />

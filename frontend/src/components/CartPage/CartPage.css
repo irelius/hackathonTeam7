@@ -98,3 +98,11 @@
 #delete-cart-item-button:hover {
   background-color: rgb(208, 208, 215);
 }
+
+.shopping-cart-container {
+  display: flex;
+}
+
+.shopping-cart.left {
+  width: 70%;
+}

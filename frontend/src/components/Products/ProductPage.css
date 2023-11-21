@@ -1,10 +1,14 @@
-.product-container {
-    backdrop-filter: blur(10px); /* Apply a blur effect to the background */
+.all-products-container {
+    /* backdrop-filter: blur(10px);  */
+    /* Apply a blur effect to the background */
     background: rgba(255, 255, 255, 0.6); /* Semi-transparent white background for the blur effect */
     border-radius: 10px;
     /* text-align: center; */
     width: 100%; /* Set your desired maximum width */
-    height: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .product-container h1 {
@@ -13,16 +17,16 @@
 
 .product-grid {
     display: grid;
+    text-align: center;
     grid-template-columns: repeat(3, 1fr); /* Create a 3-column grid */
     gap: 20px; /* Add spacing between grid items */
-    height: 45vh;
-
+    
 }
 
 .product-cell {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    padding: 10px 80px;
 }
 
 /* .product {
@@ -56,4 +60,40 @@
 
 .cart-icon {
     height: 30px;
+}
+
+.product-container {
+    display: flex;
+    height: auto;
+}
+
+.product.left, .product.right {
+    width: 50%;
+}
+
+.product.left {
+    margin: 100px 125px;
+}
+
+
+.product.right {
+    margin: 150px 150px;
+}
+
+.product.right h1 {
+    text-align: left;
+}
+
+.product.right p {
+    line-height: 50px;
+}
+
+
+.add-cart-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 20px;
+    cursor: pointer;
 }
