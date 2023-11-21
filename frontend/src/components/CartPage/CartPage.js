@@ -40,6 +40,9 @@ function CartPage2() {
   const allProductObj = useSelector((state) => state.product);
   const allProducts = Object.values(allProductObj);
 
+  const placeholderImageUrl = "https://via.placeholder.com/150"; // Replace this with your placeholder image URL
+  const productImage = placeholderImageUrl;
+
   console.log(cartItems);
 
   const checkout = async (e) => {
@@ -104,13 +107,12 @@ function CartPage2() {
             {cartItems.map((cartItem) => (
               <div className="cart-card" key={cartItem.id}>
                 <div className="cart-info" id="cart-section">
-                  <section className="table-cell">
-                    <i
-                      className="bx bxs-trash pointer"
-                      onClick={() => deleteCartItem(cartItem)}
-                    ></i>
-                  </section>
+                
                   <section className="table-cell" id="cart-name">
+                    <img
+                      src={productImage}
+                      className="product-image"
+                    />
                     {allProducts[cartItem.id]?.productName}
                   </section>
                   <section className="table-cell">
@@ -132,7 +134,13 @@ function CartPage2() {
                     </aside>
                   </section>
                   <section>
-                  ${cartItem.productQuantity * cartItem.pricePerUnit / 100}
+                    ${(cartItem.productQuantity * cartItem.pricePerUnit) / 100}
+                  </section>
+                  <section className="table-cell">
+                    <i
+                      className="bx bxs-trash pointer"
+                      onClick={() => deleteCartItem(cartItem)}
+                    ></i>
                   </section>
                 </div>
               </div>
