@@ -8,15 +8,16 @@ import * as productActions from "../../store/product"
 import * as productCartActions from "../../store/productcart"
 import * as productCategoryActions from "../../store/productcategory"
 import * as reviewActions from "../../store/review"
+import * as discountCategoryActions from "../../store/discountcategory"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(reviewActions.loadAllReviewsThunk())
+        dispatch(discountCategoryActions.loadAllDiscountCategoriesThunk())
     }, [])
 
-    const review = useSelector(state => state.review)
+    const review = useSelector(state => state.address)
     console.log("booba", review)
 
     const handleTest = (e) => {
@@ -34,10 +35,10 @@ function TestSam() {
             rating: 1,
         }
 
-        // dispatch(reviewActions.addReviewThunk(newReview))
-        // dispatch(reviewActions.editReviewThunk(1, editReview))
+        // dispatch(discountCategoryActions.addReviewThunk(newReview))
+        // dispatch(discountCategoryActions.editReviewThunk(1, editReview))
 
-        dispatch(reviewActions.deleteReviewThunk(1))
+        // dispatch(discountCategoryActions.deleteAddressThunk(1))
     }
 
     return (

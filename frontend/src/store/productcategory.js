@@ -1,27 +1,27 @@
 import { csrfFetch } from "./csrf";
 
-const LOAD_PRODUCTCATEGORY = "/product/setProductCategory"
-const LOAD_PRODUCTCATEGORIES = "/product/setProductCategories"
-const ADD_PRODUCTCATEGORY = "/product/addProductCategory"
-const EDIT_PRODUCTCATEGORY = "/product/editProductCategory"
-const DELETE_PRODUCTCATEGORY = "/product/deleteProductCategory"
-const CLEAR_PRODUCTCATEGORY = "/product/clearProductCategory"
+const LOAD_PRODUCT_CATEGORY = "/product/setProductCategory"
+const LOAD_PRODUCT_CATEGORIES = "/product/setProductCategories"
+const ADD_PRODUCT_CATEGORY = "/product/addProductCategory"
+const EDIT_PRODUCT_CATEGORY = "/product/editProductCategory"
+const DELETE_PRODUCT_CATEGORY = "/product/deleteProductCategory"
+const CLEAR_PRODUCT_CATEGORY = "/product/clearProductCategory"
 
 export const loadProductCategory = (productCategory) => {
     return {
-        type: LOAD_PRODUCTCATEGORY,
+        type: LOAD_PRODUCT_CATEGORY,
         payload: productCategory
     }
 }
 
 export const loadProductCategories = (productCategories) => {
     return {
-        type: LOAD_PRODUCTCATEGORIES,
+        type: LOAD_PRODUCT_CATEGORIES,
         payload: productCategories,
     }
 }
 
-// thunk action for all products
+// thunk action for all product categories
 export const loadAllProductCategoriesThunk = () => async (dispatch) => {
     try {
         const res = await csrfFetch("/api/productcategory/all")
@@ -69,7 +69,7 @@ export const loadProductCategoryByProduct = (productId) => async (dispatch) => {
 
 export const addProductCategory = (productCategory) => {
     return {
-        type: ADD_PRODUCTCATEGORY,
+        type: ADD_PRODUCT_CATEGORY,
         payload: productCategory
     }
 }
@@ -101,7 +101,7 @@ export const addProductCategoryThunk = (productId, categoryArr) => async (dispat
 
 export const editProductCategory = (productCategory) => {
     return {
-        type: EDIT_PRODUCTCATEGORY,
+        type: EDIT_PRODUCT_CATEGORY,
         payload: productCategory
     }
 }
@@ -133,7 +133,7 @@ export const editProductCategoryThunk = (productId, categoryArr) => async (dispa
 
 export const deleteProductCategory = (productCategory) => {
     return {
-        type: DELETE_PRODUCTCATEGORY,
+        type: DELETE_PRODUCT_CATEGORY,
         payload: productCategory
     }
 }
@@ -158,7 +158,7 @@ export const deleteProductCategoryThunk = (productCategoryId) => async (dispatch
 
 export const clearProductCategory = () => {
     return {
-        type: CLEAR_PRODUCTCATEGORY
+        type: CLEAR_PRODUCT_CATEGORY
     }
 }
 
@@ -168,9 +168,9 @@ const initialProduct = {}
 const productCategoryReducer = (state = initialProduct, action) => {
     const newState = { ...state }
     switch (action.type) {
-        case LOAD_PRODUCTCATEGORY:
+        case LOAD_PRODUCT_CATEGORY:
             return action.payload.data
-        case LOAD_PRODUCTCATEGORIES:
+        case LOAD_PRODUCT_CATEGORIES:
             const productCategories = {}
 
             if (!action.payload.data) {
@@ -183,23 +183,23 @@ const productCategoryReducer = (state = initialProduct, action) => {
             }
 
             return productCategories
-        case ADD_PRODUCTCATEGORY:
+        case ADD_PRODUCT_CATEGORY:
             for (let i = 0; i < action.payload.data.length; i++) {
                 let curr = action.payload.data[i]
                 newState[curr.id] = curr
             }
             return newState;
-        case EDIT_PRODUCTCATEGORY:
+        case EDIT_PRODUCT_CATEGORY:
             const newPCs = {}
             for (let i = 0; i < action.payload.data.length; i++) {
                 let curr = action.payload.data[i]
                 newPCs[curr.id] = curr
             }
             return newPCs;
-        case DELETE_PRODUCTCATEGORY:
+        case DELETE_PRODUCT_CATEGORY:
             delete newState[action.payload.data.id]
             return newState;
-        case CLEAR_PRODUCTCATEGORY:
+        case CLEAR_PRODUCT_CATEGORY:
             return initialProduct
         default:
             return newState;

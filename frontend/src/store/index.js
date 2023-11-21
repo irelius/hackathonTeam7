@@ -12,6 +12,7 @@ import productCartReducer from "./productcart"
 import cartReducer from "./cart";
 import stripeSessionReducer from "./stripesession";
 import userReducer from "./user";
+import discountCategoryReducer from "./discountcategory";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   review: reviewReducer,
   address: addressReducer,
   discount: discountReducer,
+  discountCategory: discountCategoryReducer,
   productCart: productCartReducer,
   cart: cartReducer,
   stripeSession: stripeSessionReducer,
