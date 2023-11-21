@@ -33,7 +33,7 @@ router.get("/:reviewId", restoreUser, requireAuth, async (req, res) => {
 })
 
 // Get all reviews made to a particular product
-router.get("/product/:productId",  restoreUser, requireAuth, async (req, res) => {
+router.get("/product/:productId", restoreUser, requireAuth, async (req, res) => {
     try {
         const reviews = await Review.findAll({
             where: {
@@ -48,7 +48,7 @@ router.get("/product/:productId",  restoreUser, requireAuth, async (req, res) =>
 })
 
 // get a user's review for a product
-router.get("/product/:productId/user/:userId",  restoreUser, requireAuth, async (req, res) => {
+router.get("/product/:productId/user/:userId", restoreUser, requireAuth, async (req, res) => {
     try {
         const review = await Review.findAll({
             where: {
@@ -68,7 +68,7 @@ router.get("/product/:productId/user/:userId",  restoreUser, requireAuth, async 
 })
 
 // Get all reviews made by a user
-router.get('/user/:userId',  restoreUser, requireAuth, async (req, res) => {
+router.get('/user/:userId', restoreUser, requireAuth, async (req, res) => {
     try {
         const reviews = await Review.findAll({
             where: {
@@ -86,10 +86,10 @@ router.get('/user/:userId',  restoreUser, requireAuth, async (req, res) => {
 // create new review for a product
 router.post('/', restoreUser, requireAuth, async (req, res) => {
     try {
-        const { userId, review, rating } = req.body;
+        const { productId, review, rating } = req.body;
 
         // check if product exists
-        const product = await Product.findByPk(req.params.productId)
+        const product = await Product.findByPk(productId)
         if (!product) {
             return notFoundError(res, "Product")
         }
@@ -97,8 +97,8 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
         // check if user already has a review for a product
         const checkForReview = await Review.findAll({
             where: {
-                productId: req.params.productId,
-                userId: userId
+                productId: productId,
+                userId: req.user.id
             }
         })
         if (checkForReview.length > 0) {
@@ -107,8 +107,8 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
 
         // if there's no problem, create a new review for a product
         const newReview = await Review.create({
-            userId: userId,
-            productId: req.params.productId,
+            userId: req.user.id,
+            productId: productId,
             review: review,
             rating: rating
         })
@@ -121,27 +121,24 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
 
 
 // update a product's review
-router.put("/:reviewId", restoreUser, requireAuth, checkUser, async (req, res) => {
-    const userId = req.user.id
-    const { review, rating } = req.body;
-
+router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
+    const { reviewInfo } = req.body;
     try {
-
         const reviewToEdit = await Review.findByPk(req.params.reviewId)
 
         if (!reviewToEdit) {
             return notFoundError(res, "Review")
         }
 
-        if (reviewToEdit.userId !== userId) {
+        if (reviewToEdit.userId !== req.user.id) {
             return notAuthToEdit(res, "review")
         }
 
-        reviewToEdit.review = review
-        reviewToEdit.rating = rating
+        reviewToEdit.review = reviewInfo.review
+        reviewToEdit.rating = reviewInfo.rating
 
         await reviewToEdit.save()
-        return res.json({ message: "Successfully updated review" })
+        return res.json({ data: reviewToEdit })
     } catch (err) {
         return internalServerError(res, err)
     }
@@ -149,19 +146,19 @@ router.put("/:reviewId", restoreUser, requireAuth, checkUser, async (req, res) =
 
 
 // delete a review for a product
-router.delete("/:reviewId", restoreUser, requireAuth, checkUser, async (req, res) => {
+router.delete("/:reviewId", restoreUser, requireAuth, async (req, res) => {
     try {
-        const review = await Review.findByPk(req.params.reviewId)
-        if (!review) {
+        const reviewToDelete = await Review.findByPk(req.params.reviewId)
+        if (!reviewToDelete) {
             return notFoundError(res, "Review")
         }
 
-        if (req.user.id !== review.userId && req.user.id !== 1) {
+        if (req.user.id !== reviewToDelete.userId) {
             return notAuthToDelete(res, "review")
         }
 
-        await review.destroy()
-        res.status(200).json({ message: "Review successfully deleted", statusCode: 200 })
+        await reviewToDelete.destroy()
+        res.status(200).json({ data: reviewToDelete })
     } catch (err) {
         return internalServerError(res, err)
     }

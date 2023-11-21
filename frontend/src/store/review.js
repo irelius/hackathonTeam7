@@ -21,33 +21,6 @@ export const loadReviews = (reviews) => {
     }
 }
 
-export const addReview = (review) => {
-    return {
-        type: ADD_REVIEW,
-        payload: review
-    }
-}
-
-export const editReview = (review) => {
-    return {
-        type: EDIT_REVIEW,
-        payload: review
-    }
-}
-
-export const deleteReview = (review) => {
-    return {
-        type: DELETE_REVIEW,
-        payload: review
-    }
-}
-
-export const clearReview = () => {
-    return {
-        type: CLEAR_REVIEW
-    }
-}
-
 // thunk action for one specific review
 export const loadOneReviewThunk = (reviewId) => async (dispatch) => {
     try {
@@ -94,17 +67,17 @@ export const loadAllReviewsThunk = () => async (dispatch) => {
     return []
 }
 
+export const addReview = (review) => {
+    return {
+        type: ADD_REVIEW,
+        payload: review
+    }
+}
+
 // thunk action for creating a new review
 export const addReviewThunk = (newReview) => async (dispatch) => {
     try {
-
-
-        // Log the URL and data being sent
-        console.log('Data:', newReview);
-
-
-
-        const res = await csrfFetch(`/api/review/new`, {
+        const res = await csrfFetch(`/api/review/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -122,6 +95,13 @@ export const addReviewThunk = (newReview) => async (dispatch) => {
 
     } catch (err) {
         console.error('An error occurred while creating new review:', err);
+    }
+}
+
+export const editReview = (review) => {
+    return {
+        type: EDIT_REVIEW,
+        payload: review
     }
 }
 
@@ -148,6 +128,14 @@ export const editReviewThunk = (reviewId, reviewInfo) => async (dispatch) => {
     }
 }
 
+
+export const deleteReview = (review) => {
+    return {
+        type: DELETE_REVIEW,
+        payload: review
+    }
+}
+
 export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/review/${reviewId}`, {
@@ -164,13 +152,20 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     }
 }
 
+export const clearReview = () => {
+    return {
+        type: CLEAR_REVIEW
+    }
+}
+
+
 const initialReview = {}
 
 const reviewReducer = (state = initialReview, action) => {
     const newState = { ...state }
     switch (action.type) {
         case LOAD_REVIEW:
-            return action.payload
+            return action.payload.data
         case LOAD_REVIEWS:
             const review = {}
 
@@ -185,13 +180,13 @@ const reviewReducer = (state = initialReview, action) => {
 
             return review
         case ADD_REVIEW:
-            newState[action.payload.id] = action.payload
+            newState[action.payload.data.id] = action.payload.data
             return newState;
         case EDIT_REVIEW:
-            newState[action.payload.id] = action.payload;
+            newState[action.payload.data.id] = action.payload.data;
             return newState;
         case DELETE_REVIEW:
-            delete newState[action.payload.id]
+            delete newState[action.payload]
             return newState;
         case CLEAR_REVIEW:
             return initialReview

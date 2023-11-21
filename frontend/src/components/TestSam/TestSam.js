@@ -7,37 +7,37 @@ import * as orderActions from "../../store/order"
 import * as productActions from "../../store/product"
 import * as productCartActions from "../../store/productcart"
 import * as productCategoryActions from "../../store/productcategory"
+import * as reviewActions from "../../store/review"
 
 function TestSam() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(productCategoryActions.loadAllProductCategoriesThunk())
-
-        dispatch(productCategoryActions.clearProductCategory())
+        dispatch(reviewActions.loadAllReviewsThunk())
     }, [])
 
-    const productCategory = useSelector(state => state.productCategory)
-    console.log(productCategory)
+    const review = useSelector(state => state.review)
+    console.log("booba", review)
 
     const handleTest = (e) => {
         e.preventDefault()
 
-        const newPC = ["Black", "Indoor"]
-        const editPC = ["White", "Outdoor"]
-
-        const editProduct = {
-            productName: "edit product",
-            productDescription: "edit product descript",
-            productPrice: 999,
-            productQuantity: 999
+        const newReview = {
+            productId: 1,
+            review: "test review",
+            rating: 5,
         }
 
-        const productQuantity = 1
+        const editReview = {
+            productId: 1,
+            review: "asdf review",
+            rating: 1,
+        }
 
-        // dispatch(productCategoryActions.editProductCategoryThunk(1, editPC))
+        // dispatch(reviewActions.addReviewThunk(newReview))
+        // dispatch(reviewActions.editReviewThunk(1, editReview))
 
-        dispatch(productCategoryActions.deleteProductCategoryThunk(3))
+        dispatch(reviewActions.deleteReviewThunk(1))
     }
 
     return (
