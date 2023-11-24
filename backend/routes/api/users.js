@@ -2,10 +2,12 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { internalServerError } = require('../../utils/errorFunc');
+const { isAdmin } = require('../../utils/authorization');
 
 const validateSignup = [
   check('email')
@@ -44,6 +46,21 @@ router.get('/', (req, res) => {
     });
   } else return res.json({ user: null });
 });
+
+// get all employees
+router.get("/employees", restoreUser, requireAuth, isAdmin, async (req, res) => {
+  try {
+    const employees = await User.findAll({
+      where: {
+        role: ["admin", "staff"]
+      },
+      attributes: { exclude: ["hashedPassword"] }
+    })
+    res.json({ data: employees })
+  } catch (err) {
+    return internalServerError(res, err)
+  }
+})
 
 // Sign up
 router.post('/', validateSignup, async (req, res) => {

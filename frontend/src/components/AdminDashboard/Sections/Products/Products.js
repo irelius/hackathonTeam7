@@ -12,7 +12,30 @@ function ProductsSection() {
 
     return (
         <div>
-            products
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                    </tr>
+                </thead>
+            </table>
+            <tbody>
+                {products.map((el, i) => (
+                    <tr key={i}>
+                        <td>
+                            {el.productName}
+                        </td>
+                        <td>
+                            ${el.productPrice / 100}
+                        </td>
+                        <td>
+                            {el.productQuantity}
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
         </div>
     )
 }

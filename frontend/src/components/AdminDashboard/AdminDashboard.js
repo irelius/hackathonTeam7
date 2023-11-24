@@ -8,23 +8,30 @@ import ProductsSection from "./Sections/Products/Products"
 import EmployeesSection from "./Sections/Employees/Employees"
 import ReviewsSection from "./Sections/Reviews/Reviews"
 
-import * as reviewActions from "../../store/review"
 import * as userActions from "../../store/user"
-import * as orderActions from "../../store/order"
-import * as discountActions from "../../store/discount"
-import * as productActions from "../../store/product"
-
 
 function AdminDashboard() {
     const dispatch = useDispatch()
     const [load, setLoad] = useState(false)
+    const [activeTab, setActiveTab] = useState("OrdersSection")
 
     useEffect(() => {
         dispatch(sessionActions.restoreUser())
+        dispatch(userActions.loadAllUsersThunk())
         setLoad(true)
+
+        return (() => (
+            dispatch(userActions.clearUser())
+        ))
     }, [dispatch])
 
     const currUser = useSelector(state => state.session.user)
+    const allUsers = useSelector(state => state.user)
+
+    const handleTabChange = (tab) => {
+        setActiveTab(tab)
+    }
+
 
     if (!currUser) {
         return <Redirect to="/forbidden" />;
@@ -34,28 +41,34 @@ function AdminDashboard() {
         return <Redirect to="/forbidden" />;
     }
 
-    return (
+    return load ? (
         <div>
             <section>
-                <OrdersSection />
+                <button onClick={() => handleTabChange("OrdersSection")}>Orders</button>
+                <button onClick={() => handleTabChange("ProductsSection")}>Products</button>
+                <button onClick={() => handleTabChange("ReviewsSection")}>Reviews</button>
+                <button onClick={() => handleTabChange("DiscountsSection")}>Discounts</button>
+                {currUser.role === "admin" ? ( // only show the employee tab button if the user role is Admin
+                    <button onClick={() => handleTabChange("EmployeesSection")}>Employees</button>
+                ) : (
+                    <></>
+                )}
             </section>
+
             <section>
-                <ProductsSection />
-            </section>
-            <section>
-                <ReviewsSection />
-            </section>
-            <section>
-                <DiscountsSection />
-            </section>
-            {currUser.role === "admin" ? ( // only show the employee section if the user role is Admin
-                <section>
+                {activeTab === "OrdersSection" && <OrdersSection />}
+                {activeTab === "ProductsSection" && <ProductsSection />}
+                {activeTab === "ReviewsSection" && <ReviewsSection allUsers={allUsers} />}
+                {activeTab === "DiscountsSection" && <DiscountsSection />}
+                {activeTab === "EmployeesSection" && currUser.role === "admin" ? ( // only show the employee section if the user role is Admin
                     <EmployeesSection />
-                </section>
-            ) : (
-                <section></section>
-            )}
+                ) : (
+                    <></>
+                )}
+            </section>
         </div>
+    ) : (
+        <></>
     )
 }
 

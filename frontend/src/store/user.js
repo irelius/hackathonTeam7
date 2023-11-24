@@ -59,6 +59,21 @@ export const loadAllUsersThunk = () => async (dispatch) => {
     return []
 }
 
+// thunk action for loading employee users
+export const loadAllEmployeesThunk = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch("/api/users/employees")
+        if (res.ok) {
+            const allUsers = await res.json()
+            dispatch(loadUsers(allUsers))
+        } else {
+            console.error('Failed to load all users:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all employees:', err);
+    }
+}
+
 
 
 // thunk action for editing a user information

@@ -1,25 +1,34 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { loadAllReviewByDateThunk } from "../../../../store/review"
-import { loadAllUsersThunk } from "../../../../store/user"
+import { clearReview, loadAllReviewByDateThunk } from "../../../../store/review"
+import { clearUser, loadAllUsersThunk } from "../../../../store/user"
 
-function ReviewsSection() {
+function ReviewsSection({ allUsers }) {
     const dispatch = useDispatch()
+    const [load, setLoad] = useState(false)
+
     useEffect(() => {
         dispatch(loadAllReviewByDateThunk())
         dispatch(loadAllUsersThunk())
+
+        setLoad(true)
+
+        return (() => (
+            dispatch(clearUser())
+        ))
     }, [dispatch])
 
     const reviews = Object.values(useSelector(state => state.review))
-    const allUsers = useSelector(state => state.user)
 
-    return (
+    return load ? (
         <div>
             {reviews.map((el, i) => (
                 <div key={i}>
-                    <section>
-                        {allUsers[el.userId].username}
-                    </section>
+                    {allUsers[el.userId] ? (
+                        allUsers[el.userId].username
+                    ) : (
+                        <></>
+                    )}
                     <section>
                         {el.review}
                     </section>
@@ -29,6 +38,8 @@ function ReviewsSection() {
                 </div>
             ))}
         </div>
+    ) : (
+        <div></div>
     )
 }
 
