@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
@@ -20,6 +20,7 @@ import ProductsPage from "./components/Products";
 import SingleProductPage from "./components/Products/SingleProductPage";
 import TestSam from "./components/TestSam/TestSam";
 import CartPage2 from "./components/CartPage/CartPage";
+import Forbidden from "./components/Forbidden/Forbidden";
 
 // import Homespace from "./components/HomeSpace";
 
@@ -88,6 +89,9 @@ function App() {
           {/* Just a test route for my purposes */}
           <Route path="/test">
             <TestSam />
+          </Route>
+          <Route path="/forbidden">
+            <Forbidden />
           </Route>
         </Switch>
       )}

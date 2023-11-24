@@ -20,6 +20,28 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     }
 })
 
+// get all orders made, grouped by cart Id
+router.get("/by-cart", restoreUser, requireAuth, isAdmin, async (req, res) => {
+    try {
+        const orders = await Order.findAll({
+            order: ["cartId"]
+        })
+
+        const groupedOrders = orders.reduce((acc, order) => {
+            const { cartId } = order;
+            if (!acc[cartId]) {
+                acc[cartId] = [];
+            }
+            acc[cartId].push(order);
+            return acc;
+        }, {})
+
+        res.json({ data: groupedOrders })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
 // get all orders made by a user
 router.get("/user/:userId", restoreUser, requireAuth, async (req, res) => {
     try {

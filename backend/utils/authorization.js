@@ -18,8 +18,6 @@ const isAdmin = function (req, res, next) {
 }
 
 const checkUser = function (req, res, next) {
-    console.log('booba', req.params.userId, req.user.id)
-
     if (req.params.userId === req.user.id || req.user.id === 1) {
         return next()
     }

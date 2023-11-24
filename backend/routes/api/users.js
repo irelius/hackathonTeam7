@@ -37,6 +37,7 @@ router.get('/', (req, res) => {
       id: user.id,
       email: user.email,
       username: user.username,
+      role: user.role
     };
     return res.json({
       user: safeUser
@@ -67,10 +68,10 @@ router.post('/', validateSignup, async (req, res) => {
 // Get all users
 router.get("/all", async (req, res) => {
   try {
-      const users = await User.findAll()
-      res.json({data: users})
+    const users = await User.findAll()
+    res.json({ data: users })
   } catch (err) {
-      return internalServerError(res, err)
+    return internalServerError(res, err)
   }
 })
 

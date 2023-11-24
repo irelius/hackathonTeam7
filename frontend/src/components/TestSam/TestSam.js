@@ -18,8 +18,6 @@ function TestSam() {
     }, [])
 
     const review = useSelector(state => state.address)
-    console.log("booba", review)
-
     const handleTest = (e) => {
         e.preventDefault()
 

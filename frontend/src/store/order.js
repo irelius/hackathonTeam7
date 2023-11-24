@@ -26,7 +26,7 @@ export const loadOneOrderThunk = (orderId) => async (dispatch) => {
         const res = await csrfFetch(`/api/order/${orderId}`)
         if (res.ok) {
             const order = await res.json()
-            dispatch(loadOrder(order))
+            dispatch(loadOrders(order))
         } else {
             console.error('Failed to load specific order:', res.status, res.statusText);
         }
@@ -48,7 +48,21 @@ export const loadAllOrdersThunk = () => async (dispatch) => {
     } catch (err) {
         console.error('An error occurred while loading all orders:', err);
     }
-    return []
+}
+
+// thunk action for all orders grouped by cart ID
+export const loadAllOrdersByCartThunk = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch('/api/order/by-cart')
+        if (res.ok) {
+            const orders = await res.json()
+            dispatch(loadOrder(orders))
+        } else {
+            console.error("Failed to load all orders:", res.status, res.statusText)
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all orders:', err);
+    }
 }
 
 // thunk action for one current user's orders
@@ -57,7 +71,7 @@ export const loadCurrentUserOrdersThunk = () => async (dispatch) => {
         const res = await csrfFetch(`/api/order/current`)
         if (res.ok) {
             const order = await res.json()
-            dispatch(loadOrders(order))
+            dispatch(loadOrder(order))
         } else {
             console.error('Failed to load order:', res.status, res.statusText);
         }
