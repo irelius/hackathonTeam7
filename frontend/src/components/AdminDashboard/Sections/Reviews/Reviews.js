@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { clearReview, loadAllReviewByDateThunk } from "../../../../store/review"
+import { loadAllReviewByDateThunk } from "../../../../store/review"
 import { clearUser, loadAllUsersThunk } from "../../../../store/user"
 
 function ReviewsSection({ allUsers }) {

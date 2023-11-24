@@ -8,14 +8,12 @@ function EmployeesSection() {
     useEffect(() => {
         dispatch(userActions.loadAllEmployeesThunk())
 
-        // return (() => {
-        //     dispatch(userActions.clearUser())
-        // })
+        return (() => {
+            dispatch(userActions.clearUser())
+        })
     }, [dispatch])
 
     const allEmployees = Object.values(useSelector(state => state.user))
-
-    console.log('booba', allEmployees)
 
     return (
         <div>
