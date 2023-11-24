@@ -40,6 +40,11 @@ module.exports = {
           len: [60, 60],
         },
       },
+      role: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "customer"
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
