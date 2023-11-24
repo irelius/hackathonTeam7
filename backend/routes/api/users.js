@@ -68,7 +68,9 @@ router.post('/', validateSignup, async (req, res) => {
 // Get all users
 router.get("/all", async (req, res) => {
   try {
-    const users = await User.findAll()
+    const users = await User.findAll({
+      attributes: { exclude: ["hashedPassword"] }
+    })
     res.json({ data: users })
   } catch (err) {
     return internalServerError(res, err)

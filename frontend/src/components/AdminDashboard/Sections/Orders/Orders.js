@@ -1,20 +1,18 @@
 import "./Orders.css"
 
-import { useEffect, useState } from "react"
+import TableCreation from "./Helper/TableCreation"
 import { useDispatch, useSelector } from "react-redux"
-import * as orderActions from "../../../../store/order"
-import TableCreation from "./HelperFuncs/TableCreation"
+import { useEffect } from "react"
+import { loadAllOrdersByCartThunk } from "../../../../store/order"
 
 
 function OrdersSection() {
     const dispatch = useDispatch()
-
     useEffect(() => {
-        dispatch(orderActions.loadAllOrdersByCartThunk())
+        dispatch(loadAllOrdersByCartThunk())
     }, [dispatch])
 
     const orders = Object.values(useSelector(state => state.order))
-
 
     return (
         <div>

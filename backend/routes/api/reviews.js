@@ -19,6 +19,18 @@ router.get("/all", restoreUser, requireAuth, async (req, res) => {
     }
 })
 
+// Get all reviews
+router.get("/all/by-newest", restoreUser, requireAuth, async (req, res) => {
+    try {
+        const reviews = await Review.findAll({
+            order: [["createdAt", "DESC"]]
+        })
+        res.json({ data: reviews })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
 // Get a review by id
 router.get("/:reviewId", restoreUser, requireAuth, async (req, res) => {
     try {

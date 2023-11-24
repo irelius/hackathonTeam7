@@ -67,6 +67,22 @@ export const loadAllReviewsThunk = () => async (dispatch) => {
     return []
 }
 
+// thunk action for all reviews, ordered by date from newest to oldest
+export const loadAllReviewByDateThunk = () => async (dispatch) => {
+    try {
+        const res = await csrfFetch("/api/review/all/by-newest")
+        if (res.ok) {
+            const allReviews = await res.json()
+            dispatch(loadReviews(allReviews))
+        } else {
+            console.error('Failed to load reviews:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading reviews:', err);
+    }
+    return []
+}
+
 export const addReview = (review) => {
     return {
         type: ADD_REVIEW,
