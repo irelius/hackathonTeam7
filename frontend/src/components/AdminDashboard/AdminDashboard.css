@@ -1,3 +1,4 @@
+/* Dashboard Side Bar section */
 #dashboard-side-bar {
     display: flex;
     flex-direction: column;
@@ -12,10 +13,9 @@
     color: #ffffff;
 }
 
-#dashboard-side-bar div {
+#dashboard-side-bar>div {
     padding: 20px;
     padding-left: 35px;
-    /* margin-bottom: 10px; */
     cursor: pointer;
 }
 
@@ -26,23 +26,111 @@
 }
 
 
+/* Dashboard Display Section */
 #dashboard-display {
     display: flex;
-    position: fixed;
 
-    left: 200px;
     padding: 20px;
-    padding-left: 50px;
+    padding-left: 250px;
+    padding-bottom: 0px;
 
     height: 100%;
-    width: 100%;
 }
 
 
+/* Temporary text CSS */
 .dash-text-100 {
     color: #ffffff;
 }
 
 .dash-text-200 {
     color: #57687c
+}
+
+
+/* ----------------------------------------------------------------------------------------- */
+/* dashboard table stuff. might change the name to be just "table-th" or something if we want to use this for other tables */
+.dashboard-table {
+    margin-top: 130px;
+}
+
+
+/* Table Header section */
+.dashboard-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    position: fixed;
+
+    top: 75px;
+    left: 200px;
+
+    width: 100%;
+    height: 60px;
+
+    background-color: #333;
+    color: #ffffff;
+}
+
+.dashboard-tr {
+    display: flex;
+    flex-direction: row;
+
+    padding-left: 50px;
+}
+
+.dashboard-th-300 {
+    display: flex;
+    justify-content: start;
+    width: 300px;
+    font-weight: normal;
+}
+
+.dashboard-th-200 {
+    display: flex;
+    justify-content: start;
+    width: 200px;
+    font-weight: normal;
+}
+
+.dashboard-th-100 {
+    display: flex;
+    justify-content: start;
+    width: 100px;
+    font-weight: normal;
+}
+
+
+/* Table Body section */
+.dashboard-table-rows {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-table-rows > * {
+    margin-bottom: 20px;
+}
+
+.dashboard-td-300 {
+    display: flex;
+    justify-content: start;
+    width: 300px;
+    font-weight: normal;
+}
+
+.dashboard-td-200 {
+    display: flex;
+    justify-content: start;
+    width: 200px;
+    font-weight: normal;
+}
+
+.dashboard-td-100 {
+    display: flex;
+    justify-content: start;
+    width: 100px;
+    font-weight: normal;
 }

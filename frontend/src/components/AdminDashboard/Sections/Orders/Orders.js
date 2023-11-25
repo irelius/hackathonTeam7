@@ -15,22 +15,22 @@ function OrdersSection() {
     const orders = Object.values(useSelector(state => state.order))
 
     return (
-        <div>
+        <div className="dashboard-header">
             <table>
-                <thead>
-                    <tr>
-                        <th>Cart ID</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Date</th>
+                <thead className="dashboard-header">
+                    <tr className="dashboard-tr">
+                        <th className="dashboard-th-100">Cart ID</th>
+                        <th className="dashboard-th-200">Name</th>
+                        <th className="dashboard-th-100">Quantity</th>
+                        <th className="dashboard-th-100">Date</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {orders.map((el, i) => (
-                        <TableCreation orders={el} />
-                    ))}
-                </tbody>
             </table>
+            <tbody>
+                {orders.map((el, i) => (
+                    <TableCreation orders={el} />
+                ))}
+            </tbody>
         </div>
     )
 }
