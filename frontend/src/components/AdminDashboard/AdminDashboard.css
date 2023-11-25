@@ -1,0 +1,48 @@
+#dashboard-side-bar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 200px;
+
+    top: 75px;
+    left: 0;
+    bottom: 0;
+
+    background-color: #333;
+    color: #ffffff;
+}
+
+#dashboard-side-bar div {
+    padding: 20px;
+    padding-left: 35px;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+}
+
+
+#dashboard-side-bar>div:hover {
+    background-color: #555;
+    color: white;
+}
+
+
+#dashboard-display {
+    display: flex;
+    position: fixed;
+
+    left: 200px;
+    padding: 20px;
+    padding-left: 50px;
+
+    height: 100%;
+    width: 100%;
+}
+
+
+.dash-text-100 {
+    color: #ffffff;
+}
+
+.dash-text-200 {
+    color: #57687c
+}
