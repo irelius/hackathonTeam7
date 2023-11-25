@@ -107,10 +107,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
 }
 
-.dashboard-table-rows > * {
+.dashboard-table-rows>* {
+    margin-bottom: 20px;
+}
+
+#expand-discount {
+    margin-left: 20px;
     margin-bottom: 20px;
 }
 
