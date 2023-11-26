@@ -1,0 +1,34 @@
+#dashboard-product-display {
+    margin-bottom: 50px;
+}
+
+#dashboard-product-directory-bg {
+    background-color: orange;
+
+    display: flex;
+    position: fixed;
+
+    width: 100vw;
+    height: 50px;
+    bottom: 0;
+    left: 200px;
+
+
+}
+
+
+#dashboard-product-directory {
+    display: flex;
+    position: fixed;
+    left: 200px;
+    bottom: 0;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 50px;
+    width: 1000px;
+
+    padding-left: 50px;
+
+    /* background-color: orange; */
+}

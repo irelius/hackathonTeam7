@@ -23,6 +23,41 @@ router.get("/all", async (req, res) => {
 })
 
 
+// Get all products
+router.get("/all/sorted", async (req, res) => {
+    try {
+        const products = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            order: [['productName', 'ASC']],
+        })
+        res.json({ data: products })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
+// Get all products with name that starts with a letter
+router.get("/all/:startingLetter", async (req, res) => {
+    try {
+        const startingLetter = req.params.startingLetter.toUpperCase();
+
+        const products = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            where: {
+                productName: {
+                    [Sequelize.Op.like]: `${startingLetter}%`,
+                },
+            },
+            order: [['productName', 'ASC']],
+        });
+
+        res.json({ data: products });
+    } catch (err) {
+        return internalServerError(res, err);
+    }
+})
+
 
 // Get a product by name
 router.get("/name/:productName", async (req, res) => {
