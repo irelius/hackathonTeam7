@@ -1,10 +1,4 @@
-#dashboard-product-display {
-    margin-bottom: 50px;
-}
-
 #dashboard-product-directory-bg {
-    background-color: orange;
-
     display: flex;
     position: fixed;
 
@@ -13,7 +7,7 @@
     bottom: 0;
     left: 200px;
 
-
+    background-color: #e8e8e8;
 }
 
 
@@ -26,9 +20,39 @@
     align-items: center;
 
     height: 50px;
-    width: 1000px;
+    width: 70vw;
+    max-width: 1000px;
 
     padding-left: 50px;
+}
 
-    /* background-color: orange; */
+.active-letter {
+    color: black;
+    text-decoration: underline;
+}
+
+
+.letter-spacing {
+    display: flex;
+    justify-content: center;
+    width: 20px;
+}
+
+#dashboard-empty-space {
+    height: 50px;
+    background-color: none;
+}
+
+#no-products {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    height: 50px;
+
+    margin-bottom: 20px;
+
+    width: 70vw;
+    max-width: 1000px;
 }

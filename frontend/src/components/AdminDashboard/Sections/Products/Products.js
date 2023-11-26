@@ -17,15 +17,13 @@ function ProductsSection() {
         }
     }, [dispatch, searchLetter])
 
-    const handleSearchLetter = () => {
-
-    }
-
-
     const products = Object.values(useSelector(state => state.product))
+    const alphabet = ['All', ...Array.from({ length: 26 }, (_, index) => String.fromCharCode(65 + index))];
+
+    const isActive = (letter) => letter === searchLetter;
 
     return (
-        <div id="dashboard-product-display">
+        <div>
             <div className="dashboard-table">
                 <table>
                     <thead className="dashboard-header">
@@ -38,7 +36,7 @@ function ProductsSection() {
                 </table>
                 <tbody>
                     {products.length === 0 ? (
-                        <div>There are no products that start with {`${searchLetter}`}</div>
+                        <div id="no-products">There are no products that start with {`${searchLetter}`}</div>
                     ) : (
                         <div>
                             {products.map((el, i) => (
@@ -60,33 +58,15 @@ function ProductsSection() {
             </div>
             <div id="dashboard-product-directory-bg">
                 <div id="dashboard-product-directory" className="text-200">
-                    <aside onClick={() => setSearchLetter("All")}>All</aside>
-                    <aside onClick={() => setSearchLetter("A")}>A</aside>
-                    <aside onClick={() => setSearchLetter("B")}>B</aside>
-                    <aside onClick={() => setSearchLetter("C")}>C</aside>
-                    <aside onClick={() => setSearchLetter("D")}>D</aside>
-                    <aside onClick={() => setSearchLetter("E")}>E</aside>
-                    <aside onClick={() => setSearchLetter("F")}>F</aside>
-                    <aside onClick={() => setSearchLetter("G")}>G</aside>
-                    <aside onClick={() => setSearchLetter("H")}>H</aside>
-                    <aside onClick={() => setSearchLetter("I")}>I</aside>
-                    <aside onClick={() => setSearchLetter("J")}>J</aside>
-                    <aside onClick={() => setSearchLetter("K")}>K</aside>
-                    <aside onClick={() => setSearchLetter("L")}>L</aside>
-                    <aside onClick={() => setSearchLetter("M")}>M</aside>
-                    <aside onClick={() => setSearchLetter("N")}>N</aside>
-                    <aside onClick={() => setSearchLetter("O")}>O</aside>
-                    <aside onClick={() => setSearchLetter("P")}>P</aside>
-                    <aside onClick={() => setSearchLetter("Q")}>Q</aside>
-                    <aside onClick={() => setSearchLetter("R")}>R</aside>
-                    <aside onClick={() => setSearchLetter("S")}>S</aside>
-                    <aside onClick={() => setSearchLetter("T")}>T</aside>
-                    <aside onClick={() => setSearchLetter("U")}>U</aside>
-                    <aside onClick={() => setSearchLetter("V")}>V</aside>
-                    <aside onClick={() => setSearchLetter("W")}>W</aside>
-                    <aside onClick={() => setSearchLetter("X")}>X</aside>
-                    <aside onClick={() => setSearchLetter("Y")}>Y</aside>
-                    <aside onClick={() => setSearchLetter("Z")}>Z</aside>
+                    {alphabet.map((letter) => (
+                        <aside
+                            key={letter}
+                            className={isActive(letter) ? 'active-letter pointer letter-spacing' : 'pointer letter-spacing'}
+                            onClick={() => setSearchLetter(letter)}
+                        >
+                            {letter}
+                        </aside>
+                    ))}
                 </div>
             </div>
         </div>
