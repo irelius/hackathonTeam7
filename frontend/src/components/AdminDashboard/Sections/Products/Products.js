@@ -23,7 +23,7 @@ function ProductsSection() {
     const isActive = (letter) => letter === searchLetter;
 
     return (
-        <div>
+        <div id="temp">
             <div className="dashboard-table">
                 <table>
                     <thead className="dashboard-header">
@@ -38,7 +38,7 @@ function ProductsSection() {
                     {products.length === 0 ? (
                         <div id="no-products">There are no products that start with {`${searchLetter}`}</div>
                     ) : (
-                        <div>
+                        <div id="temp">
                             {products.map((el, i) => (
                                 <tr key={i} className="dashboard-table-rows">
                                     <td className="dashboard-td-300">
@@ -61,7 +61,7 @@ function ProductsSection() {
                     {alphabet.map((letter) => (
                         <aside
                             key={letter}
-                            className={isActive(letter) ? 'active-letter pointer letter-spacing' : 'pointer letter-spacing'}
+                            className={isActive(letter) ? 'active-letter text-100 pointer letter-spacing' : 'pointer letter-spacing'}
                             onClick={() => setSearchLetter(letter)}
                         >
                             {letter}

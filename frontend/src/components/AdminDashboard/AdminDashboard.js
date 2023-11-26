@@ -57,7 +57,7 @@ function AdminDashboard() {
                 )}
             </section>
 
-            <section id="dashboard-display" className="bg-100">
+            <section id="dashboard-display">
                 {activeTab === "OrdersSection" && <OrdersSection />}
                 {activeTab === "ProductsSection" && <ProductsSection />}
                 {activeTab === "ReviewsSection" && <ReviewsSection allUsers={allUsers} />}

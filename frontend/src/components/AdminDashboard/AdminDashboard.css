@@ -9,7 +9,7 @@
     left: 0;
     bottom: 0;
 
-    background-color: #333;
+    background-color: #2C3E50;
     color: #ffffff;
 }
 
@@ -21,7 +21,7 @@
 
 
 #dashboard-side-bar>div:hover {
-    background-color: #555;
+    background-color: #57687c;
     color: white;
 }
 
@@ -69,7 +69,7 @@
     width: 100%;
     height: 60px;
 
-    background-color: #333;
+    background-color: #2C3E50;
     color: #ffffff;
 }
 
@@ -78,6 +78,7 @@
     flex-direction: row;
 
     padding-left: 50px;
+    max-width: 70vw;
 }
 
 .dashboard-th-300 {
@@ -110,6 +111,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    max-width: 70vw;
 }
 
 .dashboard-table-rows>* {
