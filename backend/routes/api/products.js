@@ -22,15 +22,25 @@ router.get("/all", async (req, res) => {
     }
 })
 
-
-// Get all products
-router.get("/all/sorted", async (req, res) => {
+// get all products, sorted by options
+router.get("/all/sort", async (req, res) => {
     try {
-        const products = await Product.findAll({
-            attributes: { exclude: ["createdAt", "updatedAt"] },
-            order: [['productName', 'ASC']],
-        })
-        res.json({ data: products })
+        const { sortBy, sortOrder, startsWith } = req.query;
+
+        const searchClause = startsWith && startsWith !== "All"
+            ? {
+                productName: {
+                    [Op.startsWith]: startsWith.toUpperCase(),
+                },
+            }
+            : {};
+
+        const result = await Product.findAll({
+            where: searchClause,
+            order: [[sortBy, sortOrder]],
+        });
+
+        res.json({ data: result });
     } catch (err) {
         return internalServerError(res, err)
     }

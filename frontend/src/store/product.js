@@ -62,9 +62,11 @@ export const loadAllProductsThunk = () => async (dispatch) => {
 }
 
 //thunk action for all products, sorted alphabetically
-export const loadAllProductsSortedThunk = () => async (dispatch) => {
+export const loadAllProductsSortedThunk = (sortBy, sortOrder, startsWith) => async (dispatch) => {
     try {
-        const res = await csrfFetch("/api/product/all/sorted")
+        const queryString = `?sortBy=${sortBy}&sortOrder=${sortOrder}&startsWith=${startsWith}`;
+        const res = await csrfFetch(`/api/product/all/sort${queryString}`);
+
         if (res.ok) {
             const allProducts = await res.json()
             dispatch(loadOrderedProducts(allProducts))
@@ -76,6 +78,15 @@ export const loadAllProductsSortedThunk = () => async (dispatch) => {
     }
     return []
 }
+
+// export const loadAllProductsSortedThunk = (sortBy, sortOrder, startsWith) => async (dispatch) => {
+//     try {
+//         const res = await csrfFetch(`/api`)
+
+//     } catch (err) {
+//         console.error('An error occurred while loading sorted products:', err);
+//     }
+// }
 
 //thunk action for to get all products given a particular letter, sorted alphabetically
 export const loadLetterProductsSortedThunk = (startingLetter) => async (dispatch) => {
