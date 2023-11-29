@@ -38,6 +38,7 @@ function ProductsSection() {
 
     // function to handle changing the sorting option whether by productname, price, or quantity
     const handleSortChanging = (mode, order) => {
+        setExpandRow(null)
         if (mode === "nameSort") {
             setNameSort(order)
             setPriceSort(null)
