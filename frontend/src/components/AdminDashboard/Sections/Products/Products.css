@@ -59,3 +59,10 @@
     width: 70vw;
     max-width: 1000px;
 }
+
+
+#dashboard-header-column>* {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+}

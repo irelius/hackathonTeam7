@@ -1,0 +1,32 @@
+#product-info-container {
+    margin-bottom: 30px;
+}
+
+#product-info-container > * {
+    margin-bottom: 20px;
+}
+
+#category-header-container {
+    display: flex;
+    width: 700px;
+
+    text-decoration: underline;
+}
+
+#category-header-container > * {
+    width: 175px;
+}
+
+
+#category-body-container {
+    display: flex;
+    width: 700px;
+}
+
+#category-body-container > * {
+    width: 175px;
+}
+
+#category-body-container > section > * {
+    margin-top: 20px;
+}

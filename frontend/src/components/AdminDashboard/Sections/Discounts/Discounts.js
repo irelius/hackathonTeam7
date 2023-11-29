@@ -39,7 +39,7 @@ function DiscountsSection() {
                             <td className="dashboard-td-200">{el.expirationDate.slice(0, 10)}</td>
                         </tr>,
                         expandRow === i && (
-                            <tr id="expand-discount" key={`${i}-expanded`}>
+                            <tr className="expanded-row" key={`${i}-expanded`}>
                                 <td colSpan="4">
                                     asdf asdf asdf asdf asdf asd f
                                 </td>
