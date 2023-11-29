@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import { NavLink, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AddProduct from "../Products/AddProduct";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ function ProfileButton({ user }) {
             <NavLink to={profileLink}>
               <button className="user-btn">Profile</button>
             </NavLink>
+            <AddProduct />
 
             <button onClick={logout} className="user-btn">
               Log Out
