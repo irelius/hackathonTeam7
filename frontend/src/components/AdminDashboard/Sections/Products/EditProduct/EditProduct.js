@@ -1,6 +1,7 @@
 import "./EditProduct.css"
 
 import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { useEffect, useState } from "react"
 
 import * as productCategoryActions from "../../../../../store/productcategory"
@@ -8,6 +9,8 @@ import * as categoryActions from "../../../../../store/category"
 
 function EditProduct({ product }) {
     const dispatch = useDispatch()
+    const history = useHistory()
+
     useEffect(() => {
         dispatch(productCategoryActions.loadProductCategoryByProduct(product.id))
     }, [dispatch])
@@ -54,32 +57,37 @@ function EditProduct({ product }) {
     }
 
     return (
-        <form>
+        <div id="product-main-container" className="bg-200">
             <section id="product-info-container">
-                <section>
-                    <aside>Edit Name:</aside>
-                    <input
-                        type="text"
-                        defaultValue={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <aside>Edit Price:</aside>
-                    <input
-                        type="number"
-                        defaultValue={`${price / 100}`}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <aside>Edit Stock:</aside>
-                    <input
-                        type="number"
-                        defaultValue={stock}
-                        onChange={(e) => setStock(e.target.value)}
-                    />
-                </section>
+                <aside id="product-edit-container">
+                    <section>
+                        <aside>Edit Name:</aside>
+                        <input
+                            type="text"
+                            defaultValue={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </section>
+                    <section>
+                        <aside>Edit Price:</aside>
+                        <input
+                            type="number"
+                            defaultValue={`${price / 100}`}
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                    </section>
+                    <section>
+                        <aside>Edit Stock:</aside>
+                        <input
+                            type="number"
+                            defaultValue={stock}
+                            onChange={(e) => setStock(e.target.value)}
+                        />
+                    </section>
+                </aside>
+                <aside id="product-link">
+                    View <p onClick={() => history.push(`/products/${product.id}`)} id="product-name">{product.productName}</p>
+                </aside>
             </section>
             <section id="category-header-container">
                 <aside>Color</aside>
@@ -142,7 +150,15 @@ function EditProduct({ product }) {
                     ))}
                 </section>
             </section>
-        </form>
+            <section id="save-changes-container">
+                <p id="product-save-changes" className="pointer">
+                    Save Changes
+                </p>
+                <p id="product-cancel-changes" className="pointer">
+                    Cancel
+                </p>
+            </section>
+        </div>
     )
 }
 

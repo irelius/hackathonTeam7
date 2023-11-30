@@ -1,0 +1,19 @@
+#asdf {
+    display: flex;
+    flex-direction: col;
+    position: absolute;
+
+    top: 100px;
+}
+
+
+.expandable-div {
+    overflow: hidden;
+    background-color: orange;
+    max-height: 0;
+    transition: max-height 0.5s ease;
+}
+
+.expandable-div.expanded {
+    max-height: 1000px; /* Adjust to a sufficiently large value based on your content */
+}

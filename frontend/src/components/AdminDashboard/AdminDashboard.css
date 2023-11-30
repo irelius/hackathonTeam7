@@ -144,9 +144,23 @@
 }
 
 
-.expanded-row {
+/* Expanding row functionality CSS */
+#expand-container{
     display: flex;
-    align-items: center;
-    margin-left: 20px;
-    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+#expand-columns {
+    display: flex;
+}
+
+.expanded-row {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.5s ease; /* Use height for transition */
+}
+
+.expanded-row.show {
+    height: 700px; /* Set the desired height */
+    transition: height 0.3s ease; /* Ensure transition is specified for the 'show' class */
 }
