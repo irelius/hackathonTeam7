@@ -6,16 +6,15 @@ import { useEffect, useState } from "react"
 
 import * as productCategoryActions from "../../../../../store/productcategory"
 import * as categoryActions from "../../../../../store/category"
+import * as productActions from "../../../../../store/product"
 
-function EditProduct({ product, onCloseExpandRow }) {
+function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
     useEffect(() => {
         dispatch(productCategoryActions.loadProductCategoryByProduct(product.id))
     }, [dispatch])
-
-    const [newCategories, setNewCategories] = useState([])
 
     const allProductCategories = useSelector(state => state.productCategory)
     const allCategories = useSelector(state => state.category)
@@ -26,30 +25,32 @@ function EditProduct({ product, onCloseExpandRow }) {
     const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
 
     const [name, setName] = useState(product.productName)
-    const [price, setPrice] = useState(product.productPrice)
+    const [price, setPrice] = useState(product.productPrice / 100)
     const [stock, setStock] = useState(product.productQuantity)
+    const [description, setDescription] = useState(product.productDescription)
 
     const [currPCs, setCurrPCs] = useState({})
     const [copyCurrPCs, setCopyCurrPCs] = useState({})
 
     // useEffect to set up the currPCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
     useEffect(() => {
-        const productCategories = {}
+        const productCategories = {};
         for (let i = 0; i < Object.values(allProductCategories).length; i++) {
-            let curr = Object.values(allProductCategories)[i]
-            productCategories[curr.Category.categoryName] = true
+            let curr = Object.values(allProductCategories)[i];
+            if (curr && curr.Category) { // Check if curr and curr.Category are defined
+                productCategories[curr.Category.categoryName] = true;
+            }
         }
-
 
         setCurrPCs(prevState => ({
             ...prevState,
-            ...productCategories
-        }))
+            ...productCategories,
+        }));
         setCopyCurrPCs(prevState => ({
             ...prevState,
-            ...currPCs
-        }))
-    }, [allProductCategories])
+            ...currPCs,
+        }));
+    }, [allProductCategories]);
 
     // function to handle clicking a checkbox and updates the currPCs useState variable.
     const handleCheckBoxClick = (categoryName, e) => {
@@ -63,8 +64,26 @@ function EditProduct({ product, onCloseExpandRow }) {
         setCurrPCs(categoryUpdater)
     }
 
+    const handleProductEdit = () => {
+        // handle any edits made to product name, price, and quantity
+        const newProductInfo = {
+            productName: name,
+            productPrice: price * 100,
+            productDescription: description,
+            productQuantity: stock,
+        }
+        dispatch(productActions.editProductThunk(product.id, newProductInfo))
+
+        // handle any edits amde to the product categories
+        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(currPCs)))
+
+        setProductUpdated(prevState => !prevState)
+
+        return onCloseExpandRow()
+    }
+
     const handleCancel = () => {
-        setCurrPCs((prevState) => ({
+        setCurrPCs(() => ({
             ...copyCurrPCs
         }))
         return onCloseExpandRow()
@@ -72,6 +91,9 @@ function EditProduct({ product, onCloseExpandRow }) {
 
     return (
         <div id="product-main-container" className="bg-200">
+            <section id="product-link">
+                View <p onClick={() => history.push(`/products/${product.id}`)} id="product-name" className="text-200">{product.productName}</p>
+            </section>
             <section id="product-info-container">
                 <aside id="product-edit-container">
                     <section>
@@ -86,7 +108,7 @@ function EditProduct({ product, onCloseExpandRow }) {
                         <aside>Edit Price:</aside>
                         <input
                             type="number"
-                            defaultValue={`${price / 100}`}
+                            defaultValue={`${price}`}
                             onChange={(e) => setPrice(e.target.value)}
                         />
                     </section>
@@ -99,13 +121,17 @@ function EditProduct({ product, onCloseExpandRow }) {
                         />
                     </section>
                 </aside>
-                <aside id="product-link">
-                    View <p onClick={() => history.push(`/products/${product.id}`)} id="product-name">{product.productName}</p>
+                <aside>
+                    <aside id='product-description'>Edit Description</aside>
+                    <textarea
+                        id="product-description-input"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
                 </aside>
             </section>
             <section id="category-header-container">
                 <aside>Color</aside>
-                <aside>Availability</aside>
                 <aside>Furniture</aside>
                 <aside>Location</aside>
             </section >
@@ -125,7 +151,8 @@ function EditProduct({ product, onCloseExpandRow }) {
                         </div>
                     ))}
                 </section>
-                <section>
+                {/* TO DO: see if availability is somethign that should be an option */}
+                {/* <section>
                     {availabilitySection.map(el => (
                         <div key={`availability-${el.id}`}>
                             <input
@@ -138,7 +165,7 @@ function EditProduct({ product, onCloseExpandRow }) {
                             </label>
                         </div>
                     ))}
-                </section>
+                </section> */}
                 <section>
                     {furnitureSection.map(el => (
                         <div key={`furniture-${el.id}`}>
@@ -171,7 +198,7 @@ function EditProduct({ product, onCloseExpandRow }) {
                 </section>
             </section>
             <section id="save-changes-container">
-                <p id="product-save-changes" className="pointer">
+                <p id="product-save-changes" className="pointer" onClick={() => handleProductEdit()}>
                     Save Changes
                 </p>
                 <p id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >

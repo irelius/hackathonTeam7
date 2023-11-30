@@ -161,6 +161,6 @@
 }
 
 .expanded-row.show {
-    height: 700px; /* Set the desired height */
+    height: 775px; /* Set the desired height */
     transition: height 0.5s ease; /* Ensure transition is specified for the 'show' class */
 }

@@ -21,7 +21,7 @@ function TestSam() {
         <div id='asdf'>
             <button onClick={() => setExpand((prevState) => !prevState)}>Toggle</button>
             <div className={`expandable-div ${expand ? 'expanded' : ''}`}>
-                {expand ? <div>booba</div> : null}
+                {expand ? <div>test</div> : null}
             </div>
         </div>
     );

@@ -247,7 +247,6 @@ router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, re
         const productId = req.params.productId
         const { productName, productDescription, productPrice, productQuantity } = req.body
 
-
         const product = await Product.findByPk(productId)
 
         if (!product) {

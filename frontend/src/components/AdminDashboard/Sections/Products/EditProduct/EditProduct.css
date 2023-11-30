@@ -1,6 +1,7 @@
 #product-main-container {
     border-radius: 10px;
     padding: 20px;
+    height: fit-content;
 }
 
 #product-info-container {
@@ -20,8 +21,22 @@
     margin-bottom: 5px;
 }
 
+#product-description {
+    margin-bottom: 3px;
+}
+
+#product-description-input {
+    margin-bottom: 30px;
+
+    width: 300px;
+    height: 150px;
+    overflow-y: auto;
+    resize: none;
+}
+
 #product-link {
     display: flex;
+    justify-content: center;
     align-items: center;
     margin-bottom: 10px;
 }
@@ -39,6 +54,7 @@
 
 #category-header-container {
     display: flex;
+    justify-content: center;
     width: 700px;
 
     text-decoration: underline;
@@ -51,6 +67,7 @@
 
 #category-body-container {
     display: flex;
+    justify-content: center;
     width: 700px;
 }
 

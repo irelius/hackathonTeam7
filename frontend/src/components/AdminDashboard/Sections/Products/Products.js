@@ -13,6 +13,7 @@ function ProductsSection() {
 
     // startsWith option
     const [searchLetter, setSearchLetter] = useState('All');
+    const [productUpdated, setProductUpdated] = useState(false)
 
     // sortBy and Order option
     const [nameSort, setNameSort] = useState('ASC');
@@ -21,16 +22,14 @@ function ProductsSection() {
 
     useEffect(() => {
         dispatch(categoryActions.loadAllCategoriesThunk());
-    }, []);
-
-    const categories = useSelector((state) => state.category);
+    }, [productUpdated]);
 
     useEffect(() => {
         const sortBy = nameSort ? 'productName' : priceSort ? 'productPrice' : 'productQuantity';
         const sortOrder = nameSort ? nameSort : priceSort ? priceSort : stockSort;
 
         dispatch(productActions.loadAllProductsSortedThunk(sortBy, sortOrder, searchLetter));
-    }, [dispatch, searchLetter, nameSort, priceSort, stockSort]);
+    }, [dispatch, productUpdated, searchLetter, nameSort, priceSort, stockSort]);
 
     const products = Object.values(useSelector((state) => state.product));
 
@@ -122,7 +121,7 @@ function ProductsSection() {
                                     </section>
                                     <section className={`expanded-row ${expandRow === i ? 'show' : ''}`} key={i}>
                                         {expandRow === i ? (
-                                            <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} />
+                                            <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} setProductUpdated={setProductUpdated}/>
                                         ) : (
                                             <></>
                                         )}
