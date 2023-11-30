@@ -1,15 +1,23 @@
 const AWS = require("aws-sdk");
 
-const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
+const NAME_OF_BUCKET = "3dea";
 
 // const S3_LOCATION = "https://${bucket-name}.s3.amazonaws.com/";
 // const ALLOWED_EXTENSIONS = new Set(["png", "jpg", "jpeg", "gif"]);
 
 const multer = require("multer");
 
+// const s3 = new AWS.S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+// });
+
+const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY } = process.env; // Access variables from .env
+
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_SECRET,
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  apiVersion: "2006-03-01"
 });
 
 // --------------------------- Public UPLOAD ------------------------
@@ -20,7 +28,7 @@ const singlePublicFileUpload = async (file) => {
   // name of the file in your S3 bucket will be the date in ms plus the extension name
   const Key = new Date().getTime().toString() + path.extname(originalname);
   const uploadParams = {
-    Bucket: BUCKET_NAME,
+    Bucket: NAME_OF_BUCKET,
     Key,
     Body: buffer,
     ACL: "public-read",
@@ -32,6 +40,12 @@ const singlePublicFileUpload = async (file) => {
 };
 
 const multiplePublicFileUpload = async (files) => {
+  if (!files || !Array.isArray(files)) {
+    // Handle the case when files is not an array
+    console.error("Invalid files array:", files);
+    return [];
+  }
+
   return await Promise.all(
     files.map((file) => {
       return singlePublicFileUpload(file);
@@ -99,24 +113,3 @@ module.exports = {
   singleMulterUpload,
   multipleMulterUpload,
 };
-
-// function allowedFile(filename) {
-//     const ext = filename.split('.').pop().toLowerCase();
-//     return ALLOWED_EXTENSIONS.has(ext);
-// }
-
-// function getUniqueFilename(filename) {
-//     const ext = filename.split('.').pop().toLowerCase();
-//     const uniqueFilename = uuidv4();
-//     return `${uniqueFilename}.${ext}`;
-// }
-
-// async function uploadFileToS3(file, acl = 'public-read') {
-//     const filename = getUniqueFilename(file.name);
-
-//     const params = {
-//         Bucket: BUCKET_NAME,
-//         Key: filename,
-//         Body:
-//     }
-// }

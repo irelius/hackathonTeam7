@@ -13,7 +13,9 @@ const { internalServerError, notFoundError } = require("../../utils/errorFunc");
 const {
   singlePublicFileUpload,
   singleMulterUpload,
-} = require("../../aws_config");
+  multiplePublicFileUpload,
+  multipleMulterUpload,
+} = require("../../awsS3");
 
 // Get all productImage
 router.get("/all", async (req, res) => {
@@ -54,27 +56,24 @@ router.get("/all", async (req, res) => {
 //   }
 // });
 
-router.post("/", singleMulterUpload("images"), async (req, res) => {
+router.post("/", singleMulterUpload("image"), restoreUser, requireAuth, async (req, res) => {
   try {
       const { productId } = req.body;
 
-      // Create product images and associate with the product
-      const imageUrls = await multiplePublicFileUpload(req.files);
-      const productImages = await Promise.all(
-          imageUrls.map(async (imageUrl) => {
-              return await ProductImage.create({
-                  productId: productId,
-                  image: imageUrl,
-              });
-          })
-      );
+      // Create product image and associate with the product
+      const imageUrl = await singlePublicFileUpload(req.file);
+      const productImage = await ProductImage.create({
+          productId: productId,
+          image: imageUrl,
+      });
 
-      return res.status(201).json({ productImages });
+      return res.status(201).json({ productImage });
   } catch (error) {
       console.error(error);
       return internalServerError(res, error);
   }
 });
+
 
 
 
