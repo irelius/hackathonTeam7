@@ -9,7 +9,7 @@
     width: 100%;
 
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.314);
+    background: rgba(255, 255, 255);
 }
 
 #nav > * {

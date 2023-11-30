@@ -61,6 +61,10 @@ function ProductsSection() {
         setExpandRow((prev) => (prev === index ? null : index));
     };
 
+    const handleCloseExpandRow = () => {
+        setExpandRow(null);
+    };
+
     return (
         <div id="dashboard-products-main-container">
             <div className="dashboard-table">
@@ -110,14 +114,18 @@ function ProductsSection() {
                     ) : (
                         <div>
                             {products.map((el, i) => (
-                                <div id="expand-container" key={i} className="dashboard-table-rows pointer" onClick={() => handleRowClick(i)}>
-                                    <section id='expand-columns'>
+                                <div id="expand-container" key={i} className="dashboard-table-rows">
+                                    <section id='expand-columns' className="pointer" onClick={() => handleRowClick(i)}>
                                         <aside className="dashboard-td-300">{el.productName}</aside>
                                         <aside className="dashboard-td-200">${el.productPrice / 100}</aside>
                                         <aside className="dashboard-td-200">{el.productQuantity}</aside>
                                     </section>
                                     <section className={`expanded-row ${expandRow === i ? 'show' : ''}`} key={i}>
-                                        <EditProduct product={el} />
+                                        {expandRow === i ? (
+                                            <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} />
+                                        ) : (
+                                            <></>
+                                        )}
                                     </section>
                                 </div>
                             ))}

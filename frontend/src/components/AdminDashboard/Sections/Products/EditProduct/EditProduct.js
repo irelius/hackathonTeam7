@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import * as productCategoryActions from "../../../../../store/productcategory"
 import * as categoryActions from "../../../../../store/category"
 
-function EditProduct({ product }) {
+function EditProduct({ product, onCloseExpandRow }) {
     const dispatch = useDispatch()
     const history = useHistory()
 
@@ -29,8 +29,8 @@ function EditProduct({ product }) {
     const [price, setPrice] = useState(product.productPrice)
     const [stock, setStock] = useState(product.productQuantity)
 
-
     const [currPCs, setCurrPCs] = useState({})
+    const [copyCurrPCs, setCopyCurrPCs] = useState({})
 
     // useEffect to set up the currPCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
     useEffect(() => {
@@ -39,14 +39,21 @@ function EditProduct({ product }) {
             let curr = Object.values(allProductCategories)[i]
             productCategories[curr.Category.categoryName] = true
         }
+
+
         setCurrPCs(prevState => ({
             ...prevState,
             ...productCategories
         }))
-    }, [])
+        setCopyCurrPCs(prevState => ({
+            ...prevState,
+            ...currPCs
+        }))
+    }, [allProductCategories])
 
     // function to handle clicking a checkbox and updates the currPCs useState variable.
-    const handleCheckBoxClick = (categoryName) => {
+    const handleCheckBoxClick = (categoryName, e) => {
+        e.stopPropagation();
         const categoryUpdater = { ...currPCs }
         if (categoryUpdater[categoryName]) {
             delete categoryUpdater[categoryName]
@@ -54,6 +61,13 @@ function EditProduct({ product }) {
             categoryUpdater[categoryName] = true
         }
         setCurrPCs(categoryUpdater)
+    }
+
+    const handleCancel = () => {
+        setCurrPCs((prevState) => ({
+            ...copyCurrPCs
+        }))
+        return onCloseExpandRow()
     }
 
     return (
@@ -98,26 +112,28 @@ function EditProduct({ product }) {
             <section id="category-body-container">
                 <section>
                     {colorSection.map(el => (
-                        <div key={el.id}>
+                        <div key={`color-${el.id}`}>
                             <input
                                 type="checkbox"
                                 id={`color-${el.id}`}
                                 checked={currPCs[el.categoryName]}
-                                onClick={() => handleCheckBoxClick(el.categoryName)}
+                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
-                            <label htmlFor={`color-${el.id}`}>{el.categoryName}</label>
+                            <label htmlFor={`color-${el.id}`} onClick={(e) => e.preventDefault()}>
+                                {el.categoryName}
+                            </label>
                         </div>
                     ))}
                 </section>
                 <section>
                     {availabilitySection.map(el => (
-                        <div key={el.id}>
+                        <div key={`availability-${el.id}`}>
                             <input
                                 type="radio"
                                 id={`availability-${el.id}`}
                                 name="availability"
                             />
-                            <label htmlFor={`availability-${el.id}`}>
+                            <label htmlFor={`availability-${el.id}`} onClick={(e) => e.preventDefault()}>
                                 {el.categoryName === "Instock" ? "In Stock" : "Out of Stock"}
                             </label>
                         </div>
@@ -125,27 +141,31 @@ function EditProduct({ product }) {
                 </section>
                 <section>
                     {furnitureSection.map(el => (
-                        <div key={el.id}>
+                        <div key={`furniture-${el.id}`}>
                             <input
                                 type="checkbox"
                                 id={`furniture-${el.id}`}
                                 checked={currPCs[el.categoryName]}
-                                onClick={() => handleCheckBoxClick(el.categoryName)}
+                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
-                            <label htmlFor={`furniture-${el.id}`}>{el.categoryName}</label>
+                            <label htmlFor={`furniture-${el.id}`} onClick={(e) => e.preventDefault()}>
+                                {el.categoryName}
+                            </label>
                         </div>
                     ))}
                 </section>
                 <section>
                     {locationSection.map(el => (
-                        <div key={el.id}>
+                        <div key={`location-${el.id}`}>
                             <input
                                 type="checkbox"
                                 id={`location-${el.id}`}
                                 checked={currPCs[el.categoryName]}
-                                onClick={() => handleCheckBoxClick(el.categoryName)}
+                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
-                            <label htmlFor={`location-${el.id}`}>{el.categoryName}</label>
+                            <label htmlFor={`location-${el.id}`} onClick={(e) => e.preventDefault()}>
+                                {el.categoryName}
+                            </label>
                         </div>
                     ))}
                 </section>
@@ -154,7 +174,7 @@ function EditProduct({ product }) {
                 <p id="product-save-changes" className="pointer">
                     Save Changes
                 </p>
-                <p id="product-cancel-changes" className="pointer">
+                <p id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
                     Cancel
                 </p>
             </section>
