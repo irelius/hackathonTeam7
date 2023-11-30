@@ -56,7 +56,10 @@ function ProfileButton({ user }) {
             <NavLink to={profileLink}>
               <button className="user-btn">Profile</button>
             </NavLink>
-            <AddProduct />
+            {/* <AddProduct /> */}
+            <NavLink to="/new/product">
+            <button className="user-btn">Add new product</button>
+            </NavLink>
 
             <button onClick={logout} className="user-btn">
               Log Out

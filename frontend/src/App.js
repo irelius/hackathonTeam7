@@ -21,6 +21,7 @@ import SingleProductPage from "./components/Products/SingleProductPage";
 import TestSam from "./components/TestSam/TestSam";
 import CartPage2 from "./components/CartPage/CartPage";
 import Forbidden from "./components/Forbidden/Forbidden";
+import AddProductForm from "./components/Products/AddProduct/AddProductForm";
 
 // import Homespace from "./components/HomeSpace";
 
@@ -66,6 +67,9 @@ function App() {
           </Route>
           <Route path="/products/:id">
             <SingleProductPage />
+          </Route>
+          <Route path="/new/product">
+            <AddProductForm />
           </Route>
           {/* <Route path="/reviews">
             <ReviewPage />
