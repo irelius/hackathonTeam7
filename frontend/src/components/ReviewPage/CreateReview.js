@@ -24,6 +24,7 @@ function CreateReview() {
       userId: userId,
       productId: productId,
       review,
+      rating,
     };
 
     dispatch(addReviewThunk(newReview));

@@ -90,7 +90,7 @@ export const addProductThunk = (newProduct) => async (dispatch) => {
         if (res.ok) {
             const product = await res.json()
             dispatch(addProduct(product))
-            return product
+            return product;
         } else {
             console.error('Failed to create a new product:', res.status, res.statusText);
         }
@@ -109,7 +109,7 @@ export const editProduct = (product) => {
 
 
 // thunk action for editing a product information
-export const editProductThunk = (productId, newProductInfo) => async (dispatch) => {
+export const editProductThunk = (productId, newProductInfo, newImage) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/product/info/${productId}`, {
             method: "PUT",

@@ -22,17 +22,13 @@ const addProductImage = (productImage) => ({
   payload: productImage,
 });
 
-export const addProductImageThunk = (product) => async (dispatch) => {
-  const { image } = product;
+export const addProductImageThunk = (productId, image) => async (dispatch) => {
   const formData = new FormData();
-
-  // Append the single image to the formData
-  if (image) {
-    formData.append("image", image);
-  }
+  formData.append("productId", productId);
+  if (image) formData.append("image", image);
 
   try {
-    const res = await csrfFetch(`/api/productimages/`, {
+    const res = await csrfFetch(`/api/productimages/${productId}`, {
       method: "POST",
       headers: {
         "Content-Type": "multipart/form-data",
@@ -53,15 +49,15 @@ export const addProductImageThunk = (product) => async (dispatch) => {
   }
 };
 
+
 const initialState = { image: null }; // Change from {} to null
 
 const productImageReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case LOAD_PRODUCT_IMAGE:
       return action.payload.data;
     case LOAD_PRODUCT_IMAGES:
-      return action.payload; // Assuming payload is an array of images
+      return [...state, ...action.payload]; // Assuming payload is an array of images
     case ADD_PRODUCT_IMAGE:
       return { ...state, image: action.payload }; // Assuming payload is the product image itself
     default:

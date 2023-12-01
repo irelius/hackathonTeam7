@@ -16,6 +16,7 @@ const {
   multiplePublicFileUpload,
   multipleMulterUpload,
 } = require("../../awsS3");
+const { isAdmin } = require("../../utils/authorization");
 
 // Get all productImage
 router.get("/all", async (req, res) => {
@@ -56,25 +57,54 @@ router.get("/all", async (req, res) => {
 //   }
 // });
 
-router.post("/", singleMulterUpload("image"), restoreUser, requireAuth, async (req, res) => {
-  try {
-      const { productId } = req.body;
+// router.post("/", singleMulterUpload("image"), restoreUser, requireAuth, async (req, res) => {
+//   try {
+//       const { productId } = req.body;
 
-      // Create product image and associate with the product
+//       const product = await Product.findByPk(productId)
+//       if (!product) {
+//         return notFoundError(res, "Product")
+//       }
+
+//       // Create product image and associate with the product
+//       const imageUrl = await singlePublicFileUpload(req.file);
+//       const productImage = await ProductImage.create({
+//           productId: productId,
+//           image: imageUrl,
+//       });
+
+//       return res.status(201).json({ productImage });
+//   } catch (error) {
+//       console.error(error);
+//       return internalServerError(res, error);
+//   }
+// });
+
+router.post(
+  "/:productId",
+  restoreUser,
+  requireAuth,
+  singleMulterUpload("image"),
+  async (req, res) => {
+    try {
+      const { productId } = req.body;
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        return notFoundError(res, "Product");
+      }
+
       const imageUrl = await singlePublicFileUpload(req.file);
-      const productImage = await ProductImage.create({
-          productId: productId,
-          image: imageUrl,
+      await ProductImage.create({
+        productId: productId,
+        image: imageUrl,
       });
 
-      return res.status(201).json({ productImage });
-  } catch (error) {
+      res.status(201).json({ message: "Image uploaded successfully" });
+    } catch (error) {
       console.error(error);
       return internalServerError(res, error);
+    }
   }
-});
-
-
-
+);
 
 module.exports = router;
