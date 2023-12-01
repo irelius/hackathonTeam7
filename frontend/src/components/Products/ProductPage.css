@@ -97,3 +97,8 @@
     border-radius: 20px;
     cursor: pointer;
 }
+
+.product-image {
+    width: 450px;
+    height: 450px;
+}

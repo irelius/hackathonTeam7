@@ -18,15 +18,15 @@ function AddProductForm({ setShowModal }) {
     const file = e.target.files[0];
     if (file) setImage(file);
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!image) {
       setErrors(["Please select an image"]);
       return;
     }
-  
+
     try {
       // Create a new product
       const newProduct = {
@@ -35,41 +35,18 @@ function AddProductForm({ setShowModal }) {
         productPrice,
         productQuantity,
       };
-  
+
       // Dispatch action to add the product and get the ID
       const createdProduct = await dispatch(addProductThunk(newProduct));
-      
+
       // Upload image to AWS S3 with the newly created product ID
       await dispatch(addProductImageThunk(createdProduct.data.id, image));
-  
       console.log("Product and image uploaded successfully!");
     } catch (error) {
       console.error("Error creating product or associating image:", error);
       // Handle error as needed
     }
   };
-  
-  
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   if (!image) {
-  //     setErrors(["Please select an image"]);
-  //     return;
-  //   }
-
-  //   dispatch(addProductImageThunk({ image }));
-  // };
-
-  // for multiple file upload
-  //    const updateFiles = (e) => {
-  //        const files = e.target.files;
-  //        console.log('this is files in form', files)
-  //     if (files.length > 0) {
-  //         setImages(files);
-  //     }
-  // };
 
   return (
     <>

@@ -12,15 +12,52 @@ const loadProductImage = (productImage) => ({
   payload: productImage,
 });
 
-const loadProductImages = (productImage) => ({
+const loadProductImages = (productImages) => ({
   type: LOAD_PRODUCT_IMAGES,
-  payload: productImage,
+  payload: productImages,
 });
 
 const addProductImage = (productImage) => ({
   type: ADD_PRODUCT_IMAGE,
   payload: productImage,
 });
+
+// thunk action for one specific review
+export const loadOneProductImageThunk = (productId) => async (dispatch) => {
+  try {
+      const res = await csrfFetch(`/api/productimages/${productId}`)
+      if (res.ok) {
+          const image = await res.json()
+          dispatch(loadProductImage(image))
+      } else {
+          console.error('Failed to load specific product image:', res.status, res.statusText);
+      }
+  } catch (err) {
+      console.error('An error occurred while loading specific product image:', err);
+  }
+}
+
+
+// thunk action for all product images
+export const loadAllProductImagesThunk = () => async (dispatch) => {
+  try {
+    const res = await csrfFetch("/api/productimages/all");
+    if (res.ok) {
+      const allPIs = await res.json();
+      dispatch(loadProductImage(allPIs));
+    } else {
+      console.error(
+        "Failed to load all productCart:",
+        res.status,
+        res.statusText
+      )
+    }
+  } catch (err) {
+    console.error("An error occurred while loading all productCart:", err);
+  }
+  return [];
+}
+
 
 export const addProductImageThunk = (productId, image) => async (dispatch) => {
   const formData = new FormData();
@@ -57,7 +94,20 @@ const productImageReducer = (state = initialState, action) => {
     case LOAD_PRODUCT_IMAGE:
       return action.payload.data;
     case LOAD_PRODUCT_IMAGES:
-      return [...state, ...action.payload]; // Assuming payload is an array of images
+      // return [...state, ...action.payload]; 
+      // Assuming payload is an array of images
+      const productImages = {}
+
+            if (!action.payload.data) {
+                return productImages
+            }
+
+            for (let i = 0; i < action.payload.data.length; i++) {
+                let curr = action.payload.data[i]
+                productImages[curr.id] = curr
+            }
+
+            return productImages
     case ADD_PRODUCT_IMAGE:
       return { ...state, image: action.payload }; // Assuming payload is the product image itself
     default:
