@@ -72,12 +72,12 @@
 }
 
 .product.left {
-    margin: 100px 125px;
+    margin: 40px 125px;
 }
 
 
 .product.right {
-    margin: 150px 150px;
+    margin: 100px 150px;
 }
 
 .product.right h1 {
@@ -101,4 +101,9 @@
 .product-image {
     width: 450px;
     height: 450px;
+}
+
+.single-product-image {
+    width: 750px;
+    height: 800px;
 }

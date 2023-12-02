@@ -22,10 +22,10 @@ const addProductImage = (productImage) => ({
   payload: productImage,
 });
 
-// thunk action for one specific review
+// thunk action for one specific image
 export const loadOneProductImageThunk = (productId) => async (dispatch) => {
   try {
-      const res = await csrfFetch(`/api/productimages/${productId}`)
+      const res = await csrfFetch(`/api/productimages/product/${productId}`)
       if (res.ok) {
           const image = await res.json()
           dispatch(loadProductImage(image))
@@ -44,7 +44,7 @@ export const loadAllProductImagesThunk = () => async (dispatch) => {
     const res = await csrfFetch("/api/productimages/all");
     if (res.ok) {
       const allPIs = await res.json();
-      dispatch(loadProductImage(allPIs));
+      dispatch(loadProductImages(allPIs));
     } else {
       console.error(
         "Failed to load all productCart:",
@@ -87,32 +87,32 @@ export const addProductImageThunk = (productId, image) => async (dispatch) => {
 };
 
 
-const initialState = { image: null }; // Change from {} to null
+const initialState = {};
 
 const productImageReducer = (state = initialState, action) => {
+  const newState = { ...state }
   switch (action.type) {
     case LOAD_PRODUCT_IMAGE:
       return action.payload.data;
     case LOAD_PRODUCT_IMAGES:
-      // return [...state, ...action.payload]; 
-      // Assuming payload is an array of images
-      const productImages = {}
+      const productImages = {};
 
-            if (!action.payload.data) {
-                return productImages
-            }
+      if (!action.payload.data) {
+        return productImages;
+      }
 
-            for (let i = 0; i < action.payload.data.length; i++) {
-                let curr = action.payload.data[i]
-                productImages[curr.id] = curr
-            }
+      for (let i = 0; i < action.payload.data.length; i++) {
+        let curr = action.payload.data[i];
+        productImages[curr.id] = curr;
+      }
 
-            return productImages
+      return productImages;
     case ADD_PRODUCT_IMAGE:
       return { ...state, image: action.payload }; // Assuming payload is the product image itself
     default:
-      return state;
+      return newState;
   }
 };
+
 
 export default productImageReducer;

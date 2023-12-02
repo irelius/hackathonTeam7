@@ -28,57 +28,26 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// router.post("/", singleMulterUpload("image"), async (req, res) => {
-//   try {
-//     const { productId } = req.body;
+// get all product image by product id
+router.get("/product/:productId", restoreUser, requireAuth, async (req, res) => {
+  try {
+    // const productId = req.params.productId;
+    const productImages = await ProductImage.findAll({
+      where: {
+        productId: req.params.productId
+      }
+    });
 
-//     // Create product
-//     const product = await Product.findOne({
-//       where: {
-//         productId: req.product.id,
-//       },
-//     });
+    if (!productImages) {
+      return res.status(404).json({ message: "Product image not found"})
+    }
 
-//     if (!product) {
-//       return notFoundError(res, "Product");
-//     }
-
-//     // Create product images and associate with the product
-//     const imageUrl = await singlePublicFileUpload(req.file);
-//     const image = await ProductImage.create({
-//       productId: productId,
-//       image: imageUrl,
-//     });
-
-//     return res.status(201).json({ image });
-//   } catch (error) {
-//     console.error(error);
-//     return internalServerError(res, error);
-//   }
-// });
-
-// router.post("/", singleMulterUpload("image"), restoreUser, requireAuth, async (req, res) => {
-//   try {
-//       const { productId } = req.body;
-
-//       const product = await Product.findByPk(productId)
-//       if (!product) {
-//         return notFoundError(res, "Product")
-//       }
-
-//       // Create product image and associate with the product
-//       const imageUrl = await singlePublicFileUpload(req.file);
-//       const productImage = await ProductImage.create({
-//           productId: productId,
-//           image: imageUrl,
-//       });
-
-//       return res.status(201).json({ productImage });
-//   } catch (error) {
-//       console.error(error);
-//       return internalServerError(res, error);
-//   }
-// });
+    return res.json({data: productImages});
+  } catch (error) {
+    console.error('Error retrieving product image:', error);
+    return res.status(500).json({ message: 'Internal server error'})
+  }
+})
 
 router.post(
   "/:productId",
