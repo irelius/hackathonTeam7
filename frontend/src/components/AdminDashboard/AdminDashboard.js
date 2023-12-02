@@ -45,7 +45,7 @@ function AdminDashboard() {
 
     return load ? (
         <div>
-            <section id="dashboard-side-bar">
+            <section id="dashboard-side-bar-section">
                 <div className={`dash-text-${activeTab === "OrdersSection" ? "100" : "200"}`} onClick={() => handleTabChange("OrdersSection")}>Orders</div>
                 <div className={`dash-text-${activeTab === "ProductsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ProductsSection")}>Products</div>
                 <div className={`dash-text-${activeTab === "ReviewsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ReviewsSection")}>Reviews</div>
