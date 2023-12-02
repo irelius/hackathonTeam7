@@ -22,7 +22,7 @@ export const loadProductCategories = (productCategories) => {
 }
 
 // thunk action for all product categories
-export const loadAllProductCategoriesThunk = () => async (dispatch) => {
+export const loadAllProductCategoryThunk = () => async (dispatch) => {
     try {
         const res = await csrfFetch("/api/productcategory/all")
         if (res.ok) {
@@ -38,7 +38,7 @@ export const loadAllProductCategoriesThunk = () => async (dispatch) => {
 }
 
 // thunk action for all PCs of a category ID
-export const loadProductCategoryByCategory = (categoryId) => async (dispatch) => {
+export const loadProductCategoryByCategoryThunk = (categoryId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/productcategory/category/${categoryId}`)
         if (res.ok) {
@@ -48,12 +48,12 @@ export const loadProductCategoryByCategory = (categoryId) => async (dispatch) =>
             console.error(`Failed to load productCategories of category {categoryId}:`, res.status, res.statusText);
         }
     } catch (err) {
-        console.error('An error occurred while loading productCategories of category {categoryId}:', err);
+        console.error(`An error occurred while loading productCategories of categpory ${categoryId}:`, err);
     }
 }
 
 // thunk action for all PCs of a product ID
-export const loadProductCategoryByProduct = (productId) => async (dispatch) => {
+export const loadProductCategoryByProductThunk = (productId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/productcategory/product/${productId}`)
         if (res.ok) {
@@ -63,7 +63,7 @@ export const loadProductCategoryByProduct = (productId) => async (dispatch) => {
             console.error(`Failed to load productCategories of product ${productId}:`, res.status, res.statusText);
         }
     } catch (err) {
-        console.error('An error occurred while loading productCategories of product {categoryId}:', err);
+        console.error(`An error occurred while loading productCategories of product ${productId}:`, err);
     }
 }
 

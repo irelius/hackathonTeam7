@@ -136,7 +136,9 @@ router.get('/product/:productId/category/:categoryId', async (req, res) => {
 // will create a new product category between a product Id and for each category passed in
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
     let { productId, categoryArr } = req.body // categoryArr is an array structured like: ["Black", "Indoor"]
-    categoryArr.push("All")
+    if(!categoryArr.includes("All")) {
+        categoryArr.push("All")
+    }
 
     let newPCs = []
 

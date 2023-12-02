@@ -145,7 +145,7 @@
 
 
 /* Expanding row functionality CSS */
-#expand-container{
+#expand-container {
     display: flex;
     flex-direction: column;
 }
@@ -157,10 +157,12 @@
 .expanded-row {
     overflow: hidden;
     height: 0;
-    transition: height 0.5s ease; /* Use height for transition */
+    transition: height 0.5s ease;
+    /* Use height for transition */
 }
 
 .expanded-row.show {
     height: 775px;
-    transition: height 0.5s ease; /* Ensure transition is specified for the 'show' class */
+    transition: height 0.5s ease;
+    /* Ensure transition is specified for the 'show' class */
 }

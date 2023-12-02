@@ -1,99 +1,107 @@
-import "./EditProduct.css"
-
-import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
+import "./EditDiscount.css"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
-import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
 
-import * as productCategoryActions from "../../../../../store/productcategory"
-import * as productActions from "../../../../../store/product"
+import * as discountCategoryActions from "../../../../../store/discountcategory"
+import * as discountActions from "../../../../../store/discount"
 
-function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
-    const dispatch = useDispatch()
+function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     const history = useHistory()
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(productCategoryActions.loadProductCategoryByProductThunk(product.id))
+        dispatch(discountCategoryActions.loadDiscountCategoryByDiscountThunk(discount.id))
     }, [dispatch])
 
-    const allProductCategories = useSelector(state => state.productCategory)
+    const allDiscountCategories = useSelector(state => state.discountCategory)
     const allCategories = useSelector(state => state.category)
+
+    console.log('booba', discount)
 
     const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
     const availabilitySection = Object.values(allCategories).filter(el => el.section === "Availability");
     const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
     const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
 
-    const [name, setName] = useState(product.productName)
-    const [price, setPrice] = useState(product.productPrice / 100)
-    const [stock, setStock] = useState(product.productQuantity)
-    const [description, setDescription] = useState(product.productDescription)
+    const [name, setName] = useState(discount.discountName)
+    const [type, setType] = useState(discount.discountType)
+    const [value, setValue] = useState(discount.discountValue)
+    const [expiration, setExpiration] = useState(discount.expirationDate.slice(0, 10))
 
-    const [currPCs, setCurrPCs] = useState({})
-    const [copyCurrPCs, setCopyCurrPCs] = useState({})
+    const [currDCs, setCurrDCs] = useState({})
+    const [copyCurrDCs, setCopyCurrDCs] = useState({})
 
-    // useEffect to set up the currPCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
+
+    // useEffect to set up the currDCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
     useEffect(() => {
-        const productCategories = {};
-        let pcArr = Object.values(allProductCategories)
-        for (let i = 0; i < pcArr.length; i++) {
-            let curr = pcArr[i];
+        const discountCategories = {};
+        let dcArr = Object.values(allDiscountCategories)
+        for (let i = 0; i < dcArr.length; i++) {
+            let curr = dcArr[i];
             if (curr && curr.Category) { // Check if curr and curr.Category are defined
-                productCategories[curr.Category.categoryName] = true;
+                discountCategories[curr.Category.categoryName] = true;
             }
         }
 
-        setCurrPCs(prevState => ({
+        setCurrDCs(prevState => ({
             ...prevState,
-            ...productCategories,
-        }));
-        setCopyCurrPCs(prevState => ({
+            ...discountCategories,
+        }))
+        setCopyCurrDCs(prevState => ({
             ...prevState,
-            ...currPCs,
+            ...currDCs,
         }));
-    }, [allProductCategories]);
+    }, [allDiscountCategories]);
 
-    // function to handle clicking a checkbox and updates the currPCs useState variable.
+    // function to handle clicking a checkbox and updates the currDCs useState variable.
     const handleCheckBoxClick = (categoryName, e) => {
         e.stopPropagation();
-        const categoryUpdater = { ...currPCs }
+        const categoryUpdater = { ...currDCs }
         if (categoryUpdater[categoryName]) {
             delete categoryUpdater[categoryName]
         } else {
             categoryUpdater[categoryName] = true
         }
-        setCurrPCs(categoryUpdater)
+        setCurrDCs(categoryUpdater)
     }
 
-    const handleProductEdit = () => {
+    console.log('booba', currDCs)
+
+    const handleDiscountEdit = () => {
         // handle any edits made to product name, price, and quantity
-        const newProductInfo = {
-            productName: name,
-            productPrice: price * 100,
-            productDescription: description,
-            productQuantity: stock,
+        const newDiscountInfo = {
+            discountName: name,
+            discountType: type.toLowerCase(),
+            discountValue: value,
+            expirationDate: expiration,
         }
-        dispatch(productActions.editProductThunk(product.id, newProductInfo))
+        dispatch(discountActions.editDiscountThunk(discount.id, newDiscountInfo))
 
         // handle any edits amde to the product categories
-        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(currPCs)))
+        dispatch(discountCategoryActions.editDiscountCategoryThunk(discount.id, Object.keys(currDCs)))
 
-        setProductUpdated(prevState => !prevState)
+        setDiscountUpdated(prevState => !prevState)
 
         return onCloseExpandRow()
     }
 
     const handleCancel = () => {
-        setCurrPCs(() => ({
-            ...copyCurrPCs
+        setCurrDCs(() => ({
+            ...copyCurrDCs
         }))
         return onCloseExpandRow()
     }
 
+    // function to handle radio button clicking for discount type
+    const handleRadioClick = (type, e) => {
+        e.stopPropagation()
+        setType(type)
+    }
+
     return (
         <div id="product-main-container" className="bg-200">
-            <section id="product-link">
-                View <p onClick={() => history.push(`/products/${product.id}`)} id="product-name" className="text-200">{product.productName}</p>
-            </section>
             <section id="product-info-container">
                 <aside id="product-edit-container">
                     <section>
@@ -105,29 +113,46 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         />
                     </section>
                     <section>
-                        <aside>Edit Price:</aside>
+                        <aside>Edit Value:</aside>
                         <input
                             type="number"
-                            defaultValue={`${price}`}
-                            onChange={(e) => setPrice(e.target.value)}
+                            defaultValue={value}
+                            onChange={(e) => setValue(e.target.value)}
                         />
                     </section>
                     <section>
-                        <aside>Edit Stock:</aside>
+                        <aside id='product-description'>Edit Expiration</aside>
                         <input
-                            type="number"
-                            defaultValue={stock}
-                            onChange={(e) => setStock(e.target.value)}
+                            id="product-description-input"
+                            value={expiration}
+                            onChange={(e) => setExpiration(e.target.value)}
                         />
                     </section>
                 </aside>
                 <aside>
-                    <aside id='product-description'>Edit Description</aside>
-                    <textarea
-                        id="product-description-input"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
+                    <section>
+                        <aside>Edit Discount Type</aside>
+                        <input
+                            type="radio"
+                            id="type-percent"
+                            checked={type === "percent"}
+                            onClick={(e) => handleRadioClick("percent", e)}
+                        />
+                        <label htmlFor={`type-percent`} onClick={(e) => e.preventDefault()}>
+                            Percent
+                        </label>
+                    </section>
+                    <section>
+                        <input
+                            type="radio"
+                            id="type-flat"
+                            checked={type === "flat"}
+                            onClick={(e) => handleRadioClick("flat", e)}
+                        />
+                        <label htmlFor={`type-flat`} onClick={(e) => e.preventDefault()}>
+                            Flat Discount
+                        </label>
+                    </section>
                 </aside>
             </section>
             <section id="category-header-container">
@@ -142,7 +167,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                             <input
                                 type="checkbox"
                                 id={`color-${el.id}`}
-                                checked={currPCs[el.categoryName]}
+                                checked={currDCs[el.categoryName]}
                                 onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
                             <label htmlFor={`color-${el.id}`} onClick={(e) => e.preventDefault()}>
@@ -151,28 +176,13 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         </div>
                     ))}
                 </section>
-                {/* TO DO: see if availability is somethign that should be an option */}
-                {/* <section>
-                    {availabilitySection.map(el => (
-                        <div key={`availability-${el.id}`}>
-                            <input
-                                type="radio"
-                                id={`availability-${el.id}`}
-                                name="availability"
-                            />
-                            <label htmlFor={`availability-${el.id}`} onClick={(e) => e.preventDefault()}>
-                                {el.categoryName === "Instock" ? "In Stock" : "Out of Stock"}
-                            </label>
-                        </div>
-                    ))}
-                </section> */}
                 <section>
                     {furnitureSection.map(el => (
                         <div key={`furniture-${el.id}`}>
                             <input
                                 type="checkbox"
                                 id={`furniture-${el.id}`}
-                                checked={currPCs[el.categoryName]}
+                                checked={currDCs[el.categoryName]}
                                 onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
                             <label htmlFor={`furniture-${el.id}`} onClick={(e) => e.preventDefault()}>
@@ -187,7 +197,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                             <input
                                 type="checkbox"
                                 id={`location-${el.id}`}
-                                checked={currPCs[el.categoryName]}
+                                checked={currDCs[el.categoryName]}
                                 onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
                             />
                             <label htmlFor={`location-${el.id}`} onClick={(e) => e.preventDefault()}>
@@ -198,7 +208,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                 </section>
             </section>
             <section id="save-changes-container">
-                <p id="product-save-changes" className="pointer" onClick={() => handleProductEdit()}>
+                <p id="product-save-changes" className="pointer" onClick={() => handleDiscountEdit()}>
                     Save Changes
                 </p>
                 <p id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
@@ -209,4 +219,4 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     )
 }
 
-export default EditProduct
+export default EditDiscount

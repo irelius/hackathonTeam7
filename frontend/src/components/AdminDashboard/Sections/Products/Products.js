@@ -11,11 +11,13 @@ import * as categoryActions from "../../../../store/category"
 function ProductsSection() {
     const dispatch = useDispatch();
 
-    // startsWith option
+    // useState variable to set startsWith option to "All"
     const [searchLetter, setSearchLetter] = useState('All');
+
+    // usestate variable to keep track if product is edited
     const [productUpdated, setProductUpdated] = useState(false)
 
-    // sortBy and Order option
+    // sortBy and order option usestate variables
     const [nameSort, setNameSort] = useState('ASC');
     const [priceSort, setPriceSort] = useState(null);
     const [stockSort, setStockSort] = useState(null);
@@ -24,6 +26,7 @@ function ProductsSection() {
         dispatch(categoryActions.loadAllCategoriesThunk());
     }, [productUpdated]);
 
+    // useeffect to dispatch what products to display depending on the starting letter, order, quantity, price, etc.
     useEffect(() => {
         const sortBy = nameSort ? 'productName' : priceSort ? 'productPrice' : 'productQuantity';
         const sortOrder = nameSort ? nameSort : priceSort ? priceSort : stockSort;
@@ -33,6 +36,7 @@ function ProductsSection() {
 
     const products = Object.values(useSelector((state) => state.product));
 
+    // alphabet variable for the product directory
     const alphabet = ['All', ...Array.from({ length: 26 }, (_, index) => String.fromCharCode(65 + index))];
     const isActive = (letter) => letter === searchLetter;
 
