@@ -70,7 +70,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     console.log('booba', currDCs)
 
     const handleDiscountEdit = () => {
-        // handle any edits made to product name, price, and quantity
+        // handle any edits made to discount name, type, value, and expiration date
         const newDiscountInfo = {
             discountName: name,
             discountType: type.toLowerCase(),
@@ -79,7 +79,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
         }
         dispatch(discountActions.editDiscountThunk(discount.id, newDiscountInfo))
 
-        // handle any edits amde to the product categories
+        // handle any edits amde to the discount categories
         dispatch(discountCategoryActions.editDiscountCategoryThunk(discount.id, Object.keys(currDCs)))
 
         setDiscountUpdated(prevState => !prevState)
@@ -101,9 +101,9 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     }
 
     return (
-        <div id="product-main-container" className="bg-200">
-            <section id="product-info-container">
-                <aside id="product-edit-container">
+        <div id="discount-main-container" className="bg-200">
+            <section id="discount-info-container">
+                <aside id="discount-edit-container">
                     <section>
                         <aside>Edit Name:</aside>
                         <input
@@ -121,16 +121,17 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                         />
                     </section>
                     <section>
-                        <aside id='product-description'>Edit Expiration</aside>
+                        <aside id='discount-expiration'>Edit Expiration</aside>
                         <input
-                            id="product-description-input"
+                            id="discount-expiration-input"
+                            type="date"
                             value={expiration}
                             onChange={(e) => setExpiration(e.target.value)}
                         />
                     </section>
                 </aside>
-                <aside>
-                    <section>
+                <aside id="discount-type-container">
+                    <section id="category-section-map">
                         <aside>Edit Discount Type</aside>
                         <input
                             type="radio"
@@ -138,80 +139,101 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                             checked={type === "percent"}
                             onClick={(e) => handleRadioClick("percent", e)}
                         />
-                        <label htmlFor={`type-percent`} onClick={(e) => e.preventDefault()}>
+                        <label htmlFor={`type-percent`} onClick={(e) => {
+                            e.preventDefault()
+                            handleRadioClick("percent", e)
+                        }}>
                             Percent
                         </label>
                     </section>
-                    <section>
+                    <section id="category-section-map">
                         <input
                             type="radio"
                             id="type-flat"
                             checked={type === "flat"}
                             onClick={(e) => handleRadioClick("flat", e)}
                         />
-                        <label htmlFor={`type-flat`} onClick={(e) => e.preventDefault()}>
+                        <label htmlFor={`type-flat`} onClick={(e) => {
+                            e.preventDefault()
+                            handleRadioClick("flat", e)
+                        }}>
                             Flat Discount
                         </label>
                     </section>
                 </aside>
             </section>
-            <section id="category-header-container">
-                <aside>Color</aside>
-                <aside>Furniture</aside>
-                <aside>Location</aside>
-            </section >
-            <section id="category-body-container">
-                <section>
-                    {colorSection.map(el => (
-                        <div key={`color-${el.id}`}>
-                            <input
-                                type="checkbox"
-                                id={`color-${el.id}`}
-                                checked={currDCs[el.categoryName]}
-                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                            />
-                            <label htmlFor={`color-${el.id}`} onClick={(e) => e.preventDefault()}>
-                                {el.categoryName}
-                            </label>
-                        </div>
-                    ))}
-                </section>
-                <section>
-                    {furnitureSection.map(el => (
-                        <div key={`furniture-${el.id}`}>
-                            <input
-                                type="checkbox"
-                                id={`furniture-${el.id}`}
-                                checked={currDCs[el.categoryName]}
-                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                            />
-                            <label htmlFor={`furniture-${el.id}`} onClick={(e) => e.preventDefault()}>
-                                {el.categoryName}
-                            </label>
-                        </div>
-                    ))}
-                </section>
-                <section>
-                    {locationSection.map(el => (
-                        <div key={`location-${el.id}`}>
-                            <input
-                                type="checkbox"
-                                id={`location-${el.id}`}
-                                checked={currDCs[el.categoryName]}
-                                onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                            />
-                            <label htmlFor={`location-${el.id}`} onClick={(e) => e.preventDefault()}>
-                                {el.categoryName}
-                            </label>
-                        </div>
-                    ))}
-                </section>
+
+            <section id="category-section">
+                <aside>
+                    <section className="underline">Color</section>
+                    <section id="category-section-map">
+                        {colorSection.map(el => (
+                            <div key={`color-${el.id}`}>
+                                <input
+                                    type="checkbox"
+                                    id={`color-${el.id}`}
+                                    checked={currDCs[el.categoryName]}
+                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
+                                />
+                                <label htmlFor={`color-${el.id}`} onClick={(e) => {
+                                    e.preventDefault()
+                                    handleCheckBoxClick(el.categoryName, e)
+                                }}>
+                                    {el.categoryName}
+                                </label>
+                            </div>
+                        ))}
+                    </section>
+                </aside>
+                <aside>
+                    <section className="underline">Furniture</section>
+                    <section id="category-section-map">
+                        {furnitureSection.map(el => (
+                            <div key={`furniture-${el.id}`}>
+                                <input
+                                    type="checkbox"
+                                    id={`furniture-${el.id}`}
+                                    checked={currDCs[el.categoryName]}
+                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
+                                />
+                                <label htmlFor={`furniture-${el.id}`} onClick={(e) => {
+                                    e.preventDefault()
+                                    handleCheckBoxClick(el.categoryName, e)
+                                }}>
+                                    {el.categoryName}
+                                </label>
+                            </div>
+                        ))}
+                    </section>
+                </aside>
+                <aside>
+                    <section className="underline">Location</section>
+                    <section id="category-section-map">
+                        {locationSection.map(el => (
+                            <div key={`location-${el.id}`}>
+                                <input
+                                    type="checkbox"
+                                    id={`location-${el.id}`}
+                                    checked={currDCs[el.categoryName]}
+                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
+                                />
+                                <label htmlFor={`location-${el.id}`} onClick={(e) => {
+                                    e.preventDefault()
+                                    handleCheckBoxClick(el.categoryName, e)
+                                }}>
+                                    {el.categoryName}
+                                </label>
+                            </div>
+                        ))}
+                    </section>
+                </aside>
             </section>
+
             <section id="save-changes-container">
-                <p id="product-save-changes" className="pointer" onClick={() => handleDiscountEdit()}>
+                <p id="discount-save-changes" className="pointer" onClick={() => handleDiscountEdit()}>
                     Save Changes
                 </p>
-                <p id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
+                <p id="discount-cancel-changes" className="pointer" onClick={() => handleCancel()} >
                     Cancel
                 </p>
             </section>
