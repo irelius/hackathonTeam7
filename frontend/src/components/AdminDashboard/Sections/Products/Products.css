@@ -55,9 +55,7 @@
     height: 50px;
 
     margin-bottom: 20px;
-
-    width: 70vw;
-    max-width: 1000px;
+    margin-left: 150px;
 }
 
 #dashboard-header-column>* {
