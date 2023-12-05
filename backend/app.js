@@ -27,6 +27,7 @@ app.use(
 );
 
 app.use(morgan('dev'));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Security Middleware

@@ -13,6 +13,7 @@ import cartReducer from "./cart";
 import stripeSessionReducer from "./stripesession";
 import userReducer from "./user";
 import discountCategoryReducer from "./discountcategory";
+import productImageReducer from "./productimage";
 import categoryReducer from "./category";
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   stripeSession: stripeSessionReducer,
   user: userReducer,
+  productImage: productImageReducer,
   category: categoryReducer,
 });
 

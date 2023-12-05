@@ -3,16 +3,28 @@ import { useEffect, useState } from "react";
 import { loadAllProductsThunk } from "../../store/product";
 import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 import "./ProductPage.css";
+import { loadAllProductImagesThunk } from "../../store/productimage";
 
 export default function ProductsPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadAllProductsThunk());
+    dispatch(loadAllProductImagesThunk());
   }, [dispatch]);
 
   const productObj = useSelector((state) => state.product);
   const products = Object.values(productObj);
+
+  const imagesObj = useSelector((state) => state.productImage);
+  const images = Object.values(imagesObj);
+
+  const placeholderImageUrl = "https://via.placeholder.com/450";
+
+  const getImageUrl = (productId) => {
+    const image = images.find((img) => img?.productId === productId);
+    return image ? image.image : placeholderImageUrl;
+  };
 
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 9;
@@ -38,8 +50,7 @@ export default function ProductsPage() {
     (currentPage + 1) * productsPerPage
   );
 
-  const placeholderImageUrl = "https://via.placeholder.com/450";
-  const productImage = placeholderImageUrl;
+ 
 
   return (
     <>
@@ -50,7 +61,7 @@ export default function ProductsPage() {
             <div className="product-cell" key={product.id}>
               <div className="product">
                 <NavLink to={`/products/${product.id}`}>
-                  <img src={productImage} className="product-image" alt="" />
+                  <img src={getImageUrl(product.id)} className="product-image" alt="" />
                   <li>{product.productName}</li>
                 </NavLink>
                 <div className="product-price">

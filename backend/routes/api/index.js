@@ -36,7 +36,7 @@ router.use('/cart', cartRouter);
 router.use('/order', orderRouter);
 router.use('/category', categoryRouter)
 router.use('/product', productRouter);
-router.use('/productimage', productImageRouter);
+router.use('/productimages', productImageRouter);
 router.use('/productcategory', productCategoryRouter);
 router.use('/review', reviewRouter);
 router.use('/productcart', productCartRouter)

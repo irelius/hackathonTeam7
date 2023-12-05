@@ -24,6 +24,7 @@ function CreateReview() {
       userId: userId,
       productId: productId,
       review,
+      rating,
     };
 
     dispatch(addReviewThunk(newReview));
@@ -31,7 +32,7 @@ function CreateReview() {
 
   return (
     <>
-      <div>
+      <div className="review-form-container">
         <form 
         onSubmit={handleSubmit}
         >

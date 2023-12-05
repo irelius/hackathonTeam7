@@ -224,7 +224,7 @@ router.get("/filter", async (req, res) => {
 
 // create a new product to list
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
-    const { productName, productDescription, productPrice, productQuantity } = req.body
+    const { productName, productDescription, productPrice, productQuantity, image } = req.body;
 
     try {
         const newProduct = await Product.create({
@@ -232,20 +232,28 @@ router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
             productDescription: productDescription,
             productPrice: productPrice,
             productQuantity: productQuantity
-        })
+        });
 
-        res.status(201).json({ data: newProduct })
+        if (image) {
+            await ProductImage.create({
+                productId: newProduct.id,
+                image: image,
+            });
+        }
+
+        res.status(201).json({ data: newProduct });
     } catch (err) {
-        return internalServerError(res, err)
+        return internalServerError(res, err);
     }
-})
+});
+
 
 
 // update a product
 router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
         const productId = req.params.productId
-        const { productName, productDescription, productPrice, productQuantity } = req.body
+        const { productName, productDescription, productPrice, productQuantity, image } = req.body
 
         const product = await Product.findByPk(productId)
 
@@ -259,6 +267,15 @@ router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, re
         product.productPrice = productPrice
 
         await product.save()
+
+         // If an image is provided, create a new entry in ProductImage
+         if (image) {
+            // Assuming you have a ProductImage model with an association to Product
+            const productImage = await ProductImage.create({
+                productId: product.id,
+                image: image,
+            });
+        }
 
         return res.json({ message: "Successfully updated product information" })
     } catch (err) {

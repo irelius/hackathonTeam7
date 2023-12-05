@@ -11,6 +11,7 @@ import { loadUserCartThunk } from "../../store/cart";
 import { csrfFetch } from "../../store/csrf";
 import { addStripeSessionThunk } from "../../store/stripesession";
 import { loadAllProductsThunk } from "../../store/product";
+import { loadAllProductImagesThunk } from "../../store/productimage";
 
 function CartPage2() {
   const history = useHistory();
@@ -24,6 +25,8 @@ function CartPage2() {
         await dispatch(loadUserProductCartThunk());
         await dispatch(loadUserCartThunk());
         await dispatch(loadAllProductsThunk());
+        await dispatch(loadAllProductImagesThunk());
+
         setIsLoaded(true);
       } catch (error) {
         console.error("Error loading data:", error);
@@ -40,10 +43,16 @@ function CartPage2() {
   const allProductObj = useSelector((state) => state.product);
   const allProducts = Object.values(allProductObj);
 
+  const imagesObj = useSelector((state) => state.productImage);
+  const images = Object.values(imagesObj);
   const placeholderImageUrl = "https://via.placeholder.com/150"; // Replace this with your placeholder image URL
-  const productImage = placeholderImageUrl;
+  const getImageUrl = (productId) => {
+    const image = images.find((img) => img?.productId === productId);
+    return image ? image.image : placeholderImageUrl;
+  };
 
-  console.log(cartItems);
+  
+
 
   const checkout = async (e) => {
     try {
@@ -128,7 +137,7 @@ function CartPage2() {
                 <div className="cart-info" id="cart-section">
                   <section className="table-cell" id="cart-name">
                     <NavLink to={`/products/${cartItem.productId}`}>
-                      <img src={productImage} className="product-image" />
+                      <img src={getImageUrl(cartItem.productId)} className="product-image" />
                       {getProductNameById(cartItem.productId, allProducts)}
                     </NavLink>
                   </section>
