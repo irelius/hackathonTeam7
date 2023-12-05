@@ -2,12 +2,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* width: 100%; */
+
+    position: fixed;
+
+    height: 75px;
+    width: 100%;
 
     backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.314);
+    background: rgba(255, 255, 255);
+}
 
-    margin: 10px 20px;
+#nav > * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 li {
@@ -144,8 +152,6 @@ li {
     justify-content: space-between;
 
     width: 100%;
-
-    background-color: orange;
 }
 
 .logo-header {

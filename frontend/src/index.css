@@ -1,10 +1,12 @@
 /* TODO Add site wide styles */
-html, body, #root {
+html,
+body,
+#root {
     width: 100%;
     height: 100%;
     padding: 0px;
     margin: 0px;
-    background-color: #e8e8e8;
+    background-color: #F2F2F2;
 }
 
 
@@ -31,7 +33,7 @@ html, body, #root {
 
 * {
     font-family: "Inter", sans-serif;
-  }
+}
 
 .font-20 {
     font-size: 20px;
@@ -44,16 +46,58 @@ html, body, #root {
 
 /* ---------------------------------------------------------------------------------------------------------------- */
 /* Color Stuff */
-.primary-color {
-    color: black
+.primary-100 {
+    color: #2C3E50
+}
+
+.primary-200 {
+    color: #57687c
+}
+
+.primary-300 {
+    color: #b4c7dd;
+}
+
+.accent-100 {
+    color: #F7CAC9;
+}
+
+.accent-200 {
+    color: #926b6a;
 }
 
 
 /* ---------------------------------------------------------------------------------------------------------------- */
+/* Text Stuff */
+
+.text-100 {
+    color: #333333
+}
+
+.text-200 {
+    color: #5c5c5c
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+
+
+/* ---------------------------------------------------------------------------------------------------------------- */
 /* Background Color Stuff */
-.primary-bg {
+.bg-100 {
+    background-color: #F2F2F2;
+}
+
+.bg-200 {
     background-color: #e8e8e8;
 }
+
+.bg-300 {
+    background-color: #bfbfbf;
+}
+
 
 
 .container {

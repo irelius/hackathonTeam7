@@ -1,0 +1,57 @@
+#discount-main-container {
+    border-radius: 10px;
+    padding: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
+
+    height: fit-content;
+}
+
+#discount-info-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#discount-edit-container {
+    margin-bottom: 10px;
+}
+
+#discount-edit-container>* {
+    margin-bottom: 20px;
+}
+
+#discount-edit-container section aside {
+    margin-bottom: 5px;
+}
+
+#discount-expiration-input {
+    margin-bottom: 30px;
+    width: 188px;
+}
+
+#discount-type-container>section>* {
+    margin-bottom: 10px;
+}
+
+#discount-save-changes {
+    color: white;
+    border: 1px solid #926b6a;
+    background-color: #1A7BE9;
+    transition: background-color 0.1s ease;
+}
+
+#discount-save-changes:hover {
+    background-color: #136DD4;
+}
+
+
+#discount-cancel-changes {
+    color: #333333;
+    border: 1px solid #926b6a;
+    background-color: #F7CAC9;
+    transition: background-color 0.1s ease;
+}
+
+#discount-cancel-changes:hover {
+    background-color: #F7BAB8;
+}

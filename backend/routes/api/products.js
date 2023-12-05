@@ -22,6 +22,51 @@ router.get("/all", async (req, res) => {
     }
 })
 
+// get all products, sorted by options
+router.get("/all/sort", async (req, res) => {
+    try {
+        const { sortBy, sortOrder, startsWith } = req.query;
+
+        const searchClause = startsWith && startsWith !== "All"
+            ? {
+                productName: {
+                    [Op.startsWith]: startsWith.toUpperCase(),
+                },
+            }
+            : {};
+
+        const result = await Product.findAll({
+            where: searchClause,
+            order: [[sortBy, sortOrder]],
+        });
+
+        res.json({ data: result });
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
+
+// Get all products with name that starts with a letter
+router.get("/all/:startingLetter", async (req, res) => {
+    try {
+        const startingLetter = req.params.startingLetter.toUpperCase();
+
+        const products = await Product.findAll({
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+            where: {
+                productName: {
+                    [Sequelize.Op.like]: `${startingLetter}%`,
+                },
+            },
+            order: [['productName', 'ASC']],
+        });
+
+        res.json({ data: products });
+    } catch (err) {
+        return internalServerError(res, err);
+    }
+})
 
 
 // Get a product by name
@@ -209,7 +254,6 @@ router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, re
     try {
         const productId = req.params.productId
         const { productName, productDescription, productPrice, productQuantity, image } = req.body
-
 
         const product = await Product.findByPk(productId)
 

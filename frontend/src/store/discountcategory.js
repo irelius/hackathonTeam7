@@ -23,7 +23,7 @@ export const loadDiscountCategories = (discountCategories) => {
 }
 
 // thunk action for all discount categories
-export const loadAllDiscountCategoriesThunk = () => async (dispatch) => {
+export const loadAllDiscountCategoryThunk = () => async (dispatch) => {
     try {
         const res = await csrfFetch("/api/discountcategory/all")
         if (res.ok) {
@@ -38,6 +38,22 @@ export const loadAllDiscountCategoriesThunk = () => async (dispatch) => {
     return []
 }
 
+// thunk action for the discount categories of a specific discount
+export const loadDiscountCategoryByDiscountThunk = (discountId) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/discountcategory/discount/${discountId}`)
+        if (res.ok) {
+            const discountCategories = await res.json()
+            dispatch(loadDiscountCategories(discountCategories))
+        } else {
+            console.error(`Failed to load discountCategories of discount ${discountId}:`, res.status, res.statusText);
+
+        }
+    } catch (err) {
+        console.error(`An error occured while loading discountCategories of discount ${discountId}`)
+    }
+}
+
 export const addDiscountCategory = (discountCategory) => {
     return {
         type: ADD_DISCOUNT_CATEGORY,
@@ -45,10 +61,58 @@ export const addDiscountCategory = (discountCategory) => {
     }
 }
 
+// thunk action to create a new discount category based on discount Id and a list of categories
+export const addDiscountCategoryThunk = (discountId, categoryArr) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/discountcategory/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ discountId, categoryArr })
+        })
+
+        if (res.ok) {
+            const discountCategory = await res.json()
+            dispatch(addDiscountCategory(discountCategory))
+            return discountCategory
+        } else {
+            console.error(`Failed to create a new discountCatgory for discount ${discountId}:`, res.status, res.statusText);
+        }
+
+    } catch (err) {
+        console.error('An error occurred while creating new discountCategory:', err);
+    }
+}
+
+
 export const editDiscountCategory = (discountCategory) => {
     return {
         type: EDIT_DISCOUNT_CATEGORY,
         payload: discountCategory
+    }
+}
+
+// thunk action to edit discountCategories
+export const editDiscountCategoryThunk = (discountId, categoryArr) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/discountcategory/${discountId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ categoryArr }),
+        });
+
+        if (res.ok) {
+            const newDiscountCateogry = await res.json()
+            dispatch(editDiscountCategory(newDiscountCateogry))
+            return newDiscountCateogry
+        } else {
+            console.error(`Failed to edit discountCategories of discount ${discountId}:`, res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while editing new discountCategory:', err);
     }
 }
 

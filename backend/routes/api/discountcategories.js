@@ -155,7 +155,6 @@ router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
 // edit the discount categories of a discount
 router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) => {
     const { categoryArr } = req.body
-    categoryArr.push("All")
 
     const discountId = req.params.discountId
 

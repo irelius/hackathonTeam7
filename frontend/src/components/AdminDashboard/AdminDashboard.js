@@ -1,13 +1,15 @@
+import "./AdminDashboard.css"
+
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min"
-import * as sessionActions from "../../store/session"
 import OrdersSection from "./Sections/Orders/Orders"
 import DiscountsSection from "./Sections/Discounts/Discounts"
 import ProductsSection from "./Sections/Products/Products"
 import EmployeesSection from "./Sections/Employees/Employees"
 import ReviewsSection from "./Sections/Reviews/Reviews"
 
+import * as sessionActions from "../../store/session"
 import * as userActions from "../../store/user"
 
 function AdminDashboard() {
@@ -43,19 +45,19 @@ function AdminDashboard() {
 
     return load ? (
         <div>
-            <section>
-                <button onClick={() => handleTabChange("OrdersSection")}>Orders</button>
-                <button onClick={() => handleTabChange("ProductsSection")}>Products</button>
-                <button onClick={() => handleTabChange("ReviewsSection")}>Reviews</button>
-                <button onClick={() => handleTabChange("DiscountsSection")}>Discounts</button>
-                {currUser.role === "admin" ? ( // only show the employee tab button if the user role is Admin
-                    <button onClick={() => handleTabChange("EmployeesSection")}>Employees</button>
+            <section id="dashboard-side-bar-section">
+                <div className={`dash-text-${activeTab === "OrdersSection" ? "100" : "200"}`} onClick={() => handleTabChange("OrdersSection")}>Orders</div>
+                <div className={`dash-text-${activeTab === "ProductsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ProductsSection")}>Products</div>
+                <div className={`dash-text-${activeTab === "ReviewsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ReviewsSection")}>Reviews</div>
+                <div className={`dash-text-${activeTab === "DiscountsSection" ? "100" : "200"}`} onClick={() => handleTabChange("DiscountsSection")}>Discounts</div>
+                {currUser.role === "admin" ? ( // only show the employee tab div if the user role is Admin
+                    <div className={`dash-text-${activeTab === "EmployeesSection" ? "100" : "200"}`} onClick={() => handleTabChange("EmployeesSection")}>Employees</div>
                 ) : (
                     <></>
                 )}
             </section>
 
-            <section>
+            <section id="dashboard-display">
                 {activeTab === "OrdersSection" && <OrdersSection />}
                 {activeTab === "ProductsSection" && <ProductsSection />}
                 {activeTab === "ReviewsSection" && <ReviewsSection allUsers={allUsers} />}
@@ -66,7 +68,7 @@ function AdminDashboard() {
                     <></>
                 )}
             </section>
-        </div>
+        </div >
     ) : (
         <></>
     )

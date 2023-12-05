@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_PRODUCT = "/product/setProduct"
 const LOAD_PRODUCTS = "/product/setProducts"
+const LOAD_PRODUCTS_ORDERED = "/product/setOrderedProducts"
 const ADD_PRODUCT = "/product/addProduct"
 const EDIT_PRODUCT = "/product/editProduct"
 const DELETE_PRODUCT = "/product/deleteProduct"
@@ -18,6 +19,13 @@ export const loadProducts = (products) => {
     return {
         type: LOAD_PRODUCTS,
         payload: products,
+    }
+}
+
+export const loadOrderedProducts = (products) => {
+    return {
+        type: LOAD_PRODUCTS_ORDERED,
+        payload: products
     }
 }
 
@@ -44,6 +52,49 @@ export const loadAllProductsThunk = () => async (dispatch) => {
         if (res.ok) {
             const allProducts = await res.json()
             dispatch(loadProducts(allProducts))
+        } else {
+            console.error('Failed to load all products:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all products:', err);
+    }
+    return []
+}
+
+//thunk action for all products, sorted alphabetically
+export const loadAllProductsSortedThunk = (sortBy, sortOrder, startsWith) => async (dispatch) => {
+    try {
+        const queryString = `?sortBy=${sortBy}&sortOrder=${sortOrder}&startsWith=${startsWith}`;
+        const res = await csrfFetch(`/api/product/all/sort${queryString}`);
+
+        if (res.ok) {
+            const allProducts = await res.json()
+            dispatch(loadOrderedProducts(allProducts))
+        } else {
+            console.error('Failed to load all products:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all products:', err);
+    }
+    return []
+}
+
+// export const loadAllProductsSortedThunk = (sortBy, sortOrder, startsWith) => async (dispatch) => {
+//     try {
+//         const res = await csrfFetch(`/api`)
+
+//     } catch (err) {
+//         console.error('An error occurred while loading sorted products:', err);
+//     }
+// }
+
+//thunk action for to get all products given a particular letter, sorted alphabetically
+export const loadLetterProductsSortedThunk = (startingLetter) => async (dispatch) => {
+    try {
+        const res = await csrfFetch(`/api/product/all/${startingLetter}`)
+        if (res.ok) {
+            const allProducts = await res.json()
+            dispatch(loadOrderedProducts(allProducts))
         } else {
             console.error('Failed to load all products:', res.status, res.statusText);
         }
@@ -202,8 +253,9 @@ const productReducer = (state = initialProduct, action) => {
                 let curr = action.payload.data[i]
                 products[curr.id] = curr
             }
-
             return products
+        case LOAD_PRODUCTS_ORDERED:
+            return action.payload.data
         case ADD_PRODUCT:
             newState[action.payload.data.id] = action.payload.data
             return newState;
