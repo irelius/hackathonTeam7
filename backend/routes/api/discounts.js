@@ -40,10 +40,9 @@ router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
 // Create a new discount
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
     try {
-        const { discountName, applicableCategory, discountType, discountValue, expirationDate } = req.body
+        const { discountName, discountType, discountValue, expirationDate } = req.body
 
         const newDiscount = await Discount.create({
-            applicableCategory: applicableCategory,
             discountName: discountName,
             discountType: discountType,
             discountValue: discountValue,

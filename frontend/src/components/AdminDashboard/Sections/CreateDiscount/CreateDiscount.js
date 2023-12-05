@@ -11,62 +11,125 @@ import CategorySection from "../../ReusableSections/CategorySection"
 function CreateDiscount() {
     const dispatch = useDispatch()
 
-    const [discountName, setDiscountName] = useState("")
-    const [discountType, setDiscountType] = useState("percent")
-    const [discountValue, setDiscountValue] = useState("")
+    const [name, setName] = useState("")
+    const [type, setType] = useState("percent")
+    const [value, setValue] = useState("")
     const [expirationDate, setExpirationDate] = useState("")
-    const [discountCategories, setDiscountCategories] = useState([])
+    const [categories, setCategories] = useState({})
+
+    const [currCats, setCurrCats] = useState({})
+    const [clearCats, setClearCats] = useState({})
 
     useEffect(() => {
         dispatch(categoryActions.loadAllCategoriesThunk())
-    }, [])
+    }, [dispatch])
 
-    const allCategories = useSelector(state => state.category)
-    const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
-    const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
-    const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
+    useEffect(() => {
+        console.log('booba', expirationDate)
+    }, [expirationDate])
 
-    const [currCats, setCurrCats] = useState({})
-    const [copyCurrCats, setCopyCurrCats] = useState({})
 
-    // function to handle clicking a checkbox and updates the currCats useState variable.
-    const handleCheckBoxClick = (categoryName, e) => {
-        e.stopPropagation();
-        const categoryUpdater = { ...currCats }
-        if (categoryUpdater[categoryName]) {
-            delete categoryUpdater[categoryName]
-        } else {
-            categoryUpdater[categoryName] = true
-        }
-        setCurrCats(categoryUpdater)
+
+    const handleCategorySelection = (updatedCategories) => {
+        setCategories(updatedCategories)
     }
 
+    // function to handle radio button clicking for discount type
+    const handleRadioClick = (type, e) => {
+        e.stopPropagation()
+        setType(type)
+    }
+
+    const handleClear = () => {
+        setCurrCats(prevState => ({
+            prevState,
+            ...clearCats
+        }))
+    }
+
+    const handleSubmit = () => {
+        const newDiscount = {
+            discountName: name,
+            discountType: type,
+            discountValue: value,
+            expirationDate: expirationDate
+        }
+
+        dispatch(discountActions.addDiscountThunk(newDiscount))
+    }
 
     return (
         <div id="temp">
-            <section>Create a New Discount</section>
+            <section>
+                <div>Create a New Discount</div>
+            </section>
+            <section>
+                <section>
+                    <section>Discount Code Name</section>
+                    <input
+                        type="text"
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </section>
+                <section>
+                    <section>Discount Type</section>
+                    <section>
+                        <input
+                            type="radio"
+                            id="type-percent"
+                            checked={type === "percent"}
+                            onClick={(e) => handleRadioClick("percent", e)}
+                        />
+                        <label htmlFor={`type-percent`} onClick={(e) => {
+                            e.preventDefault()
+                            handleRadioClick("percent", e)
+                        }}>
+                            Percent
+                        </label>
+                        <input
+                            type="radio"
+                            id="type-flat"
+                            checked={type === "flat"}
+                            onClick={(e) => handleRadioClick("flat", e)}
+                        />
+                        <label htmlFor={`type-flat`} onClick={(e) => {
+                            e.preventDefault()
+                            handleRadioClick("flat", e)
+                        }}>
+                            Flat Discount
+                        </label>
+
+                    </section>
+                </section>
+                <section>
+
+                    <section>Discount Value</section>
+                    <input
+                        type="number"
+                        onChange={(e) => setValue(e.target.value)}
+                    />
+                </section>
+                <section>
+                    <section>Expiration Date</section>
+                    <input
+                        type="date"
+                        onChange={(e) => setExpirationDate(e.target.value)}
+                    />
+                </section>
+            </section>
 
             <section>
-                <section>discountName</section>
-            </section>
-            <section>
-                <section>discountType</section>
-            </section>
-            <section>
-
-                <section>discountValue</section>
-            </section>
-            <section>
-                <section>expirationDate</section>
+                <section id="category-section">
+                    <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
+                </section>
             </section>
 
-            <section id="category-section">
-                <CategorySection />
-            </section>
 
             <section>
-                <button>Create New Discount</button>
-                <button>Clear</button>
+                <section>
+                    <button onClick={handleSubmit}>Create New Discount</button>
+                    <button onClick={handleClear}>Clear</button>
+                </section>
             </section>
 
         </div>
