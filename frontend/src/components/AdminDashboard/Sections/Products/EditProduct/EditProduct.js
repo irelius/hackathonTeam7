@@ -14,15 +14,9 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
 
     useEffect(() => {
         dispatch(productCategoryActions.loadProductCategoryByProductThunk(product.id))
-    }, [dispatch])
+    }, [dispatch, product.id])
 
     const allProductCategories = useSelector(state => state.productCategory)
-    const allCategories = useSelector(state => state.category)
-
-    const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
-    const availabilitySection = Object.values(allCategories).filter(el => el.section === "Availability");
-    const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
-    const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
 
     const [name, setName] = useState(product.productName)
     const [price, setPrice] = useState(product.productPrice / 100)

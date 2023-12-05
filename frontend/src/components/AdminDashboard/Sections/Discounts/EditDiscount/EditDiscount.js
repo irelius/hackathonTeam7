@@ -16,12 +16,6 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     }, [dispatch])
 
     const allDiscountCategories = useSelector(state => state.discountCategory)
-    const allCategories = useSelector(state => state.category)
-
-    const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
-    const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
-    const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
-
     const [name, setName] = useState(discount.discountName)
     const [type, setType] = useState(discount.discountType)
     const [value, setValue] = useState(discount.discountValue)
