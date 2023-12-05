@@ -1,3 +1,5 @@
+import "./CreateProduct.css"
+
 function CreateProduct() {
     return (
         <div>

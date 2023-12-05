@@ -8,6 +8,8 @@ import DiscountsSection from "./Sections/Discounts/Discounts"
 import ProductsSection from "./Sections/Products/Products"
 import EmployeesSection from "./Sections/Employees/Employees"
 import ReviewsSection from "./Sections/Reviews/Reviews"
+import CreateDiscount from "./Sections/CreateDiscount/CreateDiscount"
+import CreateProduct from "./Sections/CreateProduct/CreateProduct"
 
 import * as sessionActions from "../../store/session"
 import * as userActions from "../../store/user"
@@ -55,6 +57,8 @@ function AdminDashboard() {
                 ) : (
                     <></>
                 )}
+                <div className={`dash-text-${activeTab === "CreateDiscountSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateDiscountSection")}>Create Discount</div>
+                <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateProductSection")}>Create Product</div>
             </section>
 
             <section id="dashboard-display">
@@ -67,6 +71,8 @@ function AdminDashboard() {
                 ) : (
                     <></>
                 )}
+                {activeTab === "CreateDiscountSection" && <CreateDiscount />}
+                {activeTab === "CreateProductSection" && <CreateProduct />}
             </section>
         </div >
     ) : (

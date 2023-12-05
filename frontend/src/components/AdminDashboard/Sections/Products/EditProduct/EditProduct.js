@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 
 import * as productCategoryActions from "../../../../../store/productcategory"
 import * as productActions from "../../../../../store/product"
+import CategorySection from "../../../ReusableSections/CategorySection"
 
 function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     const dispatch = useDispatch()
@@ -28,10 +29,11 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     const [stock, setStock] = useState(product.productQuantity)
     const [description, setDescription] = useState(product.productDescription)
 
-    const [currPCs, setCurrPCs] = useState({})
-    const [copyCurrPCs, setCopyCurrPCs] = useState({})
+    const [currCats, setCurrCats] = useState({})
+    const [copyCurrCats, setCopyCurrCats] = useState({})
+    const [newCategories, setNewCategories] = useState({})
 
-    // useEffect to set up the currPCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
+    // useEffect to set up the currCats useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
     useEffect(() => {
         const productCategories = {};
         let pcArr = Object.values(allProductCategories)
@@ -42,26 +44,18 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
             }
         }
 
-        setCurrPCs(prevState => ({
+        setCurrCats(prevState => ({
             ...prevState,
             ...productCategories,
         }));
-        setCopyCurrPCs(prevState => ({
+        setCopyCurrCats(prevState => ({
             ...prevState,
-            ...currPCs,
+            ...currCats,
         }));
     }, [allProductCategories]);
 
-    // function to handle clicking a checkbox and updates the currPCs useState variable.
-    const handleCheckBoxClick = (categoryName, e) => {
-        e.stopPropagation();
-        const categoryUpdater = { ...currPCs }
-        if (categoryUpdater[categoryName]) {
-            delete categoryUpdater[categoryName]
-        } else {
-            categoryUpdater[categoryName] = true
-        }
-        setCurrPCs(categoryUpdater)
+    const handleCategorySelection = (updatedCategories) => {
+        setNewCategories(updatedCategories)
     }
 
     const handleProductEdit = () => {
@@ -75,7 +69,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
         dispatch(productActions.editProductThunk(product.id, newProductInfo))
 
         // handle any edits amde to the product categories
-        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(currPCs)))
+        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(currCats)))
 
         setProductUpdated(prevState => !prevState)
 
@@ -83,8 +77,8 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     }
 
     const handleCancel = () => {
-        setCurrPCs(() => ({
-            ...copyCurrPCs
+        setCurrCats(() => ({
+            ...copyCurrCats
         }))
         return onCloseExpandRow()
     }
@@ -131,88 +125,8 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                 </aside>
             </section>
 
-            <section id='category-section'>
-                <aside>
-                    <section className="underline">Color</section>
-                    <section id="category-section-map">
-                        {colorSection.map(el => (
-                            <div key={`color-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`color-${el.id}`}
-                                    checked={currPCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`color-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
-                {/* <aside>
-                    TO DO: see if availability is somethign that should be an option
-                    <section>Availability</section>
-                    <section>
-                        {availabilitySection.map(el => (
-                            <div key={`availability-${el.id}`}>
-                                <input
-                                    type="radio"
-                                    id={`availability-${el.id}`}
-                                    name="availability"
-                                />
-                                <label htmlFor={`availability-${el.id}`} onClick={(e) => e.preventDefault()}>
-                                    {el.categoryName === "Instock" ? "In Stock" : "Out of Stock"}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside> */}
-                <aside>
-                    <section className="underline">Furniture</section>
-                    <section id="category-section-map">
-                        {furnitureSection.map(el => (
-                            <div key={`furniture-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`furniture-${el.id}`}
-                                    checked={currPCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`furniture-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
-                <aside>
-                    <section className="underline">Location</section>
-                    <section id="category-section-map">
-                        {locationSection.map(el => (
-                            <div key={`location-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`location-${el.id}`}
-                                    checked={currPCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`location-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
+            <section>
+                <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
             </section>
 
             <section id="save-changes-container">

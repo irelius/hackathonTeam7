@@ -182,13 +182,13 @@ router.put('/:discountId', restoreUser, requireAuth, isAdmin, async (req, res) =
             }
         }
 
-        const returnPCs = await DiscountCategory.findAll({
+        const returnDCs = await DiscountCategory.findAll({
             where: {
                 discountId: discountId
             },
             attributes: { exclude: ["createdAt", "updatedAt"] }
         })
-        res.status(201).json({ data: returnPCs })
+        res.status(201).json({ data: returnDCs })
     } catch (err) {
         return internalServerError(res, err)
     }

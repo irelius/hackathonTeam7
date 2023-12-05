@@ -6,9 +6,9 @@ import { useEffect } from "react"
 
 import * as discountCategoryActions from "../../../../../store/discountcategory"
 import * as discountActions from "../../../../../store/discount"
+import CategorySection from "../../../ReusableSections/CategorySection"
 
 function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
-    const history = useHistory()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -18,10 +18,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     const allDiscountCategories = useSelector(state => state.discountCategory)
     const allCategories = useSelector(state => state.category)
 
-    console.log('booba', discount)
-
     const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
-    const availabilitySection = Object.values(allCategories).filter(el => el.section === "Availability");
     const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
     const locationSection = Object.values(allCategories).filter(el => el.section === "Location");
 
@@ -30,11 +27,11 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     const [value, setValue] = useState(discount.discountValue)
     const [expiration, setExpiration] = useState(discount.expirationDate.slice(0, 10))
 
-    const [currDCs, setCurrDCs] = useState({})
-    const [copyCurrDCs, setCopyCurrDCs] = useState({})
+    const [currCats, setCurrCats] = useState({})
+    const [copyCurrCats, setCopyCurrCats] = useState({})
+    const [newCategories, setNewCategories] = useState({})
 
-
-    // useEffect to set up the currDCs useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
+    // useEffect to set up the currCats useState variable. Object with categoryNames as key for O(1) lookup. requires some time to set up though
     useEffect(() => {
         const discountCategories = {};
         let dcArr = Object.values(allDiscountCategories)
@@ -45,29 +42,19 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
             }
         }
 
-        setCurrDCs(prevState => ({
+        setCurrCats(prevState => ({
             ...prevState,
             ...discountCategories,
         }))
-        setCopyCurrDCs(prevState => ({
+        setCopyCurrCats(prevState => ({
             ...prevState,
-            ...currDCs,
+            ...currCats,
         }));
     }, [allDiscountCategories]);
 
-    // function to handle clicking a checkbox and updates the currDCs useState variable.
-    const handleCheckBoxClick = (categoryName, e) => {
-        e.stopPropagation();
-        const categoryUpdater = { ...currDCs }
-        if (categoryUpdater[categoryName]) {
-            delete categoryUpdater[categoryName]
-        } else {
-            categoryUpdater[categoryName] = true
-        }
-        setCurrDCs(categoryUpdater)
+    const handleCategorySelection = (updatedCategories) => {
+        setNewCategories(updatedCategories)
     }
-
-    console.log('booba', currDCs)
 
     const handleDiscountEdit = () => {
         // handle any edits made to discount name, type, value, and expiration date
@@ -80,7 +67,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
         dispatch(discountActions.editDiscountThunk(discount.id, newDiscountInfo))
 
         // handle any edits amde to the discount categories
-        dispatch(discountCategoryActions.editDiscountCategoryThunk(discount.id, Object.keys(currDCs)))
+        dispatch(discountCategoryActions.editDiscountCategoryThunk(discount.id, Object.keys(newCategories)))
 
         setDiscountUpdated(prevState => !prevState)
 
@@ -88,8 +75,8 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     }
 
     const handleCancel = () => {
-        setCurrDCs(() => ({
-            ...copyCurrDCs
+        setCurrCats(() => ({
+            ...copyCurrCats
         }))
         return onCloseExpandRow()
     }
@@ -163,70 +150,8 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                 </aside>
             </section>
 
-            <section id="category-section">
-                <aside>
-                    <section className="underline">Color</section>
-                    <section id="category-section-map">
-                        {colorSection.map(el => (
-                            <div key={`color-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`color-${el.id}`}
-                                    checked={currDCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`color-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
-                <aside>
-                    <section className="underline">Furniture</section>
-                    <section id="category-section-map">
-                        {furnitureSection.map(el => (
-                            <div key={`furniture-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`furniture-${el.id}`}
-                                    checked={currDCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`furniture-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
-                <aside>
-                    <section className="underline">Location</section>
-                    <section id="category-section-map">
-                        {locationSection.map(el => (
-                            <div key={`location-${el.id}`}>
-                                <input
-                                    type="checkbox"
-                                    id={`location-${el.id}`}
-                                    checked={currDCs[el.categoryName]}
-                                    onClick={(e) => handleCheckBoxClick(el.categoryName, e)}
-                                />
-                                <label htmlFor={`location-${el.id}`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleCheckBoxClick(el.categoryName, e)
-                                }}>
-                                    {el.categoryName}
-                                </label>
-                            </div>
-                        ))}
-                    </section>
-                </aside>
+            <section>
+                <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
             </section>
 
             <section id="save-changes-container">

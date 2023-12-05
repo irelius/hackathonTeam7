@@ -219,18 +219,3 @@
 
     border-radius: 10px;
 }
-
-
-
-#category-section {
-    display: flex;
-    justify-content: space-around;
-}
-
-#category-section * {
-    margin-top: 10px;
-}
-
-#category-section-map *:hover {
-    cursor: pointer;
-}
