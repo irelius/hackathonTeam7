@@ -32,7 +32,7 @@ function CreateReview() {
 
   return (
     <>
-      <div>
+      <div className="review-form-container">
         <form 
         onSubmit={handleSubmit}
         >

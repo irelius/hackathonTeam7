@@ -50,7 +50,7 @@ function AddProductForm({ setShowModal }) {
 
   return (
     <>
-      <div>
+      <div className="product-form">
         <h1>Product Form</h1>
         {errors.length > 0 &&
           errors.map((error) => <div key={error}>{error}</div>)}

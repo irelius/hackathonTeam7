@@ -26,13 +26,7 @@
     
 }
 
-.review {
-    width: 45vw;
-    height: 30vh;
-    background: rgba(255, 255, 255, 0.6);
-    margin: 0 3px;
-    border-radius: 10px;
-}
+
 
 .review-info {
     padding: 10px 10px;
@@ -53,15 +47,43 @@
 }
 
 .bxs-star {
-    color: yellow;
+    color: black;
     font-size: larger;
 }
 
 .info {
     font-weight: 700;
-    margin-bottom: 10px;
 }
 
 .info.user {
     font-size: large;
+}
+
+
+.reviews-container {
+    border-top: 1px solid gray;
+    margin: 50px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.review {
+    width: 55vw;
+    height: 15vh;
+    /* background: rgba(255, 255, 255, 0.6); */
+    background-color: transparent;
+    margin: 20px 3px;
+    border-radius: 10px;
+    padding: 30px 30px;
+    border: 1px solid gray;
+}
+
+.review-info-user {
+    margin-top: 30px;
+}
+
+.review-info-date {
+    text-align: right;
 }

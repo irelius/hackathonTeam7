@@ -79,9 +79,6 @@ li {
     background-color: #333333 ;
 }
 
-
-
-
 .bx-cart {
     margin-right: 5px;
 }
@@ -98,6 +95,7 @@ li {
 .profile-dropdown {
     position: absolute;
     right: 1%;
+    top: 100%;
     backdrop-filter: blur(10px);
     /* Apply a blur effect to the background */
     background: rgba(255, 255, 255, 0.6);
