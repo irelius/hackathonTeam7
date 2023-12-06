@@ -119,7 +119,6 @@ router.get('/category/:categoryId', async (req, res) => {
 // will create a new discount category between a discount Id and for each category passed in
 router.post("/", restoreUser, requireAuth, isAdmin, async (req, res) => {
     let { discountId, categoryArr } = req.body // categoryArr is an array structured like: ["Black", "Indoor"]
-    categoryArr.push("All")
 
     let newPCs = []
 
