@@ -11,6 +11,7 @@ function EditReview({ review: initialReview, onCancel, product }) {
   const [review, setReview] = useState(initialReview.review || "");
   const [rating, setRating] = useState(initialReview.rating || 0);
 
+
   const handleStarClick = (selectedRating) => {
     setRating(selectedRating);
   };

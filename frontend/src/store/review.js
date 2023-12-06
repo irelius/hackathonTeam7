@@ -144,7 +144,7 @@ export const editReviewThunk = (reviewId, reviewInfo) => async (dispatch) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(reviewInfo )
+            body: JSON.stringify({reviewInfo})
         })
 
         if (res.ok) {

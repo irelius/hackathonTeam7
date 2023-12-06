@@ -136,6 +136,16 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
 router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
     const { reviewInfo } = req.body;
     try {
+        // Check if the provided userId and productId exist in the database
+        const userExists = await User.findByPk(reviewInfo.userId);
+        const productExists = await Product.findByPk(reviewInfo.productId);
+
+        if (!userExists || !productExists) {
+            console.log("User or product not found in the database.");
+            // You may choose to handle this situation appropriately, e.g., return a 404 response.
+            return notFoundError(res, "User or Product");
+        }
+
         const reviewToEdit = await Review.findByPk(req.params.reviewId)
 
         if (!reviewToEdit) {
@@ -146,12 +156,13 @@ router.put("/:reviewId", restoreUser, requireAuth, async (req, res) => {
             return notAuthToEdit(res, "review")
         }
 
-        reviewToEdit.review = reviewInfo.review
-        reviewToEdit.rating = reviewInfo.rating
+        reviewToEdit.review = reviewInfo.review;
+        reviewToEdit.rating = reviewInfo.rating;
 
         await reviewToEdit.save()
         return res.json({ data: reviewToEdit })
     } catch (err) {
+        console.error("An error occurred while updating review information:", err);
         return internalServerError(res, err)
     }
 })
