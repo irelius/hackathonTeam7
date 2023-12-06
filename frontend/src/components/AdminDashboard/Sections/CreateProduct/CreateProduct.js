@@ -1,8 +1,9 @@
 import "./CreateProduct.css"
 import { useDispatch } from "react-redux"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 import * as productActions from "../../../../store/product"
+import * as productCategoryActions from "../../../../store/productcategory"
 import CategorySection from "../../ReusableSections/CategorySection"
 import CurrencyInput from 'react-currency-input-field';
 
@@ -15,24 +16,12 @@ function CreateProduct() {
     const [quantity, setQuantity] = useState(1)
     // edit this part for images. just using a url for a stock image temporarily
     const [image, setImage] = useState("https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4")
-    const [categories, setCategories] = useState({})
 
+    const [categories, setCategories] = useState({})
     const [currCats, setCurrCats] = useState({})
-    const [clearCats, setClearCats] = useState({})
 
     const handleCategorySelection = (updatedCategories) => {
         setCategories(updatedCategories)
-    }
-
-    useEffect(() => {
-        console.log('booba', price)
-    }, [price])
-
-    const handleClear = () => {
-        setCurrCats(prevState => ({
-            prevState,
-            ...clearCats
-        }))
     }
 
     const handleSubmit = () => {
@@ -43,7 +32,9 @@ function CreateProduct() {
             productQuantity: quantity
         }
 
-        dispatch(productActions.addProductThunk(newProduct))
+        dispatch(productActions.addProductThunk(newProduct)).then(res => {
+            dispatch(productCategoryActions.addProductCategoryThunk(res.data.id, Object.keys(categories)))
+        })
     }
 
 
@@ -102,7 +93,7 @@ function CreateProduct() {
             <section>
                 <section>
                     <button onClick={handleSubmit}>Create New Product</button>
-                    <button onClick={handleClear}>Clear</button>
+                    <button onClick={() => setCurrCats(prevState => ({}))}>Clear</button>
                 </section>
             </section>
 

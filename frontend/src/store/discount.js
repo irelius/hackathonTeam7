@@ -70,6 +70,7 @@ export const addDiscountThunk = (newDiscount) => async (dispatch) => {
         if (res.ok) {
             const discount = await res.json()
             dispatch(addDiscount(discount))
+            return discount
         } else {
             console.error("Failed to create a new discount:", res.status, res.statusText);
         }

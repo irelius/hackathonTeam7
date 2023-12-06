@@ -3,7 +3,7 @@ import "./CreateDiscount.css"
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import * as discountActions from "../../../../store/discount"
-import * as categoryActions from "../../../../store/category"
+import * as discountCategoryActions from "../../../../store/discountcategory"
 import CategorySection from "../../ReusableSections/CategorySection"
 
 function CreateDiscount() {
@@ -16,11 +16,6 @@ function CreateDiscount() {
     const [categories, setCategories] = useState({})
 
     const [currCats, setCurrCats] = useState({})
-    const [clearCats, setClearCats] = useState({})
-
-    const handleCategorySelection = (updatedCategories) => {
-        setCategories(updatedCategories)
-    }
 
     // function to handle radio button clicking for discount type
     const handleRadioClick = (type, e) => {
@@ -28,11 +23,8 @@ function CreateDiscount() {
         setType(type)
     }
 
-    const handleClear = () => {
-        setCurrCats(prevState => ({
-            prevState,
-            ...clearCats
-        }))
+    const handleCategorySelection = (updatedCategories) => {
+        setCategories(updatedCategories)
     }
 
     const handleSubmit = () => {
@@ -43,7 +35,9 @@ function CreateDiscount() {
             expirationDate: expirationDate
         }
 
-        dispatch(discountActions.addDiscountThunk(newDiscount))
+        dispatch(discountActions.addDiscountThunk(newDiscount)).then(res => {
+            dispatch(discountCategoryActions.addDiscountCategoryThunk(res.data.id, Object.keys(categories)))
+        })
     }
 
     return (
@@ -112,11 +106,10 @@ function CreateDiscount() {
                 </section>
             </section>
 
-
             <section>
                 <section>
                     <button onClick={handleSubmit}>Create New Discount</button>
-                    <button onClick={handleClear}>Clear</button>
+                    <button onClick={() => { setCurrCats(prevState => ({})) }}>Clear</button>
                 </section>
             </section>
 
