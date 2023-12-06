@@ -1,14 +1,19 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadProductReviewsThunk } from "../../store/review";
-import { loadAllUsersThunk } from "../../store/user";
+import EditReview from "./EditReview";
+
 
 function ReviewsUnderProduct({ product, reviews }) {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const usersObj = useSelector((state) => state.user);
   const users = Object.values(usersObj);
-  // const reviewsObj = useSelector((state) => state?.review);
-  // const reviews = Object.values(reviewsObj)
+  
+  const [editingReviewId, setEditingReviewId] = useState(null);
+
+  const handleEditClick = (reviewId) => {
+    setEditingReviewId(reviewId);
+  };
 
   const renderStars = (rating) => {
     const stars = [];
@@ -18,7 +23,7 @@ function ReviewsUnderProduct({ product, reviews }) {
         stars.push(<i key={i} className="bx bxs-star"></i>);
       } else {
         // Render an empty star
-        stars.push(<i key={i} className="bx bx-star"></i>);
+        // stars.push(<i key={i} className="bx bx-star"></i>);
       }
     }
     return stars;
@@ -39,10 +44,6 @@ function ReviewsUnderProduct({ product, reviews }) {
         <h1>Reviews</h1>
         {reviews.map((review) => (
           <div className="review">
-            <div>
-              <li>{review.review}</li>
-              <li>{formatDate(review.createdAt)}</li>
-            </div>
             <div className="review-info-user">
               <li className="info user">
                 {users.find((user) => user.id === review.userId)?.username}
@@ -50,7 +51,25 @@ function ReviewsUnderProduct({ product, reviews }) {
               <li>{renderStars(review.rating)}</li>
             </div>
             <div className="review-info-date">
+              <li>{formatDate(review.createdAt)}</li>
             </div>
+            <div>
+              <li className="review-info-review">{review.review}</li>
+            </div>
+            <div>
+            {review.userId === sessionUser?.id && (
+                <button onClick={() => handleEditClick(review.id)}>
+                  Edit
+                </button>
+              )}
+                </div>
+                {editingReviewId === review.id && (
+              <EditReview
+                review={review}
+                product={product}
+                onCancel={() => setEditingReviewId(null)}
+              />
+            )}
           </div>
         ))}
       </div>

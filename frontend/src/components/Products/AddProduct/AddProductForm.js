@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProductImageThunk } from "../../../store/productimage";
 import { addProductThunk, editProductThunk } from "../../../store/product";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function AddProductForm({ setShowModal }) {
+  const history = useHistory();
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState(0);
@@ -42,6 +44,7 @@ function AddProductForm({ setShowModal }) {
       // Upload image to AWS S3 with the newly created product ID
       await dispatch(addProductImageThunk(createdProduct.data.id, image));
       console.log("Product and image uploaded successfully!");
+      history.push(`/products/${createdProduct.data.id}`)
     } catch (error) {
       console.error("Error creating product or associating image:", error);
       // Handle error as needed

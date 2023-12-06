@@ -17,7 +17,6 @@ function SingleProductPage() {
   const image = useSelector((state) => state.productImage);
   const reviewsObj = useSelector((state) => state.review);
   const reviews = Object.values(reviewsObj)
-  console.log(reviews)
 
   const placeholderImageUrl = "https://via.placeholder.com/750"; // Replace this with your placeholder image URL
   const getImageUrl = () => {
@@ -63,7 +62,7 @@ function SingleProductPage() {
         </div>
       </div>
       <div className="reviews-container">
-        <CreateReview />
+        <CreateReview product={product}/>
         <ReviewsUnderProduct product={product} reviews={reviews}/>
       </div>
     </>
