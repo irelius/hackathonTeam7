@@ -41,7 +41,7 @@ function CreateDiscount() {
     }
 
     return (
-        <div id="temp">
+        <form onSubmit={handleSubmit()} id="temp">
             <section>
                 <div>Create a New Discount</div>
             </section>
@@ -50,9 +50,12 @@ function CreateDiscount() {
                     <section>Discount Code Name</section>
                     <input
                         type="text"
-                        onChange={(e) => setName(e.target.value)}
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value.toUpperCase())}
                     />
                 </section>
+
                 <section>
                     <section>Discount Type</section>
                     <section>
@@ -68,6 +71,7 @@ function CreateDiscount() {
                         }}>
                             Percent
                         </label>
+
                         <input
                             type="radio"
                             id="type-flat"
@@ -80,21 +84,24 @@ function CreateDiscount() {
                         }}>
                             Flat Discount
                         </label>
-
                     </section>
                 </section>
-                <section>
 
+                <section>
                     <section>Discount Value</section>
                     <input
                         type="number"
+                        max={type === "percent" ? 100 : undefined}
+                        required
                         onChange={(e) => setValue(e.target.value)}
                     />
                 </section>
+
                 <section>
                     <section>Expiration Date</section>
                     <input
                         type="date"
+                        required
                         onChange={(e) => setExpirationDate(e.target.value)}
                     />
                 </section>
@@ -107,13 +114,12 @@ function CreateDiscount() {
             </section>
 
             <section>
-                <section>
-                    <button onClick={handleSubmit}>Create New Discount</button>
-                    <button onClick={() => { setCurrCats(prevState => ({})) }}>Clear</button>
-                </section>
+                <button type="submit">Create New Discount</button>
+                <button type="button" onClick={() => setCurrCats({})}>Clear</button>
             </section>
 
-        </div>
+
+        </form>
     )
 }
 

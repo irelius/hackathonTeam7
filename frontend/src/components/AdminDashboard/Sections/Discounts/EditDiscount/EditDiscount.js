@@ -1,8 +1,6 @@
-import { useState } from "react"
 import "./EditDiscount.css"
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
 
 import * as discountCategoryActions from "../../../../../store/discountcategory"
 import * as discountActions from "../../../../../store/discount"
@@ -13,7 +11,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
 
     useEffect(() => {
         dispatch(discountCategoryActions.loadDiscountCategoryByDiscountThunk(discount.id))
-    }, [dispatch])
+    }, [dispatch, discount.id])
 
     const allDiscountCategories = useSelector(state => state.discountCategory)
     const [name, setName] = useState(discount.discountName)
@@ -82,13 +80,14 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
     }
 
     return (
-        <div id="discount-main-container" className="bg-200">
+        <form onSubmit={handleDiscountEdit} id="discount-main-container" className="bg-200">
             <section id="discount-info-container">
                 <aside id="discount-edit-container">
                     <section>
                         <aside>Edit Name:</aside>
                         <input
                             type="text"
+                            required
                             defaultValue={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -97,7 +96,9 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                         <aside>Edit Value:</aside>
                         <input
                             type="number"
+                            required
                             defaultValue={value}
+                            max={type === "percent" ? 100 : undefined}
                             onChange={(e) => setValue(e.target.value)}
                         />
                     </section>
@@ -106,6 +107,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                         <input
                             id="discount-expiration-input"
                             type="date"
+                            required
                             value={expiration}
                             onChange={(e) => setExpiration(e.target.value)}
                         />
@@ -149,14 +151,14 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
             </section>
 
             <section id="save-changes-container">
-                <p id="discount-save-changes" className="pointer" onClick={() => handleDiscountEdit()}>
+                <button id="discount-save-changes" className="pointer" type="submit">
                     Save Changes
-                </p>
-                <p id="discount-cancel-changes" className="pointer" onClick={() => handleCancel()} >
+                </button>
+                <button id="discount-cancel-changes" className="pointer" onClick={() => handleCancel()} >
                     Cancel
-                </p>
+                </button >
             </section>
-        </div>
+        </form>
     )
 }
 

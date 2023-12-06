@@ -63,7 +63,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
         dispatch(productActions.editProductThunk(product.id, newProductInfo))
 
         // handle any edits amde to the product categories
-        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(currCats)))
+        dispatch(productCategoryActions.editProductCategoryThunk(product.id, Object.keys(newCategories)))
 
         setProductUpdated(prevState => !prevState)
 
@@ -78,7 +78,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     }
 
     return (
-        <div id="product-main-container" className="bg-200">
+        <form onSubmit={handleProductEdit} id="product-main-container" className="bg-200">
             <section id="product-link">
                 View <p onClick={() => history.push(`/products/${product.id}`)} id="product-name" className="text-200">{product.productName}</p>
             </section>
@@ -88,6 +88,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         <aside>Edit Name:</aside>
                         <input
                             type="text"
+                            required
                             defaultValue={name}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -96,6 +97,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         <aside>Edit Price:</aside>
                         <input
                             type="number"
+                            required
                             defaultValue={`${price}`}
                             onChange={(e) => setPrice(e.target.value)}
                         />
@@ -104,6 +106,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         <aside>Edit Stock:</aside>
                         <input
                             type="number"
+                            required
                             defaultValue={stock}
                             onChange={(e) => setStock(e.target.value)}
                         />
@@ -114,6 +117,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                     <textarea
                         id="product-description-input"
                         value={description}
+                        required
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </aside>
@@ -124,14 +128,14 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
             </section>
 
             <section id="save-changes-container">
-                <p id="product-save-changes" className="pointer" onClick={() => handleProductEdit()}>
+                <button type="submit" id="product-save-changes" className="pointer">
                     Save Changes
-                </p>
-                <p id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
+                </button>
+                <button type="button" id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
                     Cancel
-                </p>
+                </button>
             </section>
-        </div>
+        </form>
     )
 }
 

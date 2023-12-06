@@ -39,7 +39,7 @@ function CreateProduct() {
 
 
     return (
-        <div id="temp">
+        <form onSubmit={handleSubmit} id="temp">
             <section>
                 <div>Create a New Product</div>
             </section>
@@ -48,6 +48,7 @@ function CreateProduct() {
                     <section>Product Name</section>
                     <input
                         type="text"
+                        required
                         onChange={(e) => setName(e.target.value)}
                     />
                 </section>
@@ -55,20 +56,26 @@ function CreateProduct() {
                     <section>Product Description</section>
                     <input
                         type="text"
+                        required
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </section>
-                <CurrencyInput
-                    name="product-price-input"
-                    prefix="$"
-                    defaultValue={`${price}.00`}
-                    decimalsLimit={2}
-                    onValueChange={(value, name, e) => setPrice(value)}
-                />
+                <section>
+                    <section>Product Price</section>
+                    <CurrencyInput
+                        name="product-price-input"
+                        required
+                        prefix="$"
+                        defaultValue={`${price}.00`}
+                        decimalsLimit={2}
+                        onValueChange={(value, name, e) => setPrice(value)}
+                    />
+                </section>
                 <section>
                     <section>Product Quantity</section>
                     <input
                         type="number"
+                        required
                         onChange={(e) => setQuantity(e.target.value)}
                         defaultValue={quantity}
                     />
@@ -77,6 +84,7 @@ function CreateProduct() {
                     <section>Product Image</section>
                     <input
                         type="text"
+                        required
                         onChange={(e) => setImage(e.target.value)}
                         defaultValue={image}
                     />
@@ -92,12 +100,12 @@ function CreateProduct() {
 
             <section>
                 <section>
-                    <button onClick={handleSubmit}>Create New Product</button>
-                    <button onClick={() => setCurrCats(prevState => ({}))}>Clear</button>
+                    <button type="submit">Create New Product</button>
+                    <button type="button" onClick={() => setCurrCats({})}>Clear</button>
                 </section>
             </section>
 
-        </div>
+        </form>
     )
 }
 
