@@ -1,12 +1,10 @@
 import "./CreateDiscount.css"
 
 import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import * as discountActions from "../../../../store/discount"
 import * as categoryActions from "../../../../store/category"
 import CategorySection from "../../ReusableSections/CategorySection"
-
-
 
 function CreateDiscount() {
     const dispatch = useDispatch()
@@ -19,16 +17,6 @@ function CreateDiscount() {
 
     const [currCats, setCurrCats] = useState({})
     const [clearCats, setClearCats] = useState({})
-
-    useEffect(() => {
-        dispatch(categoryActions.loadAllCategoriesThunk())
-    }, [dispatch])
-
-    useEffect(() => {
-        console.log('booba', expirationDate)
-    }, [expirationDate])
-
-
 
     const handleCategorySelection = (updatedCategories) => {
         setCategories(updatedCategories)

@@ -125,7 +125,7 @@ function ProductsSection() {
                                     </section>
                                     <section className={`expanded-row ${expandRow === i ? 'show' : ''}`} key={i}>
                                         {expandRow === i ? (
-                                            <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} setProductUpdated={setProductUpdated}/>
+                                            <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} setProductUpdated={setProductUpdated} />
                                         ) : (
                                             <></>
                                         )}

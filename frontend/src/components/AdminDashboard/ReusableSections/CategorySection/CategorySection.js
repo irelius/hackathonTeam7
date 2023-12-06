@@ -1,8 +1,16 @@
+import { useEffect } from "react";
 import "./CategorySection.css"
 
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import * as categoryActions from "../../../../store/category"
 
 function CategorySection({ onCategoryChange, currCats, setCurrCats }) {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(categoryActions.loadAllCategoriesThunk())
+    }, [dispatch])
+
     const allCategories = useSelector(state => state.category)
     const colorSection = Object.values(allCategories).filter(el => el.section === "Color");
     const furnitureSection = Object.values(allCategories).filter(el => el.section === "Furniture");
