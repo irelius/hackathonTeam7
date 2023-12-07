@@ -39,7 +39,7 @@ function CreateProduct() {
 
 
     return (
-        <form onSubmit={handleSubmit} id="temp">
+        <form onSubmit={() => handleSubmit()} id="temp">
             <section>
                 <div>Create a New Product</div>
             </section>

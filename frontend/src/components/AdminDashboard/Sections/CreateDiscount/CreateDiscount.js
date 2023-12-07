@@ -41,7 +41,7 @@ function CreateDiscount() {
     }
 
     return (
-        <form onSubmit={handleSubmit()} id="temp">
+        <form onSubmit={() => handleSubmit()} id="temp">
             <section>
                 <div>Create a New Discount</div>
             </section>
@@ -117,8 +117,6 @@ function CreateDiscount() {
                 <button type="submit">Create New Discount</button>
                 <button type="button" onClick={() => setCurrCats({})}>Clear</button>
             </section>
-
-
         </form>
     )
 }
