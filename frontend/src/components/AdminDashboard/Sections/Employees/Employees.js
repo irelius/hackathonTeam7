@@ -18,31 +18,26 @@ function EmployeesSection() {
     const allEmployees = Object.values(useSelector(state => state.user))
 
     return (
-        <div className="dashboard-table">
-            <table>
-                <thead className="dashboard-header">
-                    <tr className="dashboard-tr">
-                        <th className="dashboard-th-300">Username</th>
-                        <th className="dashboard-th-300">Email</th>
-                        <th className="dashboard-th-200">Role</th>
-                    </tr>
-                </thead>
-            </table>
-            <tbody>
+        <div>
+            {/* Employee Header */}
+            <section className="dashboard-header">
+                <aside className="width-200">Username</aside>
+                <aside className="width-200">Email</aside>
+                <aside className="width-100">Role</aside>
+            </section>
+
+            {/* Employee Body */}
+            <section className="dashboard-body">
                 {allEmployees.map((el, i) => (
-                    <tr key={i} className="dashboard-table-rows">
-                        <td className="dashboard-td-300">
-                            {el.username}
-                        </td>
-                        <td className="dashboard-td-300">
-                            {el.email}
-                        </td>
-                        <td className="dashboard-td-200">
-                            {el.role.charAt(0).toUpperCase() + el.role.slice(1)}
-                        </td>
-                    </tr>
+                    <div key={i} className="dashboard-one-employee">
+                        <section className="dashboard-one-employee-row">
+                            <aside className="width-200">{el.username}</aside>
+                            <aside className="width-200">{el.email}</aside>
+                            <aside className="width-100">{el.role.charAt(0).toUpperCase() + el.role.slice(1)}</aside>
+                        </section>
+                    </div>
                 ))}
-            </tbody>
+            </section>
         </div>
     )
 }

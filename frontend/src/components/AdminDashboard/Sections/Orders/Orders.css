@@ -1,3 +1,19 @@
-#dashboard-order-cart-section {
-    margin-bottom: 20px;
+.dashboard-one-cart {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+.dashboard-one-cart-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-bottom: 10px;
 }

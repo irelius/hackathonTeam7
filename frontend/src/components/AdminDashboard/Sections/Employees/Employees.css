@@ -1,0 +1,19 @@
+.dashboard-one-employee {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+.dashboard-one-employee-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-bottom: 10px;
+}

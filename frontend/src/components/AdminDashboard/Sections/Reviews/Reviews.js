@@ -24,8 +24,8 @@ function ReviewsSection({ allUsers }) {
     const reviews = Object.values(useSelector(state => state.review))
     const products = useSelector(state => state.product)
 
-    return load ? (
-        <div id="review-main-container">
+    return (
+        < div id="review-main-container" >
             {reviews.map((el, i) => (
                 <div key={i} id='review-container'>
                     <section id="review-header">
@@ -61,9 +61,7 @@ function ReviewsSection({ allUsers }) {
                     </section>
                 </div>
             ))}
-        </div>
-    ) : (
-        <div></div>
+        </div >
     )
 }
 

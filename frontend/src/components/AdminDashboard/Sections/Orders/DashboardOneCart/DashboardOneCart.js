@@ -1,20 +1,20 @@
 function DashboardOneCart({ cart }) {
     return (
-        <div>
+        <div className="dashboard-one-cart">
             {cart.map((el, j) => {
                 return (
-                    < tr key={j} className="dashboard-table-rows">
+                    < div key={j} className='dashboard-one-cart-row'>
                         {j === 0 ? (
-                            <td className="dashboard-td-100">
+                            <aside className="width-100">
                                 {el.cartId}
-                            </td>
+                            </aside>
                         ) : (
-                            <td className="dashboard-td-100"></td>
+                            <aside className="width-100"></aside>
                         )}
-                        <td className="dashboard-td-300">{el.productName}</td>
-                        <td className="dashboard-td-100">{el.productQuantity}</td>
-                        <td className="dashboard-td-100">{el.createdAt.slice(0, 10)}</td>
-                    </tr>
+                        <aside className="width-300">{el.productName}</aside>
+                        <aside className="width-100">{el.productQuantity}</aside>
+                        <aside className="width-100">{el.createdAt.slice(0, 10)}</aside>
+                    </div>
                 )
             })}
         </div>

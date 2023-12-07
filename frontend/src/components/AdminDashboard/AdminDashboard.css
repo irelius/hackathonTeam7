@@ -1,5 +1,5 @@
 /* Dashboard Side Bar section */
-#dashboard-side-bar-section {
+#dashboard-sidebar {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -11,34 +11,25 @@
 
     background-color: #2C3E50;
     color: #ffffff;
+
+    z-index: 50;
+
+    overflow-y: auto;
 }
 
-#dashboard-side-bar-section>div {
+#dashboard-sidebar>div {
     padding: 20px;
     padding-left: 35px;
     cursor: pointer;
 }
 
 
-#dashboard-side-bar-section>div:hover {
+#dashboard-sidebar>div:hover {
     background-color: #57687c;
     color: white;
 }
 
-
-/* Dashboard Display Section */
-#dashboard-display {
-    display: flex;
-
-    padding: 20px;
-    padding-left: 350px;
-    padding-bottom: 0px;
-
-    height: 100%;
-}
-
-
-/* Temporary text CSS */
+/* Side Bar text CSS */
 .dash-text-100 {
     color: #ffffff;
 }
@@ -48,168 +39,103 @@
 }
 
 
+
 /* ----------------------------------------------------------------------------------------- */
-/* dashboard table stuff. might change the name to be just "table-th" or something if we want to use this for other tables */
-.dashboard-table {
-    margin-top: 130px;
-}
-
-
 /* Table Header section */
 .dashboard-header {
+    position: fixed;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
 
-    position: fixed;
-
-    top: 75px;
     left: 300px;
+    right: 0;
+    top: 75px;
+    bottom: 0;
 
-    width: 100%;
     height: 60px;
+
+    z-index: 49;
 
     background-color: #2C3E50;
     color: #ffffff;
 }
 
-.dashboard-tr {
-    display: flex;
-    flex-direction: row;
-
-    padding-left: 50px;
-    max-width: 70vw;
-}
-
-.dashboard-th-300 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 300px;
-    font-weight: normal;
-}
-
-.dashboard-th-200 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 200px;
-    font-weight: normal;
-}
-
-.dashboard-th-100 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100px;
-    font-weight: normal;
-}
-
-
 /* Table Body section */
-.dashboard-table-rows {
+.dashboard-body {
+    position: fixed;
     display: flex;
-    flex-direction: row;
-    max-width: 70vw;
-}
+    flex-direction: column;
 
-.dashboard-table-rows>* {
-    margin-bottom: 20px;
-}
+    left: 300px;
+    right: 0;
+    top: 135px;
+    bottom: 0;
 
-.dashboard-td-300 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 300px;
-    font-weight: normal;
-}
-
-.dashboard-td-200 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 200px;
-    font-weight: normal;
-}
-
-.dashboard-td-100 {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100px;
-    font-weight: normal;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 
 /* Expanding row functionality CSS */
-#expand-container {
-    display: flex;
-    flex-direction: column;
-}
-
-#expand-columns {
-    display: flex;
-}
-
 .expanded-row {
+    display: flex;
+    justify-content: center;
+
     overflow: hidden;
     height: 0;
+
     transition: height 0.5s ease;
-    /* Use height for transition */
 }
 
 .expanded-row.show {
     height: 775px;
     transition: height 0.5s ease;
-    /* Ensure transition is specified for the 'show' class */
 }
 
 
-
 /* Edit Section css */
-
-#category-header-container {
+/* #category-header-container {
     display: flex;
     justify-content: center;
 
     text-decoration: underline;
-}
+} */
 
-#category-header-container>aside {
+/* #category-header-container>aside {
     display: flex;
     justify-content: center;
     width: 175px;
-}
+} */
 
 
-#category-body-container {
+/* #category-body-container {
     display: flex;
     justify-content: space-evenly;
 
     background-color: orange;
-}
+} */
 
-#category-body-container>* {
+/* #category-body-container>* {
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
     width: 175px;
-}
+} */
 
-#category-body-container>section>* {
+/* #category-body-container>section>* {
     margin-top: 20px;
-}
+} */
 
 
-#save-changes-container {
+/* #save-changes-container {
     display: flex;
     justify-content: space-evenly;
     margin-top: 15px;
-}
+} */
 
-#save-changes-container>* {
+/* #save-changes-container>* {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -218,4 +144,4 @@
     width: 175px;
 
     border-radius: 10px;
-}
+} */

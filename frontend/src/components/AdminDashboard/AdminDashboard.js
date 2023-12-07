@@ -13,6 +13,7 @@ import CreateProduct from "./Sections/CreateProduct/CreateProduct"
 
 import * as sessionActions from "../../store/session"
 import * as userActions from "../../store/user"
+import TestSection from "./Sections/TestSection/TestSection"
 
 function AdminDashboard() {
     const dispatch = useDispatch()
@@ -46,8 +47,8 @@ function AdminDashboard() {
     }
 
     return load ? (
-        <div className="dashboard-container">
-            <section id="dashboard-side-bar-section">
+        <div>
+            <section id="dashboard-sidebar">
                 <div className={`dash-text-${activeTab === "OrdersSection" ? "100" : "200"}`} onClick={() => handleTabChange("OrdersSection")}>Orders</div>
                 <div className={`dash-text-${activeTab === "ProductsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ProductsSection")}>Products</div>
                 <div className={`dash-text-${activeTab === "ReviewsSection" ? "100" : "200"}`} onClick={() => handleTabChange("ReviewsSection")}>Reviews</div>
@@ -59,9 +60,11 @@ function AdminDashboard() {
                 )}
                 <div className={`dash-text-${activeTab === "CreateDiscountSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateDiscountSection")}>Create Discount</div>
                 <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateProductSection")}>Create Product</div>
+                <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("TestSection")}>Test Section</div>
             </section>
 
-            <section id="dashboard-display">
+            {/* Depending on the activeTabe, return and load the appropriate component */}
+            <section>
                 {activeTab === "OrdersSection" && <OrdersSection />}
                 {activeTab === "ProductsSection" && <ProductsSection />}
                 {activeTab === "ReviewsSection" && <ReviewsSection allUsers={allUsers} />}
@@ -73,6 +76,7 @@ function AdminDashboard() {
                 )}
                 {activeTab === "CreateDiscountSection" && <CreateDiscount />}
                 {activeTab === "CreateProductSection" && <CreateProduct />}
+                {activeTab === "TestSection" && <TestSection />}
             </section>
         </div >
     ) : (
