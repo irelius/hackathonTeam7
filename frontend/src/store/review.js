@@ -175,11 +175,14 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
 
         if (res.ok) {
             dispatch(deleteReview(reviewId))
+            return true;
         } else {
             console.error(`Failed to delete review ${reviewId}:`, res.status, res.statusText)
+            return false;
         }
     } catch (err) {
         console.error(`An error occured while deleting review ${reviewId}:`, err)
+        return false;
     }
 }
 

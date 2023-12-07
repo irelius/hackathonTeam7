@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditReview from "./EditReview";
-
+import DeleteReviewModal from "./DeleteReview";
 
 function ReviewsUnderProduct({ product, reviews }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const usersObj = useSelector((state) => state.user);
   const users = Object.values(usersObj);
-  
+
   const [editingReviewId, setEditingReviewId] = useState(null);
 
   const handleEditClick = (reviewId) => {
@@ -57,13 +57,19 @@ function ReviewsUnderProduct({ product, reviews }) {
               <li className="review-info-review">{review.review}</li>
             </div>
             <div>
-            {review.userId === sessionUser?.id && (
-                <button onClick={() => handleEditClick(review.id)}>
-                  Edit
-                </button>
-              )}
+              {review.userId === sessionUser?.id && (
+                <div>
+                  <button onClick={() => handleEditClick(review.id)}>
+                  <i class='bx bx-edit-alt' ></i>
+                  </button>
+                  <DeleteReviewModal
+                    review={review}
+                    // onCancel={() => setEditingReviewId(null)}
+                  />
                 </div>
-                {editingReviewId === review.id && (
+              )}
+            </div>
+            {editingReviewId === review.id && (
               <EditReview
                 review={review}
                 product={product}
