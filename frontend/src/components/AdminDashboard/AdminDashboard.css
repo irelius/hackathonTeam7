@@ -88,54 +88,25 @@
     transition: height 0.5s ease;
 }
 
-.expanded-row.show {
-    height: 775px;
+.expanded-row.product-show {
+    height: 725px;
+    transition: height 0.5s ease;
+}
+
+.expanded-row.discount-show {
+    height: 650px;
     transition: height 0.5s ease;
 }
 
 
 /* Edit Section css */
-/* #category-header-container {
-    display: flex;
-    justify-content: center;
-
-    text-decoration: underline;
-} */
-
-/* #category-header-container>aside {
-    display: flex;
-    justify-content: center;
-    width: 175px;
-} */
-
-
-/* #category-body-container {
-    display: flex;
-    justify-content: space-evenly;
-
-    background-color: orange;
-} */
-
-/* #category-body-container>* {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    width: 175px;
-} */
-
-/* #category-body-container>section>* {
-    margin-top: 20px;
-} */
-
-
-/* #save-changes-container {
+#save-changes-container {
     display: flex;
     justify-content: space-evenly;
     margin-top: 15px;
-} */
+}
 
-/* #save-changes-container>* {
+#save-changes-container>* {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,4 +115,4 @@
     width: 175px;
 
     border-radius: 10px;
-} */
+}

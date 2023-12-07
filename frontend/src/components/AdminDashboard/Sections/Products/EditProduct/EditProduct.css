@@ -6,7 +6,8 @@
 
     height: fit-content;
 
-    width: 900px;
+    width: 600px;
+    min-width: 60%;
 }
 
 #product-info-container {

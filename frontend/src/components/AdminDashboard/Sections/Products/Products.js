@@ -123,7 +123,7 @@ function ProductsSection() {
                                     <aside className="width-200">${el.productPrice / 100}</aside>
                                     <aside className="width-100">{el.productQuantity}</aside>
                                 </section>
-                                <section className={`expanded-row ${expandRow === i ? 'show' : ''}`} key={i}>
+                                <section className={`expanded-row ${expandRow === i ? 'product-show' : ''}`} key={i}>
                                     {expandRow === i ? (
                                         <EditProduct product={el} onCloseExpandRow={handleCloseExpandRow} setProductUpdated={setProductUpdated} />
                                     ) : (

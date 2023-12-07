@@ -5,6 +5,9 @@
     padding-right: 0px;
 
     height: fit-content;
+
+    width: 600px;
+    min-width: 60%;
 }
 
 #discount-info-container {
@@ -25,7 +28,6 @@
 }
 
 #discount-expiration-input {
-    margin-bottom: 30px;
     width: 188px;
 }
 
