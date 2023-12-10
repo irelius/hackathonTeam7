@@ -13,7 +13,6 @@ import CreateProduct from "./Sections/CreateProduct/CreateProduct"
 
 import * as sessionActions from "../../store/session"
 import * as userActions from "../../store/user"
-import TestSection from "./Sections/TestSection/TestSection"
 
 function AdminDashboard() {
     const dispatch = useDispatch()
@@ -60,7 +59,6 @@ function AdminDashboard() {
                 )}
                 <div className={`dash-text-${activeTab === "CreateDiscountSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateDiscountSection")}>Create Discount</div>
                 <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateProductSection")}>Create Product</div>
-                <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("TestSection")}>Test Section</div>
             </section>
 
             {/* Depending on the activeTabe, return and load the appropriate component */}
@@ -76,7 +74,6 @@ function AdminDashboard() {
                 )}
                 {activeTab === "CreateDiscountSection" && <CreateDiscount />}
                 {activeTab === "CreateProductSection" && <CreateProduct />}
-                {activeTab === "TestSection" && <TestSection />}
             </section>
         </div >
     ) : (

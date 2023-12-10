@@ -150,7 +150,7 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                 <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
             </section>
 
-            <section id="save-changes-container">
+            <section className="changes-container">
                 <button className="pointer save-changes-button" type="submit">
                     Save Changes
                 </button>

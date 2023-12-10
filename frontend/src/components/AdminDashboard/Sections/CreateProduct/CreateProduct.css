@@ -1,0 +1,27 @@
+#product-div {
+    width: 600px;
+    min-width: 60%;
+}
+
+
+#create-product-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-product-section>section{
+    margin-bottom: 30px;
+}
+
+#create-product-section>section>aside {
+    margin-bottom: 10px;
+}
+
+#product-description-section {
+    resize: none;
+    height: 200px;
+    width: 500px;
+
+    overflow-y: auto;
+}

@@ -127,7 +127,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                 <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
             </section>
 
-            <section id="save-changes-container">
+            <section className="changes-container">
                 <button type="submit" className="pointer save-changes-button">
                     Save Changes
                 </button>

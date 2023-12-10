@@ -1,7 +1,36 @@
-#temp {
-    width: 100%;
+#discount-div {
+    width: 600px;
+    min-width: 60%;
+}
 
-    margin-top: 100px;
-    margin-left: 100px;
-    background-color: orange;
+#create-discount-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    height: 150px;
+}
+
+#create-discount-section>section>aside {
+    margin-bottom: 15px;
+}
+
+#create-discount-section>section>aside>section {
+    margin-bottom: 5px;
+}
+
+
+#category-section {
+    margin-bottom: 20px;
+}
+
+#all-categories-option {
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 30px;
+}
+
+#all-categories-option > *:hover {
+    cursor: pointer;
 }

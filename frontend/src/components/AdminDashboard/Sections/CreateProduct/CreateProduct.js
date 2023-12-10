@@ -39,72 +39,73 @@ function CreateProduct() {
 
 
     return (
-        <form onSubmit={() => handleSubmit()} id="temp">
-            <section>
-                <div>Create a New Product</div>
-            </section>
-            <section>
-                <section>
-                    <section>Product Name</section>
-                    <input
-                        type="text"
-                        required
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <section>Product Description</section>
-                    <input
-                        type="text"
-                        required
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <section>Product Price</section>
-                    <CurrencyInput
-                        name="product-price-input"
-                        required
-                        prefix="$"
-                        defaultValue={`${price}.00`}
-                        decimalsLimit={2}
-                        onValueChange={(value, name, e) => setPrice(value)}
-                    />
-                </section>
-                <section>
-                    <section>Product Quantity</section>
-                    <input
-                        type="number"
-                        required
-                        onChange={(e) => setQuantity(e.target.value)}
-                        defaultValue={quantity}
-                    />
-                </section>
-                <section>
-                    <section>Product Image</section>
-                    <input
-                        type="text"
-                        required
-                        onChange={(e) => setImage(e.target.value)}
-                        defaultValue={image}
-                    />
-                </section>
-            </section>
+        <form onSubmit={() => handleSubmit()} className="create-container">
+            <div id='product-div'>
+                <section className='create-header'>Create a New Product</section>
 
-            <section>
-                <section id="category-section">
+                <section id='create-product-section'>
+                    <section>
+                        <aside>
+                            <section>Product Name</section>
+                            <input
+                                type="text"
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </aside>
+                        <aside>
+                            <section>Product Description</section>
+                            <textarea
+                                type="text"
+                                id='product-description-section'
+                                required
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+                        </aside>
+                        <aside>
+
+                            <section>Product Price</section>
+                            <CurrencyInput
+                                name="product-price-input"
+                                required
+                                prefix="$"
+                                defaultValue={`${price}.00`}
+                                decimalsLimit={2}
+                                onValueChange={(value, name, e) => setPrice(value)}
+                            />
+                        </aside>
+                        <aside>
+                            <section>
+                                <section>Product Quantity</section>
+                                <input
+                                    type="number"
+                                    required
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                    defaultValue={quantity}
+                                />
+                            </section>
+
+                        </aside>
+                        <section>Product Image</section>
+                        <input
+                            type="text"
+                            required
+                            onChange={(e) => setImage(e.target.value)}
+                            defaultValue={image}
+                        />
+                    </section>
+                </section>
+
+                <section>
                     <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
                 </section>
-            </section>
 
 
-            <section>
-                <section>
-                    <button type="submit">Create New Product</button>
-                    <button type="button" onClick={() => setCurrCats({})}>Clear</button>
+                <section className="changes-container">
+                    <button type="submit" className="pointer save-changes-button">Create New Product</button>
+                    <button type="button" className="pointer cancel-changes-button" onClick={() => setCurrCats({})}>Clear</button>
                 </section>
-            </section>
-
+            </div>
         </form>
     )
 }

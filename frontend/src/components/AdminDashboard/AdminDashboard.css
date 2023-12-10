@@ -90,24 +90,24 @@
 }
 
 .expanded-row.product-show {
-    height: 725px;
+    height: 750px;
     transition: height 0.5s ease;
 }
 
 .expanded-row.discount-show {
-    height: 650px;
+    height: 675px;
     transition: height 0.5s ease;
 }
 
 
 /* Edit Section css */
-#save-changes-container {
+.changes-container {
     display: flex;
     justify-content: space-evenly;
     margin-top: 15px;
 }
 
-#save-changes-container>* {
+.changes-container>* {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,6 +157,15 @@
     overflow-x: hidden;
 
     padding-top: 50px;
+    padding-bottom: 75px;
+}
 
-    background-color: orange;
+.create-header {
+    display: flex;
+    justify-content: center;
+
+    font-size: larger;
+    font-weight: bold;
+
+    margin-bottom: 20px;
 }
