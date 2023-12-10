@@ -128,10 +128,10 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
             </section>
 
             <section id="save-changes-container">
-                <button type="submit" id="product-save-changes" className="pointer">
+                <button type="submit" className="pointer save-changes-button">
                     Save Changes
                 </button>
-                <button type="button" id="product-cancel-changes" className="pointer" onClick={() => handleCancel()} >
+                <button type="button"className="pointer cancel-changes-button" onClick={() => handleCancel()} >
                     Cancel
                 </button>
             </section>

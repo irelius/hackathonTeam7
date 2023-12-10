@@ -151,10 +151,10 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
             </section>
 
             <section id="save-changes-container">
-                <button id="discount-save-changes" className="pointer" type="submit">
+                <button className="pointer save-changes-button" type="submit">
                     Save Changes
                 </button>
-                <button id="discount-cancel-changes" className="pointer" onClick={() => handleCancel()} >
+                <button className="pointer cancel-changes-button" onClick={() => handleCancel()} >
                     Cancel
                 </button >
             </section>

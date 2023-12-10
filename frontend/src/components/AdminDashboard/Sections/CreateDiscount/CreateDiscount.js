@@ -27,6 +27,17 @@ function CreateDiscount() {
         setCategories(updatedCategories)
     }
 
+    const handleAllCategorySelection = () => {
+        const categoryUpdater = { ...currCats }
+        if (categoryUpdater["All"]) {
+            delete categoryUpdater["All"]
+        } else {
+            categoryUpdater["All"] = true
+        }
+        setCurrCats(categoryUpdater)
+        setCategories(categoryUpdater)
+    }
+
     const handleSubmit = () => {
         const newDiscount = {
             discountName: name,
@@ -41,10 +52,9 @@ function CreateDiscount() {
     }
 
     return (
-        <form onSubmit={() => handleSubmit()} id="temp">
-            <section>
-                <div>Create a New Discount</div>
-            </section>
+        <form onSubmit={() => handleSubmit()} className="create-container">
+            <section>Create a New Discount</section>
+
             <section>
                 <section>
                     <section>Discount Code Name</section>
@@ -107,17 +117,28 @@ function CreateDiscount() {
                 </section>
             </section>
 
-            <section>
-                <section id="category-section">
-                    <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
-                </section>
+            <section id="category-section">
+                <CategorySection onCategoryChange={handleCategorySelection} currCats={currCats} setCurrCats={setCurrCats} />
             </section>
 
             <section>
-                <button type="submit">Create New Discount</button>
-                <button type="button" onClick={() => setCurrCats({})}>Clear</button>
+                <label htmlFor={`all-discount`} onChange={() => {
+                    handleAllCategorySelection()
+                }}
+                >Apply this discount to all products</label>
+                <input
+                    type="checkbox"
+                    id="all-discount"
+                    checked={currCats["All"]}
+                    onChange={() => { handleAllCategorySelection() }}
+                />
             </section>
-        </form>
+
+            <section id="save-changes-container">
+                <button type="submit" className="pointer save-changes-button">Create New Discount</button>
+                <button type="button" className="pointer cancel-changes-button" onClick={() => setCurrCats({})}>Clear</button>
+            </section>
+        </form >
     )
 }
 

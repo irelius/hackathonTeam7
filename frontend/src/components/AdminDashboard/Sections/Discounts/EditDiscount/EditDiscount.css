@@ -34,26 +34,3 @@
 #discount-type-container>section>* {
     margin-bottom: 10px;
 }
-
-#discount-save-changes {
-    color: white;
-    border: 1px solid #926b6a;
-    background-color: #1A7BE9;
-    transition: background-color 0.1s ease;
-}
-
-#discount-save-changes:hover {
-    background-color: #136DD4;
-}
-
-
-#discount-cancel-changes {
-    color: #333333;
-    border: 1px solid #926b6a;
-    background-color: #F7CAC9;
-    transition: background-color 0.1s ease;
-}
-
-#discount-cancel-changes:hover {
-    background-color: #F7BAB8;
-}
