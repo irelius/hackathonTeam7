@@ -10,6 +10,7 @@ import EmployeesSection from "./Sections/Employees/Employees"
 import ReviewsSection from "./Sections/Reviews/Reviews"
 import CreateDiscount from "./Sections/CreateDiscount/CreateDiscount"
 import CreateProduct from "./Sections/CreateProduct/CreateProduct"
+import CreateEmployee from "./Sections/CreateEmployee/CreateEmployee"
 
 import * as sessionActions from "../../store/session"
 import * as userActions from "../../store/user"
@@ -59,6 +60,8 @@ function AdminDashboard() {
                 )}
                 <div className={`dash-text-${activeTab === "CreateDiscountSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateDiscountSection")}>Create Discount</div>
                 <div className={`dash-text-${activeTab === "CreateProductSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateProductSection")}>Create Product</div>
+                <div className={`dash-text-${activeTab === "CreateEmployeeSection" ? "100" : "200"}`} onClick={() => handleTabChange("CreateEmployeeSection")}>Create Employee</div>
+
             </section>
 
             {/* Depending on the activeTabe, return and load the appropriate component */}
@@ -74,6 +77,7 @@ function AdminDashboard() {
                 )}
                 {activeTab === "CreateDiscountSection" && <CreateDiscount />}
                 {activeTab === "CreateProductSection" && <CreateProduct />}
+                {activeTab === "CreateEmployeeSection" && <CreateEmployee />}
             </section>
         </div >
     ) : (

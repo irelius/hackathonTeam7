@@ -85,7 +85,7 @@ function CreateDiscount() {
                                 <input
                                     type="radio"
                                     id="type-percent"
-                                    checked={type === "percent"}
+                                    defaultChecked={type === "percent"}
                                     onClick={(e) => handleRadioClick("percent", e)}
                                 />
                                 <label htmlFor={`type-percent`} onClick={(e) => {
@@ -98,7 +98,7 @@ function CreateDiscount() {
                                 <input
                                     type="radio"
                                     id="type-flat"
-                                    checked={type === "flat"}
+                                    defaultChecked={type === "flat"}
                                     onClick={(e) => handleRadioClick("flat", e)}
                                 />
                                 <label htmlFor={`type-flat`} onClick={(e) => {
@@ -134,7 +134,7 @@ function CreateDiscount() {
                     <input
                         type="checkbox"
                         id="all-discount"
-                        checked={currCats["All"]}
+                        defaultChecked={currCats["All"]}
                         onChange={() => { handleAllCategorySelection() }}
                     />
                 </section>

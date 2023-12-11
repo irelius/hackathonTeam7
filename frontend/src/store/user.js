@@ -99,6 +99,31 @@ export const editUserThunk = (userId, userInfo) => async (dispatch) => {
     }
 }
 
+
+// thunk action to create a new user
+export const addUserThunk = (newUser) => async (dispatch) => {
+
+    try {
+        const res = await csrfFetch(`/api/users/employee`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser)
+        })
+
+        if (res.ok) {
+            const user = await res.json()
+            dispatch(addUser(user))
+            return user
+        } else {
+            console.error('Failed to create a new user:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error(`An error occurred while creating a new user:`, err)
+    }
+}
+
 export const deleteUserThunk = (userId) => async (dispatch) => {
     try {
         const res = await csrfFetch(`/api/user/${userId}`, {

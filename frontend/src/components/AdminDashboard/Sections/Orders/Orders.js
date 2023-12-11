@@ -25,7 +25,7 @@ function OrdersSection() {
             <section className="dashboard-body">
                 {orders.map((cart, i) => {
                     return (
-                        <DashboardOneCart cart={cart} />
+                        <DashboardOneCart cart={cart} key={i} />
                     )
                 })}
             </section>

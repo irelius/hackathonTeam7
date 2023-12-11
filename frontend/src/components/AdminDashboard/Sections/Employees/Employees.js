@@ -9,10 +9,6 @@ function EmployeesSection() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(userActions.loadAllEmployeesThunk())
-
-        return (() => {
-            dispatch(userActions.clearUser())
-        })
     }, [dispatch])
 
     const allEmployees = Object.values(useSelector(state => state.user))
@@ -33,7 +29,9 @@ function EmployeesSection() {
                         <section className="dashboard-one-employee-row">
                             <aside className="width-200">{el.username}</aside>
                             <aside className="width-200">{el.email}</aside>
-                            <aside className="width-100">{el.role.charAt(0).toUpperCase() + el.role.slice(1)}</aside>
+                            <aside className="width-100">
+                                {el.role ? el.role.charAt(0).toUpperCase() + el.role.slice(1) : 'Unknown Role'}
+                            </aside>
                         </section>
                     </div>
                 ))}

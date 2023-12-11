@@ -100,7 +100,7 @@ li {
     /* Apply a blur effect to the background */
     background: rgba(255, 255, 255, 0.6);
     /* Semi-transparent white background for the blur effect */
-    z-index: 1000; /* Set a higher z-index value */
+    z-index: 10000; /* Set a higher z-index value */
 }
 
 .profile-container {

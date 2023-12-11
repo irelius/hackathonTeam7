@@ -63,7 +63,6 @@ function CreateProduct() {
                             />
                         </aside>
                         <aside>
-
                             <section>Product Price</section>
                             <CurrencyInput
                                 name="product-price-input"
@@ -84,7 +83,6 @@ function CreateProduct() {
                                     defaultValue={quantity}
                                 />
                             </section>
-
                         </aside>
                         <section>Product Image</section>
                         <input

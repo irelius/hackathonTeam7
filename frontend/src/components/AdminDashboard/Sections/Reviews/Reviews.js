@@ -27,7 +27,7 @@ function ReviewsSection({ allUsers }) {
     return (
         < div id="review-main-container" >
             {reviews.map((el, i) => (
-                <div key={i} id='review-container'>
+                <div key={`review-${i}`} id='review-container'>
                     <section id="review-header">
                         <aside id="review-header-left">
                             <aside id="review-product-name">
@@ -55,7 +55,7 @@ function ReviewsSection({ allUsers }) {
                     <section>
                         {Array.from({ length: el.rating }, (_, index) => {
                             return (
-                                <i key={i} className="bx bx-star" />
+                                <i key={`star-${i}`}  className="bx bx-star" />
                             )
                         })}
                     </section>

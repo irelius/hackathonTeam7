@@ -64,14 +64,15 @@ router.get("/employees", restoreUser, requireAuth, isAdmin, async (req, res) => 
 
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email, password, username, role } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
-  const user = await User.create({ email, username, hashedPassword });
+  const user = await User.create({ email, username, hashedPassword, role });
 
   const safeUser = {
     id: user.id,
     email: user.email,
     username: user.username,
+    role: user.role
   };
 
   await setTokenCookie(res, safeUser);
@@ -80,6 +81,24 @@ router.post('/', validateSignup, async (req, res) => {
     user: safeUser
   });
 });
+
+// Create Employee Account
+router.post('/employee', validateSignup, async(req, res) => {
+  const { email, password, username, role } = req.body;
+  const hashedPassword = bcrypt.hashSync(password);
+  const user = await User.create({ email, username, hashedPassword, role });
+
+  const safeUser = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    role: user.role
+  };
+
+  return res.json({
+    user: safeUser
+  });
+})
 
 
 // Get all users
