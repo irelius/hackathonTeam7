@@ -1,0 +1,16 @@
+#employee-edit-main-container {
+    border-radius: 10px;
+    padding: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
+
+    height: fit-content;
+
+    width: 500px;
+    min-width: 50%;
+}
+
+#employee-info-container {
+    display: flex;
+    justify-content: space-evenly;
+}

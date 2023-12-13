@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import * as discountActions from "../../../../store/discount"
 import * as categoryActions from "../../../../store/category"
 import EditDiscount from "./EditDiscount/EditDiscount"
-import EditProduct from "../Products/EditProduct"
 
 function DiscountsSection() {
     const dispatch = useDispatch()
@@ -17,7 +16,7 @@ function DiscountsSection() {
     const discounts = Object.values(useSelector(state => state.discount))
 
     const [expandRow, setExpandRow] = useState(null);
-    // usestate variable to keep track if product is edited
+    // usestate variable to keep track if discount is edited
     const [discountUpdated, setDiscountUpdated] = useState(false)
 
 
@@ -42,12 +41,12 @@ function DiscountsSection() {
             {/* Discounts Body */}
             <section>
                 {discounts.length === 0 ? (
-                    <section id="no-products" className="dashboard-body">There doesn't seem to be a discount available for customers.</section>
+                    <section className="dashboard-body no-dashboard-rows">There doesn't seem to be a discount available for customers.</section>
                 ) : (
                     <section className="dashboard-body">
                         {discounts.map((el, i) => (
-                            <div key={i} className="dashboard-one-product">
-                                <section className="pointer dashboard-one-product-row" onClick={() => handleRowClick(i)}>
+                            <div key={i} className="dashboard-one-discount">
+                                <section className="pointer dashboard-one-discount-row" onClick={() => handleRowClick(i)}>
                                     <aside className="width-200">{el.discountName}</aside>
                                     <aside className="width-200">{el.discountType.charAt(0).toUpperCase() + el.discountType.slice(1)}</aside>
                                     <aside className="width-100">{el.discountValue}</aside>

@@ -113,7 +113,7 @@ function ProductsSection() {
             {/* Products Body */}
             <section>
                 {products.length === 0 ? (
-                    <section id="no-products" className="dashboard-body">There are no products that start with {`${searchLetter}`}</section>
+                    <section className="dashboard-body no-dashboard-rows">There are no products that start with {`${searchLetter}`}</section>
                 ) : (
                     <section className="dashboard-body" id="product-spacing">
                         {products.map((el, i) => (

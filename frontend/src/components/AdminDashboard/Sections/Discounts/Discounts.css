@@ -1,0 +1,20 @@
+.dashboard-one-discount {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+    /* margin left is necessary due to width of scroll bar */
+    margin-left: 10px;
+}
+
+.dashboard-one-discount-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin-bottom: 10px;
+}

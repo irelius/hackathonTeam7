@@ -80,6 +80,14 @@
 
 
 /* ----------------------------------------------------------------------------------------- */
+/* Table Body section */
+.no-dashboard-rows {
+    align-items: center;
+    margin-top: 50px;
+}
+
+
+/* ----------------------------------------------------------------------------------------- */
 /* Expanding row functionality CSS */
 .expanded-row {
     display: flex;
@@ -97,6 +105,11 @@
 }
 
 .expanded-row.discount-show {
+    height: 675px;
+    transition: height 0.5s ease;
+}
+
+.expanded-row.employee-show {
     height: 675px;
     transition: height 0.5s ease;
 }
