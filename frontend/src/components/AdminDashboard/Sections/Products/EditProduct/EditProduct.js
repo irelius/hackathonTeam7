@@ -55,9 +55,9 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     const handleProductEdit = () => {
         // handle any edits made to product name, price, and quantity
         const newProductInfo = {
-            productName: name,
+            productName: name.trim(),
             productPrice: price * 100,
-            productDescription: description,
+            productDescription: description.trim(),
             productQuantity: stock,
         }
         dispatch(productActions.editProductThunk(product.id, newProductInfo))
@@ -99,6 +99,11 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                             type="number"
                             required
                             defaultValue={`${price}`}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
                             onChange={(e) => setPrice(e.target.value)}
                         />
                     </section>
@@ -108,6 +113,11 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                             type="number"
                             required
                             defaultValue={stock}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
                             onChange={(e) => setStock(e.target.value)}
                         />
                     </section>
@@ -131,7 +141,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                 <button type="submit" className="pointer save-changes-button">
                     Save Changes
                 </button>
-                <button type="button"className="pointer cancel-changes-button" onClick={() => handleCancel()} >
+                <button type="button" className="pointer cancel-changes-button" onClick={() => handleCancel()} >
                     Cancel
                 </button>
             </section>

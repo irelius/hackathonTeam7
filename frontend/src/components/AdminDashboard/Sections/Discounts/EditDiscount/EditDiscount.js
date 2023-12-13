@@ -89,6 +89,11 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                             type="text"
                             required
                             defaultValue={name}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </section>
@@ -98,6 +103,11 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                             type="number"
                             required
                             defaultValue={value}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
                             max={type === "percent" ? 100 : undefined}
                             onChange={(e) => setValue(e.target.value)}
                         />

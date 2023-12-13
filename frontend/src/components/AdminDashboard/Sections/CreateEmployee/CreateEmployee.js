@@ -27,7 +27,7 @@ function CreateEmployee() {
             role: role
         }
 
-        dispatch(userActions.addUserThunk(newEmployee))
+        dispatch(userActions.addEmployeeThunk(newEmployee))
     }
 
 

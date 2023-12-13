@@ -11,7 +11,7 @@ const forbidden = () => {
 const isAdmin = function (req, res, next) {
     const user = req.user
 
-    if (user.id !== 1) {
+    if (user.id !== 1 && user.role !== "admin") {
         return nextError(next, "Admin privileges required.", 403)
     }
     return next()
@@ -26,7 +26,7 @@ const checkUser = function (req, res, next) {
 
 const authAddress = async function (req, res, next) {
     const address = await Address.findByPk(req.params.addressId)
-    if(req.user.id !== address.userId || address.userId === 1) {
+    if (req.user.id !== address.userId || address.userId === 1) {
         return next()
     }
     return next(forbidden())

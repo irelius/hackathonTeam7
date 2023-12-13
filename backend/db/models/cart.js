@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             Cart.belongsTo(models.User, {
                 foreignKey: "userId",
-                onDelete: "CASCADE"
+                // onDelete: "CASCADE"
             })
 
             Cart.hasOne(models.StripeSession, {

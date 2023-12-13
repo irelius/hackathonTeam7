@@ -14,6 +14,7 @@ function EmployeesSection() {
 
     const allEmployees = Object.values(useSelector(state => state.user))
 
+    const [employeeUpdated, setEmployeeUpdated] = useState(false)
     const [expandRow, setExpandRow] = useState(null)
 
     const handleRowClick = (index) => {
@@ -50,7 +51,7 @@ function EmployeesSection() {
                                 </section>
                                 <section className={`expanded-row ${expandRow === i ? 'employee-show' : ''}`} key={i}>
                                     {expandRow === i ? (
-                                        <EditEmployees employee={el} onCloseExpandRow={handleCloseExpandRow} />
+                                        <EditEmployees employee={el} onCloseExpandRow={handleCloseExpandRow} setEmployeeUpdated={setEmployeeUpdated} />
                                     ) : (
                                         <></>
                                     )}

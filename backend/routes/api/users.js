@@ -3,10 +3,10 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Order, Payment, Address, Review, ProductCart, Cart, StripeSession } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { internalServerError } = require('../../utils/errorFunc');
+const { internalServerError, notFoundError } = require('../../utils/errorFunc');
 const { isAdmin } = require('../../utils/authorization');
 
 const validateSignup = [
@@ -83,7 +83,7 @@ router.post('/', validateSignup, async (req, res) => {
 });
 
 // Create Employee Account
-router.post('/employee', validateSignup, async(req, res) => {
+router.post('/employee', restoreUser, requireAuth, isAdmin, validateSignup, async (req, res) => {
   const { email, password, username, role } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   const user = await User.create({ email, username, hashedPassword, role });
@@ -100,6 +100,37 @@ router.post('/employee', validateSignup, async(req, res) => {
   });
 })
 
+// edit employee account
+router.put("/:userId/info", restoreUser, requireAuth, isAdmin, async (req, res) => {
+  const { email, password, username, role } = req.body;
+
+  try {
+    const user = await User.findByPk(req.params.userId)
+
+    if (!user) {
+      return notFoundError(res, "User")
+    }
+
+    const hashedPassword = password ? bcrypt.hashSync(password) : user.hashedPassword;
+
+    await User.update(
+      { email, password: hashedPassword, username, role },
+      {
+        where: {
+          id: req.params.userId,
+        },
+      }
+    );
+
+    const updatedUser = await User.findByPk(req.params.userId, {
+      attributes: { exclude: ['hashedPassword'] },
+    });
+    res.status(201).json({ data: updatedUser })
+  } catch (err) {
+    return internalServerError(res, err)
+  }
+})
+
 
 // Get all users
 router.get("/all", async (req, res) => {
@@ -110,6 +141,34 @@ router.get("/all", async (req, res) => {
     res.json({ data: users })
   } catch (err) {
     return internalServerError(res, err)
+  }
+})
+
+
+// delete an employee account
+router.delete("/employee/:userId", restoreUser, requireAuth, isAdmin, async (req, res) => {
+  const userId = req.params.userId
+  try {
+    await Payment.destroy({ where: { userId } })
+    await Order.destroy({ where: { userId } })
+    await Address.destroy({ where: { userId } })
+    await Review.destroy({ where: { userId } })
+    await ProductCart.destroy({ where: { userId } })
+    // await Cart.destroy({ where: { userId } })
+    await StripeSession.destroy({ where: { userId } })
+
+
+
+    const employee = await User.findByPk(userId)
+    if (!employee) {
+      return notFoundError(res, "Employee to delete")
+    }
+
+    await employee.destroy();
+    res.status(200).json({ data: employee });
+  } catch (err) {
+    console.error('Error deleting employee:', err);
+    return internalServerError(res, err);
   }
 })
 
