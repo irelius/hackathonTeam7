@@ -6,11 +6,38 @@
 
     height: fit-content;
 
-    width: 500px;
-    min-width: 50%;
+    width: 600px;
+    min-width: 60%;
 }
 
 #employee-info-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
+}
+
+#employee-section-1 {
+    display: flex;
+    flex-direction: column;
+}
+
+#radio-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+#radio-buttons>section>input {
+    margin-bottom: 10px;
+}
+
+
+#employee-username {
+    margin-bottom: 20px;
+}
+
+#employee-email {
+    margin-bottom: 10px;
+}
+
+.employee-input-header{
+    margin-bottom: 10px;
 }

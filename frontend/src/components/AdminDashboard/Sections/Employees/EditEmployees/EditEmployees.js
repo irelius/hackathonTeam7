@@ -21,7 +21,6 @@ function EditEmployees({ employee, onCloseExpandRow }) {
     }
 
     const currUser = useSelector(state => state.session.user)
-    console.log('booba', currUser)
 
     const handleEmployeeEdit = (e) => {
         e.preventDefault()
@@ -48,7 +47,12 @@ function EditEmployees({ employee, onCloseExpandRow }) {
         if (employee.id === currUser.id) {
             const confirmation = window.confirm("You're about to delete your own account. Are you sure?")
             if (!confirmation) {
-                // If the user clicks "Cancel", do not proceed with the deletion
+                return;
+            }
+        }
+        if (employee.role === "admin") {
+            const confirmation = window.confirm("You're about to delete another admin's account. Are you sure?")
+            if (!confirmation) {
                 return;
             }
         }
@@ -68,77 +72,91 @@ function EditEmployees({ employee, onCloseExpandRow }) {
     }
 
     return (
-        <form onSubmit={(e) => handleEmployeeEdit(e)} id='employee-edit-main-container'>
+        <form onSubmit={(e) => handleEmployeeEdit(e)} id='employee-edit-main-container' className="bg-200">
             <section id="employee-info-container">
-                <section>
-                    <aside>Edit Employee Username:</aside>
-                    <input
-                        type="text"
-                        required
-                        minLength={4}
-                        defaultValue={username}
-                        onKeyDown={(e) => {
-                            if (e.key === " ") {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <aside>Edit Employee Email:</aside>
-                    <input
-                        type="email"
-                        required
-                        defaultValue={email}
-                        onKeyDown={(e) => {
-                            if (e.key === " ") {
-                                e.preventDefault();
-                            }
-                        }}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </section>
-                <section>
-                    <aside>Edit Employee Role:</aside>
-                    <input
-                        type="radio"
-                        id="type-staff"
-                        checked={role === "staff"}
-                        onClick={(e) => handleRadioClick("staff", e)}
-                    />
-                    <label htmlFor="type-staff" onClick={(e) => {
-                        e.preventDefault()
-                        handleRadioClick("staff", e)
-                    }}>
-                        Staff
-                    </label>
+                <section id="employee-section-1">
+                    {/* Username section */}
+                    <section id='employee-username'>
+                        <aside className="employee-input-header">Edit Employee Username:</aside>
+                        <input
+                            type="text"
+                            required
+                            minLength={4}
+                            defaultValue={username}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </section>
 
-                    <input
-                        type="radio"
-                        id="type-admin"
-                        checked={role === "admin"}
-                        onClick={(e) => handleRadioClick("admin", e)}
-                    />
-                    <label htmlFor="type-admin" onClick={(e) => {
-                        e.preventDefault()
-                        handleRadioClick("admin", e)
-                    }}>
-                        Admin
-                    </label>
+                    {/* Email section */}
+                    <section id='employee-email'>
+                        <aside className="employee-input-header">Edit Employee Email:</aside>
+                        <input
+                            type="email"
+                            required
+                            defaultValue={email}
+                            onKeyDown={(e) => {
+                                if (e.key === " ") {
+                                    e.preventDefault();
+                                }
+                            }}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </section>
+
                 </section>
 
-                <section className="changes-container">
-                    <button className="pointer save-changes-button" type="submit">
-                        Save Changes
-                    </button>
-                    <button className="pointer cancel-changes-button" onClick={() => handleCancel()} >
-                        Cancel
-                    </button >
-                    <button className="pointer delete-button" onClick={() => handleDelete()} >
-                        Delete Profile
-                    </button >
+                {/* Role section */}
+                <section id="employee-section-2">
+                    <aside className="employee-input-header">Edit Employee Role:</aside>
+                    <section id="radio-buttons">
+                        <section>
+                            <input
+                                type="radio"
+                                id="type-staff"
+                                checked={role === "staff"}
+                                onClick={(e) => handleRadioClick("staff", e)}
+                            />
+                            <label htmlFor="type-staff" onClick={(e) => {
+                                e.preventDefault()
+                                handleRadioClick("staff", e)
+                            }}>
+                                Staff
+                            </label>
+                        </section>
+                        <section>
+                            <input
+                                type="radio"
+                                id="type-admin"
+                                checked={role === "admin"}
+                                onClick={(e) => handleRadioClick("admin", e)}
+                            />
+                            <label htmlFor="type-admin" onClick={(e) => {
+                                e.preventDefault()
+                                handleRadioClick("admin", e)
+                            }}>
+                                Admin
+                            </label>
+                        </section>
+                    </section>
                 </section>
+            </section>
+
+            {/* Button section */}
+            <section className="changes-container">
+                <button className="pointer save-changes-button" type="submit">
+                    Save Changes
+                </button>
+                <button className="pointer cancel-changes-button" onClick={() => handleCancel()} >
+                    Cancel
+                </button >
+                <button className="pointer delete-button" onClick={() => handleDelete()} >
+                    Delete Profile
+                </button >
             </section>
         </form>
     )

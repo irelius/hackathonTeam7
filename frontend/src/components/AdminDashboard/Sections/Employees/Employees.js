@@ -30,7 +30,7 @@ function EmployeesSection() {
             {/* Employee Header */}
             <section className="dashboard-header">
                 <aside className="width-200">Username</aside>
-                <aside className="width-200">Email</aside>
+                <aside className="width-300">Email</aside>
                 <aside className="width-100">Role</aside>
             </section>
 
@@ -42,9 +42,9 @@ function EmployeesSection() {
                     <section className="dashboard-body">
                         {allEmployees.map((el, i) => (
                             <div key={i} className="dashboard-one-employee">
-                                <section className="dashboard-one-employee-row" onClick={() => handleRowClick(i)}>
+                                <section className="pointer dashboard-one-employee-row" onClick={() => handleRowClick(i)}>
                                     <aside className="width-200">{el.username}</aside>
-                                    <aside className="width-200">{el.email}</aside>
+                                    <aside className="width-300">{el.email}</aside>
                                     <aside className="width-100">
                                         {el.role ? el.role.charAt(0).toUpperCase() + el.role.slice(1) : 'Unknown Role'}
                                     </aside>
