@@ -22,6 +22,7 @@ function ProductsSection() {
     const [priceSort, setPriceSort] = useState(null);
     const [stockSort, setStockSort] = useState(null);
 
+    // if product gets updated, redispatch the categories of the product
     useEffect(() => {
         dispatch(categoryActions.loadAllCategoriesThunk());
     }, [productUpdated]);

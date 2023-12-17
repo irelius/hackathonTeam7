@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_USER = "/users/setUser"
 const LOAD_USERS = "/users/setUsers"
+const LOAD_USERS_ORDERED = "/product/setOrderedUsers"
 const ADD_USER = "/users/addUser"
 const EDIT_USER = "/users/editUser"
 const DELETE_USER = "/users/deleteUser"
@@ -11,6 +12,13 @@ const CLEAR_USER = "/users/clearUser"
 export const loadUsers = (users) => {
     return {
         type: LOAD_USERS,
+        payload: users,
+    }
+}
+
+export const loadOrderedUsers = (users) => {
+    return {
+        type: LOAD_USERS_ORDERED,
         payload: users,
     }
 }
@@ -66,6 +74,22 @@ export const loadAllEmployeesThunk = () => async (dispatch) => {
         if (res.ok) {
             const allUsers = await res.json()
             dispatch(loadUsers(allUsers))
+        } else {
+            console.error('Failed to load all users:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all employees:', err);
+    }
+}
+
+// thunk action for loading employee users, ordered by username, either ascending or descending
+export const loadSortedEmployeesThunk = (sortBy, sortOrder) => async (dispatch) => {
+    try {
+        const queryString = `?sortBy=${sortBy}&sortOrder=${sortOrder}`
+        const res = await csrfFetch(`/api/users/employees/sort${queryString}`)
+        if (res.ok) {
+            const allUsers = await res.json()
+            dispatch(loadOrderedUsers(allUsers))
         } else {
             console.error('Failed to load all users:', res.status, res.statusText);
         }
@@ -206,6 +230,8 @@ const userReducer = (state = initialUser, action) => {
             }
 
             return user
+        case LOAD_USERS_ORDERED:
+            return action.payload.data
         case ADD_USER:
             newState[action.payload.id] = action.payload
             return newState;

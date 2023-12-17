@@ -116,7 +116,7 @@ router.get("/id/:productId", async (req, res) => {
 // Get a product by category and by filter type
 //'or' will, if given multiple categories, return all products of ANY of the categories
 //'and' will, if given multiple categories, return all products of ALL of the categories
-//'none' will, if given multiple categories, return all products of NON of the categories
+//'none' will, if given multiple categories, return all products of NONE of the categories
 // example url for testing: http://localhost:8000/api/product/filter?categories=Black,Indoor&type=or
 router.get("/filter", async (req, res) => {
     try {
@@ -198,7 +198,7 @@ router.get("/filter", async (req, res) => {
                 attributes: ['id'],
             });
 
-            const andProducts = await Product.findAll({
+            const products = await Product.findAll({
                 attributes: { exclude: ['createdAt', 'updatedAt'] },
                 include: {
                     model: ProductCategory,
@@ -213,7 +213,7 @@ router.get("/filter", async (req, res) => {
                 having: Sequelize.where(Sequelize.fn('count', Sequelize.col('ProductCategories.categoryId')), '=', categoryIds.length), // Ensure all specified categories are associated.
             });
 
-            return res.json({ data: andProducts });
+            return res.json({ data: products });
         }
 
     } catch (err) {

@@ -62,6 +62,26 @@ router.get("/employees", restoreUser, requireAuth, isAdmin, async (req, res) => 
   }
 })
 
+// Get employees, ordered
+router.get("/employees/sort", restoreUser, requireAuth, isAdmin, async (req, res) => {
+  try {
+    let sortBy = req.query.sortBy || "username"
+    let sortOrder = req.query.sortOrder || "ASC"
+
+    const employees = await User.findAll({
+      where: {
+        role: ["admin", "staff"]
+      },
+      order: [[sortBy, sortOrder]]
+    })
+    res.json({ data: employees })
+
+  } catch (err) {
+    return internalServerError(res, err)
+  }
+})
+
+
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
   const { email, password, username, role } = req.body;

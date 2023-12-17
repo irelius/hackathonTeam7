@@ -11,10 +11,10 @@ const forbidden = () => {
 const isAdmin = function (req, res, next) {
     const user = req.user
 
-    if (user.id !== 1 && user.role !== "admin") {
-        return nextError(next, "Admin privileges required.", 403)
+    if (user.id === 1 || user.role === "admin") {
+        return next()
     }
-    return next()
+    return nextError(next, "Admin privileges required.", 403)
 }
 
 const checkUser = function (req, res, next) {

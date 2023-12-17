@@ -8,13 +8,20 @@ import EditEmployees from "./EditEmployees/EditEmployees";
 
 function EmployeesSection() {
     const dispatch = useDispatch()
+
+    const [usernameSort, setUsernameSort] = useState("ASC")
+    const [roleSort, setRoleSort] = useState(null)
+
     useEffect(() => {
-        dispatch(userActions.loadAllEmployeesThunk())
-    }, [dispatch])
+        if (usernameSort) {
+            dispatch(userActions.loadSortedEmployeesThunk("username", usernameSort))
+        } else {
+            dispatch(userActions.loadSortedEmployeesThunk("role", roleSort))
+        }
+    }, [dispatch, usernameSort, roleSort])
 
     const allEmployees = Object.values(useSelector(state => state.user))
 
-    const [employeeUpdated, setEmployeeUpdated] = useState(false)
     const [expandRow, setExpandRow] = useState(null)
 
     const handleRowClick = (index) => {
@@ -25,13 +32,46 @@ function EmployeesSection() {
         setExpandRow(null)
     }
 
+    const handleSortChanging = (mode, order) => {
+        setExpandRow(null)
+        if (mode === "username") {
+            setUsernameSort(order)
+            setRoleSort(null)
+        } else if (mode === "role") {
+            setUsernameSort(null)
+            setRoleSort(order)
+        }
+    }
+
     return (
         <div>
             {/* Employee Header */}
             <section className="dashboard-header">
-                <aside className="width-200">Username</aside>
+                <aside className="width-200">
+                    Username
+                    <section id="arrow-icon" className="pointer">
+                        {usernameSort === 'ASC' ? (
+                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('username', 'DESC')} />
+                        ) : usernameSort === 'DESC' ? (
+                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('username', 'ASC')} />
+                        ) : (
+                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('username', 'ASC')} />
+                        )}
+                    </section>
+                </aside>
                 <aside className="width-300">Email</aside>
-                <aside className="width-100">Role</aside>
+                <aside className="width-100">
+                    Role
+                    <section id="arrow-icon" className="pointer">
+                        {roleSort === 'ASC' ? (
+                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('role', 'DESC')} />
+                        ) : roleSort === 'DESC' ? (
+                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('role', 'ASC')} />
+                        ) : (
+                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('role', 'ASC')} />
+                        )}
+                    </section>
+                </aside>
             </section>
 
             {/* Employee Body */}
@@ -51,7 +91,7 @@ function EmployeesSection() {
                                 </section>
                                 <section className={`expanded-row ${expandRow === i ? 'employee-show' : ''}`} key={i}>
                                     {expandRow === i ? (
-                                        <EditEmployees employee={el} onCloseExpandRow={handleCloseExpandRow} setEmployeeUpdated={setEmployeeUpdated} />
+                                        <EditEmployees employee={el} onCloseExpandRow={handleCloseExpandRow} />
                                     ) : (
                                         <></>
                                     )}
