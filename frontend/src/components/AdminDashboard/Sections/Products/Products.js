@@ -7,6 +7,7 @@ import { useState } from "react"
 import EditProduct from "./EditProduct"
 import * as productActions from "../../../../store/product"
 import * as categoryActions from "../../../../store/category"
+import SortArrowSection from "../../ReusableSections/SortArrowSection"
 
 function ProductsSection() {
     const dispatch = useDispatch();
@@ -76,37 +77,19 @@ function ProductsSection() {
                 <aside className="width-300 dashboard-header-arrows">
                     Name
                     <section className="pointer">
-                        {nameSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('nameSort', 'DESC')} />
-                        ) : nameSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('nameSort', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('nameSort', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={nameSort} handleSortChanging={(order) => handleSortChanging('nameSort', order)} />
                     </section>
                 </aside>
                 <aside className="width-200 dashboard-header-arrows">
                     Price
                     <section className="pointer">
-                        {priceSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('priceSort', 'DESC')} />
-                        ) : priceSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('priceSort', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('priceSort', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={priceSort} handleSortChanging={(order) => handleSortChanging('priceSort', order)} />
                     </section>
                 </aside>
                 <aside className="width-100 dashboard-header-arrows">
                     Stock
                     <section className="pointer">
-                        {stockSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('stockSort', 'DESC')}></i>
-                        ) : stockSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('stockSort', 'ASC')}></i>
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('stockSort', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={stockSort} handleSortChanging={(order) => handleSortChanging('stockSort', order)} />
                     </section>
                 </aside>
             </section>

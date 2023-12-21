@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import * as userActions from "../../../../store/user"
 import EditEmployees from "./EditEmployees/EditEmployees";
+import SortArrowSection from "../../ReusableSections/SortArrowSection";
 
 function EmployeesSection() {
     const dispatch = useDispatch()
@@ -50,26 +51,14 @@ function EmployeesSection() {
                 <aside className="width-200 dashboard-header-arrows">
                     Username
                     <section className="pointer">
-                        {usernameSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('username', 'DESC')} />
-                        ) : usernameSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('username', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('username', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={usernameSort} handleSortChanging={(order) => handleSortChanging('username', order)} />
                     </section>
                 </aside>
                 <aside className="width-300">Email</aside>
                 <aside className="width-100 dashboard-header-arrows">
                     Role
                     <section className="pointer">
-                        {roleSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('role', 'DESC')} />
-                        ) : roleSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('role', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('role', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={roleSort} handleSortChanging={(order) => handleSortChanging('role', order)} />
                     </section>
                 </aside>
             </section>

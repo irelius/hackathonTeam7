@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 
 import * as discountActions from "../../../../store/discount"
 import EditDiscount from "./EditDiscount/EditDiscount"
+import SortArrowSection from "../../ReusableSections/SortArrowSection"
 
 function DiscountsSection() {
     const dispatch = useDispatch()
@@ -83,49 +84,25 @@ function DiscountsSection() {
                 <aside className="width-200 dashboard-header-arrows">
                     Discount Name
                     <section className="pointer">
-                        {nameSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('discountName', 'DESC')} />
-                        ) : nameSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('discountName', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('discountName', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={nameSort} handleSortChanging={(order) => handleSortChanging('discountName', order)} />
                     </section>
                 </aside>
                 <aside className="width-200 dashboard-header-arrows">
                     Type
                     <section className="pointer">
-                        {typeSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('discountType', 'DESC')} />
-                        ) : typeSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('discountType', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('discountType', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={typeSort} handleSortChanging={(order) => handleSortChanging('discountType', order)} />
                     </section>
                 </aside>
                 <aside className="width-100 dashboard-header-arrows">
                     Value
                     <section className="pointer">
-                        {valueSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('discountValue', 'DESC')} />
-                        ) : valueSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('discountValue', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('discountValue', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={valueSort} handleSortChanging={(order) => handleSortChanging('discountValue', order)} />
                     </section>
                 </aside>
                 <aside className="width-100 dashboard-header-arrows">
                     Expiration
                     <section className="pointer">
-                        {expireSort === 'ASC' ? (
-                            <i className="bx bx-caret-up" onClick={() => handleSortChanging('expirationDate', 'DESC')} />
-                        ) : expireSort === 'DESC' ? (
-                            <i className="bx bx-caret-down" onClick={() => handleSortChanging('expirationDate', 'ASC')} />
-                        ) : (
-                            <i className="bx bx-reflect-horizontal" onClick={() => handleSortChanging('expirationDate', 'ASC')} />
-                        )}
+                        <SortArrowSection sortType={expireSort} handleSortChanging={(order) => handleSortChanging('expirationDate', order)} />
                     </section>
                 </aside>
             </section>
