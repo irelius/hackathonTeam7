@@ -49,6 +49,7 @@ function DiscountsSection() {
     };
 
     // function to handle changing the sort method
+        // this is so not DRY, but I also don't want to think of a way to make it drier. ey, it works right?
     const handleSortChanging = (mode, order) => {
         setExpandRow(null)
         if (mode === "discountName") {

@@ -11,15 +11,20 @@ function EmployeesSection() {
     const dispatch = useDispatch()
 
     const [usernameSort, setUsernameSort] = useState("ASC")
+    const [emailSort, setEmailSort] = useState(null)
     const [roleSort, setRoleSort] = useState(null)
 
     useEffect(() => {
         if (usernameSort) {
             dispatch(userActions.loadSortedEmployeesThunk("username", usernameSort))
-        } else {
+        }
+        if (emailSort) {
+            dispatch(userActions.loadSortedEmployeesThunk("email", emailSort))
+        }
+        if (roleSort) {
             dispatch(userActions.loadSortedEmployeesThunk("role", roleSort))
         }
-    }, [dispatch, usernameSort, roleSort])
+    }, [dispatch, usernameSort, emailSort, roleSort])
 
     const allEmployees = Object.values(useSelector(state => state.user))
 
@@ -37,9 +42,17 @@ function EmployeesSection() {
         setExpandRow(null)
         if (mode === "username") {
             setUsernameSort(order)
+            setEmailSort(null)
             setRoleSort(null)
-        } else if (mode === "role") {
+        }
+        if (mode === "email") {
             setUsernameSort(null)
+            setEmailSort(order)
+            setRoleSort(null)
+        }
+        if (mode === "role") {
+            setUsernameSort(null)
+            setEmailSort(null)
             setRoleSort(order)
         }
     }
@@ -54,7 +67,12 @@ function EmployeesSection() {
                         <SortArrowSection sortType={usernameSort} handleSortChanging={(order) => handleSortChanging('username', order)} />
                     </section>
                 </aside>
-                <aside className="width-300">Email</aside>
+                <aside className="width-300 dashboard-header-arrows">
+                    Email
+                    <section className="pointer">
+                        <SortArrowSection sortType={emailSort} handleSortChanging={(order) => handleSortChanging('email', order)} />
+                    </section>
+                </aside>
                 <aside className="width-100 dashboard-header-arrows">
                     Role
                     <section className="pointer">

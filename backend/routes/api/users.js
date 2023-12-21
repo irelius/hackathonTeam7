@@ -72,7 +72,10 @@ router.get("/employees/sort", restoreUser, requireAuth, isAdmin, async (req, res
       where: {
         role: ["admin", "staff"]
       },
-      order: [[sortBy, sortOrder]]
+      order: [
+        [sortBy, sortOrder],
+        ["username", "ASC"]
+      ]
     })
     res.json({ data: employees })
 

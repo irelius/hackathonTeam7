@@ -37,7 +37,10 @@ router.get("/all/sort", async (req, res) => {
 
         const result = await Product.findAll({
             where: searchClause,
-            order: [[sortBy, sortOrder]],
+            order: [
+                [sortBy, sortOrder],
+                ["productName", "ASC"]
+            ],
         });
 
         res.json({ data: result });
@@ -268,8 +271,8 @@ router.put("/info/:productId", restoreUser, requireAuth, isAdmin, async (req, re
 
         await product.save()
 
-         // If an image is provided, create a new entry in ProductImage
-         if (image) {
+        // If an image is provided, create a new entry in ProductImage
+        if (image) {
             // Assuming you have a ProductImage model with an association to Product
             const productImage = await ProductImage.create({
                 productId: product.id,
