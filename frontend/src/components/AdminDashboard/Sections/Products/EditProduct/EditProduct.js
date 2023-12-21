@@ -7,6 +7,7 @@ import { useEffect, useState } from "react"
 import * as productCategoryActions from "../../../../../store/productcategory"
 import * as productActions from "../../../../../store/product"
 import CategorySection from "../../../ReusableSections/CategorySection"
+import CurrencyInput from "react-currency-input-field"
 
 function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
     const dispatch = useDispatch()
@@ -74,6 +75,18 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
         setCurrCats(() => ({
             ...copyCurrCats
         }))
+        setName(product.productName)
+        setPrice(product.productPrice / 100)
+        setStock(product.productQuantity)
+        setDescription(product.productDescription)
+
+        return onCloseExpandRow()
+    }
+
+    const handleDelete = () => {
+        dispatch(productActions.deleteProductThunk(product.id)).then(() => {
+            setProductUpdated(prevState => !prevState)
+        })
         return onCloseExpandRow()
     }
 
@@ -89,22 +102,19 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         <input
                             type="text"
                             required
-                            defaultValue={name}
+                            value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
                     </section>
                     <section>
                         <aside>Edit Price:</aside>
-                        <input
-                            type="number"
+                        <CurrencyInput
+                            name="product-price-input"
                             required
-                            defaultValue={`${price}`}
-                            onKeyDown={(e) => {
-                                if (e.key === " ") {
-                                    e.preventDefault();
-                                }
-                            }}
-                            onChange={(e) => setPrice(e.target.value)}
+                            prefix="$"
+                            decimalsLimit={2}
+                            onValueChange={(value, name, e) => setPrice(value)}
+                            value={price}
                         />
                     </section>
                     <section>
@@ -112,7 +122,7 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                         <input
                             type="number"
                             required
-                            defaultValue={stock}
+                            value={stock}
                             onKeyDown={(e) => {
                                 if (e.key === " ") {
                                     e.preventDefault();
@@ -144,6 +154,9 @@ function EditProduct({ product, onCloseExpandRow, setProductUpdated }) {
                 <button type="button" className="pointer cancel-changes-button" onClick={() => handleCancel()} >
                     Cancel
                 </button>
+                <button className="pointer delete-button" onClick={() => handleDelete()} >
+                    Delete Product
+                </button >
             </section>
         </form>
     )

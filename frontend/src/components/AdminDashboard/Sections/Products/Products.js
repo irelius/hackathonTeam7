@@ -86,7 +86,7 @@ function ProductsSection() {
                         <SortArrowSection sortType={priceSort} handleSortChanging={(order) => handleSortChanging('priceSort', order)} />
                     </section>
                 </aside>
-                <aside className="width-100 dashboard-header-arrows">
+                <aside className="width-150 dashboard-header-arrows">
                     Stock
                     <section className="pointer">
                         <SortArrowSection sortType={stockSort} handleSortChanging={(order) => handleSortChanging('stockSort', order)} />
@@ -105,7 +105,7 @@ function ProductsSection() {
                                 <section className="pointer dashboard-one-product-row" onClick={() => handleRowClick(i)}>
                                     <aside className="width-300">{el.productName}</aside>
                                     <aside className="width-200">${el.productPrice / 100}</aside>
-                                    <aside className="width-100">{el.productQuantity}</aside>
+                                    <aside className="width-150">{el.productQuantity}</aside>
                                 </section>
                                 <section className={`expanded-row ${expandRow === i ? 'product-show' : ''}`} key={i}>
                                     {expandRow === i ? (

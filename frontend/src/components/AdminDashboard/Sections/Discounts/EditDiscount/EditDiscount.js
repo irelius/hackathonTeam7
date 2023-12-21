@@ -79,6 +79,13 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
         setType(type)
     }
 
+    const handleDelete = () => {
+        dispatch(discountActions.deleteDiscountThunk(discount.id)).then(() => {
+            setDiscountUpdated(prevState => !prevState)
+        })
+        return onCloseExpandRow()
+    }
+
     return (
         <form onSubmit={handleDiscountEdit} id="discount-main-container" className="bg-200">
             <section id="discount-info-container">
@@ -166,6 +173,9 @@ function EditDiscount({ discount, onCloseExpandRow, setDiscountUpdated }) {
                 </button>
                 <button className="pointer cancel-changes-button" onClick={() => handleCancel()} >
                     Cancel
+                </button >
+                <button className="pointer delete-button" onClick={() => handleDelete()} >
+                    Delete Discount
                 </button >
             </section>
         </form>

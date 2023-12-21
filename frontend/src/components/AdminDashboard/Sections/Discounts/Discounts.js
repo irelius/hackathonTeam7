@@ -35,7 +35,7 @@ function DiscountsSection() {
         if (expireSort) {
             dispatch(discountActions.loadSortedDiscountsThunk("expirationDate", expireSort))
         }
-    }, [dispatch, nameSort, typeSort, valueSort, expireSort])
+    }, [dispatch, discountUpdated, nameSort, typeSort, valueSort, expireSort])
 
     const discounts = Object.values(useSelector(state => state.discount))
 
@@ -88,19 +88,19 @@ function DiscountsSection() {
                         <SortArrowSection sortType={nameSort} handleSortChanging={(order) => handleSortChanging('discountName', order)} />
                     </section>
                 </aside>
-                <aside className="width-100 dashboard-header-arrows">
+                <aside className="width-150 dashboard-header-arrows">
                     Type
                     <section className="pointer">
                         <SortArrowSection sortType={typeSort} handleSortChanging={(order) => handleSortChanging('discountType', order)} />
                     </section>
                 </aside>
-                <aside className="width-100 dashboard-header-arrows">
+                <aside className="width-150 dashboard-header-arrows">
                     Value
                     <section className="pointer">
                         <SortArrowSection sortType={valueSort} handleSortChanging={(order) => handleSortChanging('discountValue', order)} />
                     </section>
                 </aside>
-                <aside className="width-100 dashboard-header-arrows">
+                <aside className="width-150 dashboard-header-arrows">
                     Expiration
                     <section className="pointer">
                         <SortArrowSection sortType={expireSort} handleSortChanging={(order) => handleSortChanging('expirationDate', order)} />
@@ -118,9 +118,9 @@ function DiscountsSection() {
                             <div key={i} className="dashboard-one-discount">
                                 <section className="pointer dashboard-one-discount-row" onClick={() => handleRowClick(i)}>
                                     <aside className="width-200">{el.discountName}</aside>
-                                    <aside className="width-100">{el.discountType.charAt(0).toUpperCase() + el.discountType.slice(1)}</aside>
-                                    <aside className="width-100">{el.discountValue}</aside>
-                                    <aside className="width-100">{el.expirationDate.slice(0, 10)}</aside>
+                                    <aside className="width-150">{el.discountType.charAt(0).toUpperCase() + el.discountType.slice(1)}</aside>
+                                    <aside className="width-150">{el.discountValue}</aside>
+                                    <aside className="width-150">{el.expirationDate.slice(0, 10)}</aside>
                                 </section>
                                 <section className={`expanded-row ${expandRow === i ? 'discount-show' : ''}`} key={i}>
                                     {expandRow === i ? (
