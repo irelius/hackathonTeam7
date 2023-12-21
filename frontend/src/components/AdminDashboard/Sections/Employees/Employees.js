@@ -47,9 +47,9 @@ function EmployeesSection() {
         <div>
             {/* Employee Header */}
             <section className="dashboard-header">
-                <aside className="width-200">
+                <aside className="width-200 dashboard-header-arrows">
                     Username
-                    <section id="arrow-icon" className="pointer">
+                    <section className="pointer">
                         {usernameSort === 'ASC' ? (
                             <i className="bx bx-caret-up" onClick={() => handleSortChanging('username', 'DESC')} />
                         ) : usernameSort === 'DESC' ? (
@@ -60,9 +60,9 @@ function EmployeesSection() {
                     </section>
                 </aside>
                 <aside className="width-300">Email</aside>
-                <aside className="width-100">
+                <aside className="width-100 dashboard-header-arrows">
                     Role
-                    <section id="arrow-icon" className="pointer">
+                    <section className="pointer">
                         {roleSort === 'ASC' ? (
                             <i className="bx bx-caret-up" onClick={() => handleSortChanging('role', 'DESC')} />
                         ) : roleSort === 'DESC' ? (

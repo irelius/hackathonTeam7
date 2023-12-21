@@ -73,9 +73,9 @@ function ProductsSection() {
         <div>
             {/* Products Header */}
             <section className="dashboard-header">
-                <aside className="width-300" id="dashboard-header-arrows">
+                <aside className="width-300 dashboard-header-arrows">
                     Name
-                    <section id="arrow-icon" className="pointer">
+                    <section className="pointer">
                         {nameSort === 'ASC' ? (
                             <i className="bx bx-caret-up" onClick={() => handleSortChanging('nameSort', 'DESC')} />
                         ) : nameSort === 'DESC' ? (
@@ -85,9 +85,9 @@ function ProductsSection() {
                         )}
                     </section>
                 </aside>
-                <aside className="width-200" id="dashboard-header-arrows">
+                <aside className="width-200 dashboard-header-arrows">
                     Price
-                    <section id="arrow-icon" className="pointer">
+                    <section className="pointer">
                         {priceSort === 'ASC' ? (
                             <i className="bx bx-caret-up" onClick={() => handleSortChanging('priceSort', 'DESC')} />
                         ) : priceSort === 'DESC' ? (
@@ -97,9 +97,9 @@ function ProductsSection() {
                         )}
                     </section>
                 </aside>
-                <aside className="width-100" id="dashboard-header-arrows">
+                <aside className="width-100 dashboard-header-arrows">
                     Stock
-                    <section id="arrow-icon" className="pointer">
+                    <section className="pointer">
                         {stockSort === 'ASC' ? (
                             <i className="bx bx-caret-up" onClick={() => handleSortChanging('stockSort', 'DESC')}></i>
                         ) : stockSort === 'DESC' ? (

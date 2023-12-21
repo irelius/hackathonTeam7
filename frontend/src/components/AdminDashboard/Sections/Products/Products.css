@@ -1,4 +1,4 @@
-#dashboard-header-arrows {
+/* #dashboard-header-arrows {
     display: flex;
     flex-direction: row;
 }
@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     margin-left: 3px;
-}
+} */
 
 #product-spacing {
     margin-bottom: 50px;

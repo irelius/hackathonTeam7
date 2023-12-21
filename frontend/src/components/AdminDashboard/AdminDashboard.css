@@ -61,6 +61,19 @@
     color: #ffffff;
 }
 
+.dashboard-header-arrows {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard-header-arrows * {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+}
+
+
+/* ----------------------------------------------------------------------------------------- */
 /* Table Body section */
 .dashboard-body {
     position: fixed;
@@ -78,9 +91,6 @@
     overflow-x: hidden;
 }
 
-
-/* ----------------------------------------------------------------------------------------- */
-/* Table Body section */
 .no-dashboard-rows {
     align-items: center;
     margin-top: 50px;
