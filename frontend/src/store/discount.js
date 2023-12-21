@@ -1,11 +1,12 @@
 import { csrfFetch } from "./csrf";
 
-const LOAD_DISCOUNT = "/product/setDiscount"
-const LOAD_DISCOUNTS = "/product/setDiscounts"
-const ADD_DISCOUNT = "/product/addDiscount"
-const EDIT_DISCOUNT = "/product/editDiscount"
-const DELETE_DISCOUNT = "/product/deleteDiscount"
-const CLEAR_DISCOUNT = "/product/clearDiscount"
+const LOAD_DISCOUNT = "/discount/setDiscount"
+const LOAD_DISCOUNTS = "/discount/setDiscounts"
+const LOAD_DISCOUNTS_ORDERED = "/discount/setOrderedDiscounts"
+const ADD_DISCOUNT = "/discount/addDiscount"
+const EDIT_DISCOUNT = "/discount/editDiscount"
+const DELETE_DISCOUNT = "/discount/deleteDiscount"
+const CLEAR_DISCOUNT = "/discount/clearDiscount"
 
 export const loadDiscount = (discount) => {
     return {
@@ -17,6 +18,13 @@ export const loadDiscount = (discount) => {
 export const loadDiscounts = (discounts) => {
     return {
         type: LOAD_DISCOUNTS,
+        payload: discounts
+    }
+}
+
+export const loadOrderedDiscounts = (discounts) => {
+    return {
+        type: LOAD_DISCOUNTS_ORDERED,
         payload: discounts
     }
 }
@@ -46,6 +54,22 @@ export const loadAllDiscountsThunk = () => async (dispatch) => {
         }
     } catch (err) {
         console.error("An error occurred while loading all discounts:", err);
+    }
+}
+
+// thunk aciton to get sorted discounts
+export const loadSortedDiscountsThunk = (sortBy, sortOrder) => async (dispatch) => {
+    try {
+        const queryString = `?sortBy=${sortBy}&sortOrder=${sortOrder}`
+        const res = await csrfFetch(`/api/discount/sort${queryString}`)
+        if (res.ok) {
+            const discounts = await res.json()
+            dispatch(loadOrderedDiscounts(discounts))
+        } else {
+            console.error('Failed to load all discounts:', res.status, res.statusText);
+        }
+    } catch (err) {
+        console.error('An error occurred while loading all discounts:', err);
     }
 }
 
@@ -157,6 +181,8 @@ const discountReducer = (state = initialDiscount, action) => {
             }
 
             return discounts
+        case LOAD_DISCOUNTS_ORDERED:
+            return action.payload.data
         case ADD_DISCOUNT:
             newState[action.payload.data.id] = action.payload.data
             return newState;

@@ -11,10 +11,19 @@ const forbidden = () => {
 const isAdmin = function (req, res, next) {
     const user = req.user
 
-    if (user.id === 1 || user.role === "admin") {
+    if (user.role === "admin") {
         return next()
     }
     return nextError(next, "Admin privileges required.", 403)
+}
+
+const isEmployee = function (req, res, next) {
+    const user = req.user
+    if(user.role === "admin" || user.role === "staff") {
+        return next()
+    }
+
+    return nextError(next, "Employee privileges required.", 403)
 }
 
 const checkUser = function (req, res, next) {
@@ -47,6 +56,7 @@ const authPayment = async function (req, res, next) {
 module.exports = {
     forbidden,
     isAdmin,
+    isEmployee,
     checkUser,
     authAddress,
     authPayment,

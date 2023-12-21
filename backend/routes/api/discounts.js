@@ -6,11 +6,11 @@ const { check } = require('express-validator');
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { Discount, DiscountCategory } = require("../../db/models");
 const { internalServerError, notFoundError, notAuthToEdit } = require('../../utils/errorFunc');
-const { isAdmin } = require('../../utils/authorization');
+const { isAdmin, isEmployee } = require('../../utils/authorization');
 
 
 // Get all discounts
-router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
+router.get("/all", restoreUser, requireAuth, isEmployee, async (req, res) => {
     try {
         const discounts = await Discount.findAll({
             attributes: { exclude: ["createdAt", "updatedAt"] }
@@ -21,8 +21,26 @@ router.get("/all", restoreUser, requireAuth, isAdmin, async (req, res) => {
     }
 })
 
+router.get("/sort", restoreUser, requireAuth, isEmployee, async (req, res) => {
+    try {
+        let sortBy = req.query.sortBy || "discountName"
+        let sortOrder = req.query.sortOrder || "ASC"
+
+        const discount = await Discount.findAll({
+            order: [
+                [sortBy, sortOrder],
+                ["discountName", "ASC"]
+            ]
+        })
+
+        res.json({ data: discount })
+    } catch (err) {
+        return internalServerError(res, err)
+    }
+})
+
 // get a discount by discountNmae
-router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
+router.get("/:discountId", restoreUser, requireAuth, isEmployee, async (req, res, next) => {
     try {
         const discount = await Discount.findByPk(req.params.discountId)
 
@@ -35,6 +53,7 @@ router.get("/:discountId", restoreUser, requireAuth, async (req, res, next) => {
         return internalServerError(res, err)
     }
 })
+
 
 
 // Create a new discount
