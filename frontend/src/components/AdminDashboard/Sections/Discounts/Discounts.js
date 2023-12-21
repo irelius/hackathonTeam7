@@ -88,7 +88,7 @@ function DiscountsSection() {
                         <SortArrowSection sortType={nameSort} handleSortChanging={(order) => handleSortChanging('discountName', order)} />
                     </section>
                 </aside>
-                <aside className="width-200 dashboard-header-arrows">
+                <aside className="width-100 dashboard-header-arrows">
                     Type
                     <section className="pointer">
                         <SortArrowSection sortType={typeSort} handleSortChanging={(order) => handleSortChanging('discountType', order)} />
@@ -118,7 +118,7 @@ function DiscountsSection() {
                             <div key={i} className="dashboard-one-discount">
                                 <section className="pointer dashboard-one-discount-row" onClick={() => handleRowClick(i)}>
                                     <aside className="width-200">{el.discountName}</aside>
-                                    <aside className="width-200">{el.discountType.charAt(0).toUpperCase() + el.discountType.slice(1)}</aside>
+                                    <aside className="width-100">{el.discountType.charAt(0).toUpperCase() + el.discountType.slice(1)}</aside>
                                     <aside className="width-100">{el.discountValue}</aside>
                                     <aside className="width-100">{el.expirationDate.slice(0, 10)}</aside>
                                 </section>

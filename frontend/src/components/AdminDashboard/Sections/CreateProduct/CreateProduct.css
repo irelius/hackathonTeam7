@@ -4,17 +4,17 @@
 }
 
 
-#create-product-section {
+#create-product-section-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#create-product-section>section{
+#create-product-section-container>section{
     margin-bottom: 30px;
 }
 
-#create-product-section>section>aside {
+#create-product-section-container>section>aside {
     margin-bottom: 10px;
 }
 

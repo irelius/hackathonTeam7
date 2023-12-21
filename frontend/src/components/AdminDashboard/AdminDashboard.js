@@ -75,9 +75,21 @@ function AdminDashboard() {
                 ) : (
                     <></>
                 )}
-                {activeTab === "CreateDiscountSection" && <CreateDiscount />}
-                {activeTab === "CreateProductSection" && <CreateProduct />}
-                {activeTab === "CreateEmployeeSection" && <CreateEmployee />}
+                {activeTab === "CreateDiscountSection" && currUser.role === "admin" ? (
+                    <CreateDiscount />
+                ) : (
+                    <></>
+                )}
+                {activeTab === "CreateProductSection" && currUser.role === "admin" ? (
+                    <CreateProduct />
+                ) : (
+                    <></>
+                )}
+                {activeTab === "CreateEmployeeSection" && currUser.role === "admin" ? (
+                    <CreateEmployee />
+                ) : (
+                    <></>
+                )}
             </section>
         </div >
     ) : (

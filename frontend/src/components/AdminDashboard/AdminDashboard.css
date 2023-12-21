@@ -205,3 +205,11 @@
 
     margin-bottom: 20px;
 }
+
+.input-header{
+    margin-bottom: 5px;
+}
+
+.radio-button-section>* {
+    margin-bottom: 5px;
+}

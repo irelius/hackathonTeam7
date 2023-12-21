@@ -68,7 +68,7 @@ function CreateDiscount() {
                             />
                         </aside>
 
-                        <aside>
+                        <aside id="expiration-date-section">
                             <section>Expiration Date</section>
                             <input
                                 type="date"
@@ -81,32 +81,40 @@ function CreateDiscount() {
                     <section>
                         <aside>
                             <section>Discount Type</section>
-                            <section>
-                                <input
-                                    type="radio"
-                                    id="type-percent"
-                                    defaultChecked={type === "percent"}
-                                    onClick={(e) => handleRadioClick("percent", e)}
-                                />
-                                <label htmlFor={`type-percent`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleRadioClick("percent", e)
-                                }}>
-                                    Percent
-                                </label>
+                            <section className="radio-button-section">
+                                <aside>
+                                    <input
+                                        type="radio"
+                                        id="type-percent"
+                                        checked={type === "percent"}
+                                        onClick={(e) => handleRadioClick("percent", e)}
+                                        className="pointer"
+                                    />
+                                    <label htmlFor={`type-percent`} onClick={(e) => {
+                                        e.preventDefault()
+                                        handleRadioClick("percent", e)
+                                    }}
+                                        className="pointer">
+                                        Percent
+                                    </label>
+                                </aside>
 
-                                <input
-                                    type="radio"
-                                    id="type-flat"
-                                    defaultChecked={type === "flat"}
-                                    onClick={(e) => handleRadioClick("flat", e)}
-                                />
-                                <label htmlFor={`type-flat`} onClick={(e) => {
-                                    e.preventDefault()
-                                    handleRadioClick("flat", e)
-                                }}>
-                                    Flat Discount
-                                </label>
+                                <aside>
+                                    <input
+                                        type="radio"
+                                        id="type-flat"
+                                        checked={type === "flat"}
+                                        onClick={(e) => handleRadioClick("flat", e)}
+                                        className="pointer"
+                                    />
+                                    <label htmlFor={`type-flat`} onClick={(e) => {
+                                        e.preventDefault()
+                                        handleRadioClick("flat", e)
+                                    }}
+                                        className="pointer">
+                                        Flat Discount
+                                    </label>
+                                </aside>
                             </section>
                         </aside>
 
@@ -134,7 +142,7 @@ function CreateDiscount() {
                     <input
                         type="checkbox"
                         id="all-discount"
-                        defaultChecked={currCats["All"]}
+                        checked={currCats["All"]}
                         onChange={() => { handleAllCategorySelection() }}
                     />
                 </section>

@@ -6,7 +6,6 @@
 #create-discount-section {
     display: flex;
     justify-content: space-around;
-    align-items: center;
 
     height: 150px;
 }
@@ -18,6 +17,7 @@
 #create-discount-section>section>aside>section {
     margin-bottom: 5px;
 }
+
 
 
 #category-section {

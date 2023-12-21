@@ -1,0 +1,8 @@
+#create-employee-section {
+    display: flex;
+    justify-content: center;
+}
+
+#create-employee-section>section>aside {
+    margin-bottom: 15px;
+}

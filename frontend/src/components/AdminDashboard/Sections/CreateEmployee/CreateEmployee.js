@@ -36,10 +36,10 @@ function CreateEmployee() {
         <form onSubmit={(e) => handleSubmit(e)} className="create-container">
             <div id='employee-div'>
                 <section className='create-header'>Create a New Employee Profile</section>
-                <section >
+                <section id="create-employee-section">
                     <section>
                         <aside>
-                            <section>Employee Username</section>
+                            <section className="input-header">Employee Username</section>
                             <input
                                 type="text"
                                 minLength={4}
@@ -49,7 +49,7 @@ function CreateEmployee() {
                             />
                         </aside>
                         <aside>
-                            <section>Employee Email</section>
+                            <section className="input-header">Employee Email</section>
                             <input
                                 type='email'
                                 minLength={3}
@@ -59,7 +59,7 @@ function CreateEmployee() {
                             />
                         </aside>
                         <aside>
-                            <section>Employee Password</section>
+                            <section className="input-header">Employee Password</section>
                             <input
                                 type="password"
                                 required
@@ -68,44 +68,52 @@ function CreateEmployee() {
                         </aside>
 
                         <aside>
-                            <section>Employee Role</section>
-                            <section>
-                                <input
-                                    type="radio"
-                                    id="role-staff"
-                                    checked={role === "staff"}
-                                    onClick={(e) => handleRadioClick("staff", e)}
-                                />
-                                <label htmlFor={`role-staff`}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleRadioClick("staff", e)
-                                    }}>
-                                    Staff
-                                </label>
+                            <section className="input-header">Employee Role</section>
+                            <section className="radio-button-section">
+                                <aside>
+                                    <input
+                                        type="radio"
+                                        id="role-staff"
+                                        checked={role === "staff"}
+                                        onClick={(e) => handleRadioClick("staff", e)}
+                                        className="pointer"
+                                    />
+                                    <label htmlFor={`role-staff`}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleRadioClick("staff", e)
+                                        }}
+                                        className="pointer">
+                                        Staff
+                                    </label>
+                                </aside>
 
-                                <input
-                                    type="radio"
-                                    id="role-admin"
-                                    checked={role === "admin"}
-                                    onClick={(e) => handleRadioClick("admin", e)}
-                                />
-                                <label htmlFor={`role-admin`}
-                                    onClick={(e) => {
-                                        e.preventDefault()
-                                        handleRadioClick("admin", e)
-                                    }}>
-                                    Admin
-                                </label>
+                                <aside>
+                                    <input
+                                        type="radio"
+                                        id="role-admin"
+                                        checked={role === "admin"}
+                                        onClick={(e) => handleRadioClick("admin", e)}
+                                        className="pointer"
+                                    />
+                                    <label htmlFor={`role-admin`}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            handleRadioClick("admin", e)
+                                        }}
+                                        className="pointer">
+                                        Admin
+                                    </label>
+                                </aside>
                             </section>
                         </aside>
                     </section>
                 </section>
 
-
                 <section className="changes-container">
                     <button type="submit" className="pointer save-changes-button">Create New Employee Profile</button>
                 </section>
+
             </div>
         </form>
     )
