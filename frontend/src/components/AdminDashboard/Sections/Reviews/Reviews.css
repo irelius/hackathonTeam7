@@ -3,14 +3,19 @@
 
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
 
-    left: 35%;
+    left: 300px;
     right: 0;
     top: 75px;
     bottom: 0;
 
     overflow-y: auto;
+}
+
+#review-main-container>* {
+    width: 100%;
+    justify-content: start;
 }
 
 #review-container {
